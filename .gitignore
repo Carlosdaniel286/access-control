@@ -1,0 +1,29 @@
+# Ignora qualquer node_modules em QUALQUER subpasta
+**/node_modules/
+
+# Next.js
+front/.next/
+front/out/
+
+# Arquivos de log
+*.log
+
+# Mac e Windows
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Kotlin / Gradle
+back/build/
+back/.gradle/
+*.jar
+*.war
+*.class
+
+# Docker
+**/dist/
+docker-compose.override.yml
+.env
