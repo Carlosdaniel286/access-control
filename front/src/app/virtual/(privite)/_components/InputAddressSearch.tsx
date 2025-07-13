@@ -1,5 +1,6 @@
+// ...existing code from adressSeachInput.tsx, export function InputAddressSearch ...
 import { SxProps } from "@mui/joy/styles/types/theme";
-import { InputSearch } from "./seachInput";
+import { InputSearch } from "./InputSeach";
 
 const options = [
     { id: 1, title: 'João Silva - Casa 1', casa: '1' },
@@ -18,14 +19,15 @@ const options = [
 ];
 
 
-export function AdressSeachInput({sx}:{sx?:SxProps}){
-  return(
-      <InputSearch
-       sx={sx}
-      placeholder="endereço do morador ou nome..."
-      options={options}
-      getOptionLabel={((options)=>{
-        return options.title
-      })}
-      />
-   )}
+export function InputAddressSearch({ sx }: { sx?: SxProps }) {
+    return (
+        <InputSearch
+            sx={sx}
+            placeholder="endereço do morador ou nome..."
+            options={options}
+            getOptionLabel={((options) => {
+                return options.title
+            })}
+        />
+    )
+}

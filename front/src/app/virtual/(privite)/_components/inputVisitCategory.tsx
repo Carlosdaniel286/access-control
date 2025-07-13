@@ -1,4 +1,4 @@
-import { InputSearch } from "./seachInput"
+import { InputSearch } from "./InputSeach"
 
 const options = [
   { id: 1, label: 'Visitante', value: 'visitante' },

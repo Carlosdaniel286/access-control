@@ -1,5 +1,6 @@
+// ...existing code from typeAcessInput.tsx, export function InputAccessType ...
 import { SxProps } from "@mui/joy/styles/types/theme";
-import { InputSearch } from "./seachInput"
+import { InputSearch } from "./InputSeach"
 
 const options = [
   { id: 1, label: 'Pedestre', value: 'pedestre' },
@@ -7,7 +8,7 @@ const options = [
 ];
 
 
-export function AccessTypeInput ({sx}:{sx?: SxProps}){
+export function InputAccessType ({sx}:{sx?: SxProps}){
   return(
       <InputSearch
       sx={sx}

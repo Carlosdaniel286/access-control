@@ -1,4 +1,5 @@
-import { InputSearch } from "./seachInput"
+// ...existing code from timeAccessInput.tsx, export function InputAccessTime ...
+import { InputSearch } from "./InputSeach"
 
 const options = [
   { id: 1, label: 'Fixo', value: 'fixo' },

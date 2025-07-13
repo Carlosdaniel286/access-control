@@ -1,15 +1,16 @@
 'use client'
 import { useState } from "react";
-import { CalendarDemo } from "./calendar";
-import { InputDatePiker } from "./inputDatePiker";
+import { CalendarDemo } from "./Calendar";
+import { InputDatePicker } from "./InputDatePicker";
 
 
-export function DatePiker() {
+export function DatePicker() {
  
   const[date,setDate]=useState({
     dateStart:new Date(),
     dateEnd:new Date(),
-    totalDays:0
+    totalDays:0,
+    valueDay:0
   })
   
   
@@ -19,6 +20,8 @@ export function DatePiker() {
         label="Date inicial"
         dateType='start'
         totalDays={date.totalDays}
+        startDate={date.dateStart}
+        endDate={date.dateEnd}
         getDateStart={((ev)=>{
           setDate((prev)=>({...prev,dateStart:ev}))
         })}
@@ -26,18 +29,23 @@ export function DatePiker() {
         <CalendarDemo
         dateType='end'
         label="Data final"
+         startDate={date.dateStart}
+         endDate={date.dateEnd}
          totalDays={date.totalDays}
+         valueDay={date.valueDay}
          getDateEnd={((ev)=>{
           setDate((prev)=>({...prev,dateEnd:ev}))
          })}
         />
         
-        <InputDatePiker
+        <InputDatePicker
          startDate={date.dateStart}
          endDate={date.dateEnd}
+         onChange={((day)=>{
+           setDate((prev)=>({...prev,valueDay:day}))
+         })}
          countDay={((ev)=>{
-
-         setDate((prev)=>({...prev,totalDays:ev}))
+          setDate((prev)=>({...prev,totalDays:ev}))
          })}
         />
     </div>

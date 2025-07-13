@@ -4,7 +4,7 @@ import { WorkerIcon } from "@/icons/user";
 import { Car, House, UserPlus, Users} from "lucide-react";
 
 import Link from "next/link";
-import { OpenRegister } from "./openRegister";
+import { OpenRegister } from "./OpenRegister";
 import { useState } from "react";
 
 
