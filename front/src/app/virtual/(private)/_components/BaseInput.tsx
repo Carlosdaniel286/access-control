@@ -1,5 +1,4 @@
 'use client';
-
 import { BaseInputProps } from "@/app/types/baseInput";
 import { Label } from "@/components/ui/label";
 import { useFormError } from "@/hooks/useFormError";
@@ -13,7 +12,7 @@ export function BaseInput({
   onChange,
   hasError,
   message,
-  className,
+  className='',
   ariaLabel,
   id,
   type,
@@ -65,12 +64,21 @@ export function BaseInput({
     <div className="flex flex-col gap-2">
       <Label className="text-transform: uppercase">{label}</Label>
       <input
-        className={`
-          input p-2  
-          ${formInfo.hasError ? 'border-red-500 ring-0' : ''}
-          ${className}
-          relative
-        `}
+      className={`
+       border-2
+       py-[10px]
+        border-solid
+        px-2
+      border-gray-300
+        rounded-sm
+        w-full
+        hover:ring-black
+        hover:ring-[3px]
+        hover:border-transparent
+        focus:outline-none
+        ${formInfo.hasError && 'border-red-500 ring-0'},
+        ${className}
+      `}
         id={id}
         type={type || "text"}
         name={name}

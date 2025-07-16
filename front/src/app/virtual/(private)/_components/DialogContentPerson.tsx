@@ -77,7 +77,7 @@ export function DialogContentPerson({ onButtonClick}: DialogProps) {
          
         <Box className="items-end h-[73px]" gridArea="accessType">
           <InputAccessMode 
-          sx={{ minHeight: "49.6px" }} 
+          //sx={{ minHeight: "49.6px" }} 
           getValue={((accessMode)=>{
            setForm((prev)=>({...prev,accessMode}))
           })}
@@ -102,9 +102,9 @@ export function DialogContentPerson({ onButtonClick}: DialogProps) {
         ):(
        
         <ArrowRight absoluteStrokeWidth 
-        className="bg-gray-300 hover:bg-green-500 cursor-pointer rounded-sm" 
+        className="bg-gray-400 hover:bg-black  cursor-pointer rounded-sm" 
         height={40} width={50} 
-        color="#000000" 
+        color="white" 
         onClick={(()=>{
           
           api?.scrollNext()

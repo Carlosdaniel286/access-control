@@ -42,14 +42,12 @@ export function InputCpf({getValue}: {getValue?: (value: string) => void}) {
   return (
     <div>
       <BaseInput
-        id="2"
         name="cpf"
         type="text"
         value={cpf}
         label="CPF"
         ariaLabel="Campo de CPF"
         placeholder="Digite o CPF..."
-        className="input p-2"
         inputKind="numbers"
         allowedKeys={['Backspace']}
         onChange={(ev) => handleCpfInput(ev.target.value)}

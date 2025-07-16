@@ -22,8 +22,6 @@ export function InputName({getValue}: {getValue?: (value: string) => void}) {
                 value={valueInput}
                 label='Nome completo'
                 onChange={((ev)=>{setValueInput(ev.target.value)})}
-                className="input p-2"
-                id="1"
                 inputKind="letters"
                 type="text"
                 name="name"

@@ -1,8 +1,5 @@
 
 'use client'
-
-
-
 //import { Info } from "lucide-react";
 import { useEffect, useState } from "react";
 import { differenceInCalendarDays, startOfDay } from 'date-fns';
@@ -68,7 +65,7 @@ export function InputDatePicker({ startDate, endDate, countDay, onChange }: Date
           }}
           // onKeyDown={handleDigitOnlyKeyPress}
           type="text"
-          className={`input max-w-[50px] p-2 ${formInfo.hasError ? 'border-red-500 ring-0' : ''}`}
+          className={`max-w-[50px]  ${formInfo.hasError ? 'border-red-500 ring-0' : ''}`}
           placeholder="Dias"
         />
       </div>

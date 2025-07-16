@@ -51,9 +51,9 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
      <div className="flex w-full justify-between items-center">
     <ArrowLeft absoluteStrokeWidth 
     onClick={(()=>{api?.scrollPrev()})}
-     className="bg-gray-300 hover:bg-red-500 cursor-pointer rounded-sm" 
+     className="bg-gray-400 hover:bg-black  cursor-pointer rounded-sm" 
       height={40} width={50} 
-      color="#000000" 
+      color="white" 
     />
     <Button className="cursor-pointer uppercase" type="submit">Cadastrar</Button>
     </div>

@@ -23,8 +23,9 @@ export function InputSearch<T extends { id: number | string }>({ sx, options, ge
   return (
     <div className="flex flex-col gap-2">
     <Label  className="text-transform: uppercase" >{label}</Label>
+   
     <Autocomplete
-      slotProps={{
+    slotProps={{
         clearIndicator: {
           sx: {
             position: "absolute",
@@ -37,13 +38,13 @@ export function InputSearch<T extends { id: number | string }>({ sx, options, ge
             padding: "6px",
             border: "2px solid #d1d5dc",
             '&:hover': {
-              border: "2px solid transparent",
-              boxShadow: "0 0 0 3px #3B82F6",
+             border: "2px solid transparent",
+              boxShadow: "0 0 0 3px #000000",
             },
             '--Input-focusedThickness': '0rem',
             '&:focus-within': {
               borderColor: "transparent",
-              boxShadow: "0 0 0 3px #3B82F6",
+              boxShadow: "0 0 0 3px #000000",
             },
             ...sx,
           },
@@ -52,6 +53,8 @@ export function InputSearch<T extends { id: number | string }>({ sx, options, ge
           disablePortal: true,
         },
       }}
+      
+      
       placeholder={capitalize(placeholder)}
       options={options}
       getOptionLabel={getOptionLabel}

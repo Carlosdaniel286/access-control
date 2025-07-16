@@ -3,7 +3,6 @@
 @import "tailwindcss/preflight.css" layer(base);
 
 @custom-variant dark (&:is(.dark *));
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -114,21 +113,7 @@
 }
 
 @layer components {
-  
-  .input {
-    @apply
-    border-2
-    border-solid
-  border-gray-300
-    rounded-sm
-    w-full
-    focus:outline-none
-  focus:ring-blue-600
-  hover:ring-blue-500 
-    hover:ring-3
-    hover:border-transparent
-    }
-   .widgets{
+  .widgets{
     @apply
     flex 
     items-center 
