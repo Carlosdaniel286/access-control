@@ -20,6 +20,8 @@ import { Label } from '@/components/ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { useEffect, useState } from 'react'
 import { DatePicker } from '@/app/types/datePiker'
+import { useFormError } from '@/hooks/useFormError'
+
 
 
 
@@ -38,11 +40,9 @@ export function CalendarDemo({
   const [open, setOpen] = useState(false);
   const [inputClear, setInputClear] = useState<boolean>(false);
   const [valueInput, setValueInput] = useState<string>(onToday.toLocaleDateString('pt-BR'));
-  const [formInfo, setFormInfo] = useState({
-    hasError: false,
-    message: '',
-  });
-  const [calendarState, setCalendarState] = useState({
+  const { formInfo, handleError } = useFormError();
+  
+ const [calendarState, setCalendarState] = useState({
     selectedDate: undefined as Date | undefined,
     selectedMonth: undefined as Date | undefined,
   });
@@ -60,7 +60,7 @@ export function CalendarDemo({
     }));
 
     setValueInput(date.toLocaleDateString());
-    console.log(date);
+    
   }
 };
 
@@ -97,7 +97,7 @@ export function CalendarDemo({
     // Se não há diferença de dias, não precisa validar nada
     if (totalDays === undefined) return;
 
-    if (totalDays >= 0) setFormInfo(prev => ({ ...prev, hasError: false }));
+    if (totalDays >= 0) handleError(false);
     // Se a diferença for negativa, as datas estão fora de ordem
     if (totalDays < 0) {
       let message = '';
@@ -107,12 +107,13 @@ export function CalendarDemo({
       } else if (dateType === 'end') {
         message = 'A data final deve ser maior que a inicial';
       }
-
-      setFormInfo({
-        hasError: true,
+        
+      handleError(
+        true,
         message,
-      });
+      );
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalDays, dateType]);
 
 
@@ -134,16 +135,16 @@ export function CalendarDemo({
     if (isNaN(date.getTime())) return;
 
     if (isBefore(date, onToday)) {
-      setFormInfo({ hasError: true, message: 'A data escolhida deve ser igual ou posterior à data atual.' });
+        handleError(true, 'A data escolhida deve ser igual ou posterior à data atual.' );
       return;
     }
 
     if (isAfter(date, limitDate)) {
-      setFormInfo({ hasError: true, message: 'A data escolhida deve ser inferior a um ano.' });
+        handleError(true, 'A data escolhida deve ser inferior a um ano.' );
       return;
     }
 
-    setFormInfo(prev => ({ ...prev, hasError: false }));
+    handleError(false);
     setCalendarState({
       selectedDate: date,
       selectedMonth: startOfMonth(date),
@@ -171,7 +172,7 @@ export function CalendarDemo({
   /* Mantém a máscara DD/MM/YYYY em tempo real */
   const handleInputChange = (value: string) => {
     if (inputClear) {
-      setFormInfo(prev => ({ ...prev, hasError: false }));
+      handleError(false);
       return setValueInput(value);
     }
 
@@ -197,30 +198,30 @@ export function CalendarDemo({
     }
 
     if (Number(day) > 31) {
-      setFormInfo({
-        hasError: true,
-        message: 'O dia máximo permitido é 31.',
-      });
+        handleError(
+        true,
+        'O dia máximo permitido é 31.',
+      );
       return;
     }
 
     if (Number(month) > 12) {
-      setFormInfo({
-        hasError: true,
-        message: 'O mês máximo permitido é 12.',
-      });
+        handleError(
+        true,
+        'O mês máximo permitido é 12.',
+      );
       return;
     }
     // 5. Junta tudo
     const formatted = `${day}${sep1}${month}${sep2}${year}`;
-    setFormInfo(prev => ({ ...prev, hasError: false }));
+    handleError(false);
     setValueInput(formatted);
   };
 
 
   return (
-    <div className="flex flex-col gap-0 w-full">
-      <Label htmlFor="date" className="px-1 p-1">
+    <div className="flex flex-col gap-1 w-full">
+      <Label htmlFor="date" className="px-1 p-1 uppercase">
         {label}
       </Label>
 
@@ -263,7 +264,7 @@ export function CalendarDemo({
               onClick={() => {
                 setCalendarState({ selectedDate: undefined, selectedMonth: undefined });
                 setValueInput(onToday.toLocaleDateString());
-                setFormInfo(prev => ({ ...prev, hasError: false }));
+                handleError(false);
               }}
               className="cursor-pointer"
             >
