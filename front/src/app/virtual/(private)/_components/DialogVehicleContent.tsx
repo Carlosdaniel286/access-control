@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CarouselApi } from "@/components/ui/carousel";
+import { VehiclePlate } from "./InputVehiclePlate";
 
 
 export function DialogVehicleContent({onButtonClick}:DialogProps){
@@ -32,9 +33,7 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
       
      <div>
       <Box gridArea="vehiclePlate">
-        <BaseInput
-          label="Placa do veiculo"
-        />
+       <VehiclePlate/>
       </Box>
        <Box gridArea="vehicleColor">
         <BaseInput

@@ -32,7 +32,7 @@ export function BaseInput({
 
   const restrictToDigits = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const key = e.key;
-
+    if(inputKind==null) return  handleError(false);
     if (deniedKeys && deniedKeys.includes(key)) {
       e.preventDefault();
       return;
@@ -53,6 +53,13 @@ export function BaseInput({
       const isLetter = /^[a-zA-ZÀ-ÿ\s]$/.test(key);
       if (!isLetter) {
         handleError(true, 'Apenas letras são permitidas.');
+        return e.preventDefault();
+      }
+    }
+     if (inputKind === "alfaNumerico") {
+      const isalfaNumerico = /^[a-zA-Z0-9]+$/.test(key);
+      if (!isalfaNumerico) {
+        handleError(true, 'Apenas letras e números são permitidas.');
         return e.preventDefault();
       }
     }

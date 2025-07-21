@@ -31,7 +31,7 @@ export function DatePicker({getDateFull}: DatePickerProps) {
   return(
     <div className="gap-3  flex flex-col max-w-[250px] ">
         <CalendarDemo 
-        label="Date inicial"
+        label="Data inicial"
         dateType='start'
         totalDays={date.totalDays}
         startDate={date.dateStart}

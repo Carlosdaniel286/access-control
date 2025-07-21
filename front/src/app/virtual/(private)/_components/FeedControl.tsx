@@ -2,7 +2,7 @@ export function FeedControl() {
    return(
         <div
           className="
-           bg-yellow-50
+           bg-white
             w-full
             h-full
            "

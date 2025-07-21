@@ -12,6 +12,7 @@ export type BaseInputProps = {
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     allowedKeys?: string[];
     deniedKeys?: string[];
-    inputKind? :"letters" | "numbers";
+    inputKind?:"letters" | "numbers" | "alfaNumerico" | null;
     label?: string;
+    mask?:string
 }
