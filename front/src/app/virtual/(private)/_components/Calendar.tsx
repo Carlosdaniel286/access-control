@@ -1,6 +1,4 @@
-
 'use client'
-
 
 import {
   parse,
@@ -13,17 +11,15 @@ import {
   addDays
 } from 'date-fns'
 
-
 import { CalendarDays, Info, X } from 'lucide-react'
 import { Calendar } from '@/components/ui/calendar'
 import { Label } from '@/components/ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { useEffect, useState } from 'react'
+import {  useEffect, useMemo, useState } from 'react'
 import { DatePicker } from '@/app/types/datePiker'
 import { useFormError } from '@/hooks/useFormError'
-
-
-
+import { InputMask } from './InputMask'
+import { cn } from '@/lib/utils'
 
 export function CalendarDemo({
   getDateStart,
@@ -32,192 +28,149 @@ export function CalendarDemo({
   totalDays,
   dateType,
   startDate,
-  valueDay
+  endDate,
+  valueDay,
 }: DatePicker) {
-  const onToday = startOfDay(new Date());
-  const limitDate = addYears(onToday, 1);
-
-  const [open, setOpen] = useState(false);
-  const [inputClear, setInputClear] = useState<boolean>(false);
-  const [valueInput, setValueInput] = useState<string>(onToday.toLocaleDateString('pt-BR'));
-  const { formInfo, handleError } = useFormError();
+ const today = useMemo(() => startOfDay(new Date()), [])
+ const limitDate = useMemo(() => addYears(today, 1), [today])
+ 
+  console.log('render')
   
- const [calendarState, setCalendarState] = useState({
+  const defaultFormattedDate = useMemo(() => format(today, 'dd/MM/yyyy'), [today]);
+  // `start` depende de `startDate` e `today`, então recalcule se `startDate` mudar.
+  const effectiveStartDate = useMemo(() => startOfDay(startDate ?? today), [startDate, today]);
+
+
+  const [open, setOpen] = useState(false)
+  const [valueInput, setValueInput] = useState<string>(defaultFormattedDate)
+
+  const { formInfo, handleError } = useFormError()
+
+  const [calendarState, setCalendarState] = useState({
     selectedDate: undefined as Date | undefined,
     selectedMonth: undefined as Date | undefined,
-  });
+  })
 
+  useEffect(() => {
+     
+    if (dateType === 'start') return
 
-  const addDaysToEndDate = () => {
-  const start = startDate ?? onToday;
+    if (isBefore(effectiveStartDate, today)) {
+      handleError(true, 'A data escolhida deve ser igual ou posterior à data atual.')
+      return
+    }
 
-  if (dateType === 'end') {
-    const date = addDays(start, valueDay ?? 0);
+    setValueInput(format(effectiveStartDate, 'dd/MM/yyyy'))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startDate,valueDay])
 
-    setCalendarState(prev => ({
-      ...prev,
-      selectedDate: date,
-    }));
-
-    setValueInput(date.toLocaleDateString());
-    
-  }
-};
-
-
-   useEffect(() => {
-    
+  useEffect(() => {
     addDaysToEndDate()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [valueDay]);
-  
-  
-  useEffect(() => {
-    updateSelectedMonth();
-    
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [valueInput]);
+  }, [valueDay])
 
   useEffect(() => {
-    if (getDateStart) {
-      getDateStart(calendarState.selectedDate ?? new Date());
-    }
-    if (getDateEnd) {
-      getDateEnd(calendarState.selectedDate ?? new Date());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [valueInput, calendarState.selectedDate]);
+    updateSelectedMonth()
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [valueInput])
 
- 
+   useEffect(() => {
+   updateDateStart()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [endDate])
+
+  const updateDateStart =()=>{
+    if(dateType=='end'){
    
- 
- 
- 
-  useEffect(() => {
-    // Se não há diferença de dias, não precisa validar nada
-    if (totalDays === undefined) return;
-
-    if (totalDays >= 0) handleError(false);
-    // Se a diferença for negativa, as datas estão fora de ordem
-    if (totalDays < 0) {
-      let message = '';
-
-      if (dateType === 'start') {
-        message = 'A data inicial deve ser menor que a final';
-      } else if (dateType === 'end') {
-        message = 'A data final deve ser maior que a inicial';
-      }
-        
-      handleError(
-        true,
-        message,
-      );
+      const parsed = parse(valueInput, 'dd/MM/yyyy', new Date())
+      if (isBefore(parsed,effectiveStartDate)) {
+       setValueInput(format(effectiveStartDate, 'dd/MM/yyyy'))
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalDays, dateType]);
+    }
+  }
+ 
+ 
+ 
+ 
+  const addDaysToEndDate = () => {
+    const start = startDate ?? today
+    const days = valueDay ?? 0
 
-
-
-
-  function formatSelectedDate(selected: Date | undefined) {
-    if (!selected) return;
-    const formatted = format(selected, 'dd/MM/yyyy');
-    setValueInput(formatted);
-    setCalendarState(prev => ({
-      ...prev,
-      selectedDate: selected,
-    }));
+    if (dateType === 'end' && days >= 0) {
+      const date = addDays(start, days)
+      setValueInput(format(date, 'dd/MM/yyyy'))
+    }
   }
 
-
   function updateSelectedMonth() {
-    const date = startOfDay(parse(valueInput, 'dd/MM/yyyy', new Date()));
-    if (isNaN(date.getTime())) return;
+    const date = startOfDay(parse(valueInput, 'dd/MM/yyyy', new Date()))
+    if (isNaN(date.getTime())) return
 
-    if (isBefore(date, onToday)) {
-        handleError(true, 'A data escolhida deve ser igual ou posterior à data atual.' );
-      return;
+    if (isBefore(date, today)) {
+      handleError(true, 'A data escolhida deve ser igual ou posterior à data atual.')
+      return
     }
 
     if (isAfter(date, limitDate)) {
-        handleError(true, 'A data escolhida deve ser inferior a um ano.' );
-      return;
+      handleError(true, 'A data escolhida deve ser inferior a um ano.')
+      return
     }
 
-    handleError(false);
+    handleError(false)
     setCalendarState({
       selectedDate: date,
       selectedMonth: startOfMonth(date),
-    });
+    })
   }
 
+  const handleInputChange = (value?:string) => {
+   if(!value) return
+    
+    if (value.length < 8) return
 
-  const handleClearDate = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const key = e.key;
-    if (key === 'Backspace') {
-      setInputClear(true);
-      return;
+    const parsed = parse(value, 'ddMMyyyy', new Date())
+    if (isNaN(parsed.getTime())) {
+      handleError(true, 'Data inválida será apagada')
+      return
     }
 
-    const isDigit = /^\d$/.test(key);
-    if (!isDigit) {
-      e.preventDefault();
-      return;
+   setValueInput(format(parsed, 'dd/MM/yyyy'))
+  }
+
+  useEffect(() => {
+    const date = calendarState.selectedDate ?? new Date()
+    getDateStart?.(date)
+    getDateEnd?.(date)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [calendarState.selectedDate])
+
+  useEffect(() => {
+    
+    if (totalDays === undefined) return
+    if (totalDays >= 0) return handleError(false)
+
+    let message = ''
+    if (dateType === 'start') {
+      message = 'A data inicial deve ser menor que a final'
+    } else if (dateType === 'end') {
+      
+      message = 'A data final deve ser maior que a inicial'
     }
 
-    setInputClear(false);
-  };
+    handleError(true, message)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateType])
 
+  function formatSelectedDate(selected: Date | undefined) {
+    if (!selected) return
 
-  /* Mantém a máscara DD/MM/YYYY em tempo real */
-  const handleInputChange = (value: string) => {
-    if (inputClear) {
-      handleError(false);
-      return setValueInput(value);
-    }
-
-    if (value.length > 10) return;
-    // 1. Remove qualquer /
-    const digits = value.replace(/\//g, '');
-
-    // 3. Quebra em partes
-    let day: string = digits.slice(0, 2);
-    let month: string = digits.slice(2, 4);
-    const year = digits.slice(4, 8);
-
-    // 4. Define separadores conforme o tamanho
-    const sep1 = month ? '/' : '';
-    const sep2 = year ? '/' : '';
-
-    if (day.length > 0 && Number(day.charAt(0)) > 3) {
-      day = day.padStart(2, '0');
-    }
-
-    if (month.length > 0 && Number(month.charAt(0)) > 1) {
-      month = month.padStart(2, '0');
-    }
-
-    if (Number(day) > 31) {
-        handleError(
-        true,
-        'O dia máximo permitido é 31.',
-      );
-      return;
-    }
-
-    if (Number(month) > 12) {
-        handleError(
-        true,
-        'O mês máximo permitido é 12.',
-      );
-      return;
-    }
-    // 5. Junta tudo
-    const formatted = `${day}${sep1}${month}${sep2}${year}`;
-    handleError(false);
-    setValueInput(formatted);
-  };
-
+    const formatted = format(selected, 'dd/MM/yyyy')
+    setValueInput(formatted)
+    setCalendarState(prev => ({
+      ...prev,
+      selectedDate: selected,
+    }))
+  }
 
   return (
     <div className="flex flex-col gap-1 w-full">
@@ -225,53 +178,54 @@ export function CalendarDemo({
         {label}
       </Label>
 
-      <Popover open={open} >
+      <Popover open={open}>
         <PopoverTrigger asChild>
           <div
-            className={`
-              flex
-              justify-between
-              items-center
-              font-normal
-              border-2 
-              border-solid 
-            border-gray-300
-              hover:ring-[3px]
-            hover:ring-black
-              hover:border-transparent
-              focus:outline-none
-              rounded-sm
-              ${formInfo.hasError ? 'border-red-500 ring-0' : ''}
-              h-[43px]
-            `}
+            className={cn(
+              "flex justify-between items-center font-normal",
+              "border-2 border-solid border-gray-300",
+              "hover:ring-[3px] hover:ring-black hover:border-transparent",
+              "focus:outline-none rounded-sm"
+            )}
           >
             <div
               className="cursor-pointer"
               onClick={() => {
-                setOpen(!open);
-                updateSelectedMonth();
+                setOpen(!open)
+                updateSelectedMonth()
               }}
             >
               <CalendarDays />
             </div>
 
-            <input
+            <InputMask
               aria-label="Campo de data"
               placeholder="DD/MM/YYYY"
-              className="border-0 px-2 outline-0 h-full w-full box-border"
-              type="text"
-              onChange={ev => {
-                handleInputChange(ev.target.value);
-              }}
-              onKeyDown={handleClearDate}
+              className="border-0 h-[43px] ring-0 p-0 px-0 hover:ring-0"
+              mask="00/00/0000"
+              message={formInfo.message}
+              hasError={formInfo.hasError}
+              onAccept={handleInputChange}
+             // onChange={handleInputChange}
               value={valueInput}
             />
 
             <div
               onClick={() => {
-                setCalendarState({ selectedDate: undefined, selectedMonth: undefined });
-                setValueInput(onToday.toLocaleDateString());
-                handleError(false);
+                setCalendarState({
+                  selectedDate: undefined,
+                  selectedMonth: undefined,
+                })
+
+                if (dateType === 'end') {
+                  setValueInput(format(effectiveStartDate, 'dd/MM/yyyy'))
+                }
+
+                if (dateType === 'start') {
+                  setValueInput(defaultFormattedDate)
+                }
+
+                handleError(false)
               }}
               className="cursor-pointer"
             >
@@ -280,37 +234,36 @@ export function CalendarDemo({
           </div>
         </PopoverTrigger>
 
-        <div className="py-1">
-          {formInfo.hasError && (
+        {formInfo.hasError && (
+          <div className="py-1">
             <span className="flex items-center gap-1 text-[0.8rem] text-red-500">
               <Info className="w-5 h-5 text-red-600" color="red" />
               {formInfo.message}
             </span>
-          )}
-        </div>
+          </div>
+        )}
 
         <PopoverContent className="w-auto overflow-hidden p-0" align="start">
           <Calendar
             mode="single"
-            selected={calendarState.selectedDate ?? onToday}
-            month={calendarState.selectedMonth ?? onToday}
-            onMonthChange={month => setCalendarState(prev => ({ ...prev, selectedMonth: month }))}
+            selected={calendarState.selectedDate ?? today}
+            month={calendarState.selectedMonth ?? today}
+            onMonthChange={month =>
+              setCalendarState(prev => ({ ...prev, selectedMonth: month }))
+            }
             endMonth={limitDate}
             captionLayout="dropdown"
-            disabled={{ before: onToday, after: limitDate }}
+            disabled={{ before: today, after: limitDate }}
             onSelect={date => {
-              if (getDateStart) {
-                getDateStart(date ?? new Date());
-              }
-              if (getDateEnd) {
-                getDateEnd(date ?? new Date());
-              }
-              formatSelectedDate(date);
-              setOpen(false);
+              if (getDateStart) getDateStart(date ?? new Date())
+              if (getDateEnd) getDateEnd(date ?? new Date())
+
+              formatSelectedDate(date)
+              setOpen(false)
             }}
           />
         </PopoverContent>
       </Popover>
     </div>
-  );
+  )
 }

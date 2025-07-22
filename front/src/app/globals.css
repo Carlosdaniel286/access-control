@@ -111,8 +111,21 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
-
+ 
 @layer components {
+  .inputMask{
+    @apply
+   border-2 
+   py-[10px] 
+   border-solid 
+   px-2 
+   border-gray-300 
+   rounded-sm w-full 
+   hover:ring-black 
+   hover:ring-[3px] 
+   hover:border-transparent 
+   focus:outline-none
+    }
   .widgets{
     @apply
     flex 

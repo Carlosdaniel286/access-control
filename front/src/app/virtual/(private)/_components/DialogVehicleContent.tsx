@@ -1,12 +1,11 @@
 
 import { DialogProps } from "@/app/types/dialogProps";
-import { BaseInput } from "./BaseInput";
 import { Box } from "./Box";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CarouselApi } from "@/components/ui/carousel";
-import { VehiclePlate } from "./InputVehiclePlate";
+import { InputMask } from "./InputMask";
 
 
 export function DialogVehicleContent({onButtonClick}:DialogProps){
@@ -33,15 +32,15 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
       
      <div>
       <Box gridArea="vehiclePlate">
-       <VehiclePlate/>
+       <InputMask />
       </Box>
        <Box gridArea="vehicleColor">
-        <BaseInput
+        <InputMask 
           label="Cor do veiculo"
         />
       </Box>
        <Box gridArea="vehicleModel">
-        <BaseInput
+        <InputMask 
           label="Modelo do veiculo"
         />
       </Box>

@@ -4,11 +4,11 @@
 import {type CarouselApi} from "@/components/ui/carousel";
 import { InputAddressSearch } from "./InputAddressSearch";
 import { Box } from "./Box";
-import { InputCpf } from "./InputCpf";
+
 import { InputAccessProfileOption } from "./InputAccessProfileOption";
 import { InputAccessMode } from "./InputAccessMode";
 import { DatePicker } from "./DatePicker";
-import { InputName } from "./InputName";
+
 //AccessMode
 // COMPONENTES EXTERNOS / UI
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ import { ArrowRight} from "lucide-react";
 import { useEffect, useState } from "react";
 import { InputAccessRegistration } from "./InputAccessRegistration";
 import { initValueForm } from "@/constants/accessOptions";
+import { InputMask } from "./InputMask";
 
 
 
@@ -56,11 +57,18 @@ export function DialogContentPerson({ onButtonClick}: DialogProps) {
         }}
       >
         <Box gridArea="fullName">
-          <InputName />
+          <InputMask 
+         
+          className="capitalize inputMask"
+          label="digite o nome completo"
+          />
         </Box>
 
         <Box gridArea="cpf">
-          <InputCpf />
+          <InputMask 
+           mask='999.999.999-99'
+          label="cpf"
+          />
         </Box>
 
         <Box gridArea="address">
