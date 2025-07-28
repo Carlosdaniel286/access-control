@@ -120,11 +120,13 @@
    border-solid 
    px-2 
    border-gray-300 
-   rounded-sm w-full 
+   rounded-sm 
+   w-full 
    hover:ring-black 
    hover:ring-[3px] 
    hover:border-transparent 
    focus:outline-none
+   h-full
     }
   .widgets{
     @apply

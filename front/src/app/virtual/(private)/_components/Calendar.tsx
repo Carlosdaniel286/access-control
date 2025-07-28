@@ -34,7 +34,7 @@ export function CalendarDemo({
  const today = useMemo(() => startOfDay(new Date()), [])
  const limitDate = useMemo(() => addYears(today, 1), [today])
  
-  console.log('render')
+  
   
   const defaultFormattedDate = useMemo(() => format(today, 'dd/MM/yyyy'), [today]);
   // `start` depende de `startDate` e `today`, então recalcule se `startDate` mudar.

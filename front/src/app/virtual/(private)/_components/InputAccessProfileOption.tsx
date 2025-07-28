@@ -1,25 +1,22 @@
-
-
 import { AccessProfileOption } from "@/app/types/valueForm";
-import { InputSearch } from "./InputSearch"
 import { optionsAccessProfile } from "@/constants/accessOptions";
+import { SelectDemo } from "./Select";
 
 
 
 
-export function InputAccessProfileOption({getValue}:{getValue?: (value: AccessProfileOption | null) => void;}){
+export function InputAccessProfileOption({getValue}:{getValue?: (value: AccessProfileOption | null | string) => void;}){
   return(
-      <InputSearch
-       getValue={((value: AccessProfileOption | null)=>{
-        if (getValue) {
-          getValue(value);
-        }
-      })}
+      <SelectDemo
+       onValueChange={getValue}
       placeholder="Digite o objetivo ..."
       label="Categoria de visita"
       options={optionsAccessProfile}
       getOptionLabel={((options)=>{
-        return options.label
+       const {id,label,value}= options
+       return {
+        id,label,value
+       }
       })}
       />
    )}

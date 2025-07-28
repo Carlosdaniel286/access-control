@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Sidebar } from "./_components/Sidebar";
 import { Header } from "./_components/Header";
+import { OverlayProvider } from "@/contexts/OverlayContext";
 
 
 export const metadata: Metadata = {
@@ -22,8 +23,11 @@ export default function RootLayout({
               <div 
                 className="flex h-full"
                 >
+            <OverlayProvider>
                <Sidebar/>
+             
                 {children}
+                </OverlayProvider>
               </div>
           </div>
       </body>

@@ -1,40 +1,42 @@
 
 'use client'
+
 // COMPONENTES INTERNOS
-import {type CarouselApi} from "@/components/ui/carousel";
+import { type CarouselApi } from "@/components/ui/carousel";
 import { InputAddressSearch } from "./InputAddressSearch";
 import { Box } from "./Box";
-
 import { InputAccessProfileOption } from "./InputAccessProfileOption";
-import { InputAccessMode } from "./InputAccessMode";
 import { DatePicker } from "./DatePicker";
 
-//AccessMode
+import { InputAccessRegistration } from "./InputAccessRegistration";
+import { InputMask } from "./InputMask";
+import { SelectDemo } from "./Select";
+
 // COMPONENTES EXTERNOS / UI
 import { Button } from "@/components/ui/button";
 import { DialogProps } from "@/app/types/dialogProps";
-import { ArrowRight} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
-import { InputAccessRegistration } from "./InputAccessRegistration";
-import { initValueForm } from "@/constants/accessOptions";
-import { InputMask } from "./InputMask";
+import { initValueForm, optionsAccessMode } from "@/constants/accessOptions";
+import ButtonAdd from "./ButtonAdd";
+import { useOverlay } from "@/contexts/OverlayContext";
 
 
 
-export function DialogContentPerson({ onButtonClick}: DialogProps) {
-  const[form, setForm]=useState(initValueForm)
-  const [api,setApi]=useState<CarouselApi | undefined>(undefined)
-
-  useEffect(()=>{
-  if(!onButtonClick) return
-  setApi(onButtonClick())
+export function DialogContentPerson({ onButtonClick }: DialogProps) {
+  const [form, setForm] = useState(initValueForm);
+  const [api, setApi] = useState<CarouselApi | undefined>(undefined);
+  const {handleOpenOverlay} = useOverlay()
   
-  },[onButtonClick])
+  useEffect(() => {
+    if (!onButtonClick) return;
+    setApi(onButtonClick());
+  }, [onButtonClick]);
 
   
+
   return (
-    <div draggable='false' className="bg-white sm:max-w-[800px] p-10 rounded-lg shadow-lg">
-      
+    <div draggable="false" className="bg-white sm:max-w-[800px] p-10 rounded-lg shadow-lg">
       {/* Cabeçalho */}
       <header className="mb-6">
         <h2 className="text-lg font-semibold">Cadastro de Visitantes</h2>
@@ -52,22 +54,25 @@ export function DialogContentPerson({ onButtonClick}: DialogProps) {
             "address address accessCategory"
             "datePicker datePicker accessType"
             "datePicker datePicker acessRegistration"
+            "textarea textarea textarea"
           `,
-          gridTemplateRows: "auto auto auto 200px"
+          gridTemplateRows: "auto auto auto auto auto",
         }}
       >
         <Box gridArea="fullName">
-          <InputMask 
-         
-          className="capitalize inputMask"
-          label="digite o nome completo"
+          <InputMask
+            className="capitalize inputMask"
+            label="digite o nome completo"
+            placeholder="nome completo"
+            mask={/^[a-zA-Z\s]*$/}
           />
         </Box>
 
         <Box gridArea="cpf">
-          <InputMask 
-           mask='999.999.999-99'
-          label="cpf"
+          <InputMask
+            mask="000.000.000-00"
+            label="cpf"
+            placeholder="cpf"
           />
         </Box>
 
@@ -79,49 +84,65 @@ export function DialogContentPerson({ onButtonClick}: DialogProps) {
           <InputAccessProfileOption />
         </Box>
 
-        <Box gridArea="datePicker">
+        <Box  gridArea="datePicker">
           <DatePicker />
         </Box>
-         
+
+        <Box gridArea="textarea">
+          <>
+          
+        <ButtonAdd
+         setIsOpen={(()=>{
+          handleOpenOverlay('textArea')
+         })}
+        />
+        </>
+        </Box>
+
         <Box className="items-end h-[73px]" gridArea="accessType">
-          <InputAccessMode 
-          //sx={{ minHeight: "49.6px" }} 
-          getValue={((accessMode)=>{
-           setForm((prev)=>({...prev,accessMode}))
-          })}
+          <SelectDemo
+            label="Tipo de acesso"
+            placeholder="Tipo de acesso"
+            options={optionsAccessMode}
+            getOptionLabel={(ev) => {
+              setForm((prev) => ({
+                ...prev,
+                accessMode: ev,
+              }));
+              return null;
+            }}
           />
         </Box>
-         <Box className="items-start py-4" gridArea="acessRegistration">
-          <InputAccessRegistration  />
+
+        <Box className="items-start py-4" gridArea="acessRegistration">
+          <InputAccessRegistration />
         </Box>
       </div>
 
       {/* Rodapé */}
       <footer className="mt-6 flex justify-between items-center gap-4">
-        <Button 
-        className="cursor-pointer uppercase" 
-        type='button' 
-        variant="outline"
-        
-        >Cancelar</Button>
-        
-        {form.accessMode?.value!=='veiculo' ? (
-        <Button className="cursor-pointer uppercase" type="submit">Cadastrar</Button>
-        ):(
-       
-        <ArrowRight absoluteStrokeWidth 
-        className="bg-gray-400 hover:bg-black  cursor-pointer rounded-sm" 
-        height={40} width={50} 
-        color="white" 
-        onClick={(()=>{
-          
-          api?.scrollNext()
-        
-        })}
-        />
-       
+        <Button
+          className="cursor-pointer uppercase"
+          type="button"
+          variant="outline"
+        >
+          Cancelar
+        </Button>
+
+        {form.accessMode?.value !== 'veiculo' && form.accessMode?.value !== 'passageiro' ? (
+          <Button className="cursor-pointer uppercase" type="submit">
+            Cadastrar
+          </Button>
+        ) : (
+          <ArrowRight
+            absoluteStrokeWidth
+            className="bg-gray-400 hover:bg-black cursor-pointer rounded-sm"
+            height={40}
+            width={50}
+            color="white"
+            onClick={() => api?.scrollNext()}
+          />
         )}
-        
       </footer>
     </div>
   );

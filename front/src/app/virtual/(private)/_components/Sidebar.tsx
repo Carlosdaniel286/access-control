@@ -5,16 +5,18 @@ import { Car, House, UserPlus, Users} from "lucide-react";
 
 import Link from "next/link";
 import { OpenRegister } from "./OpenRegister";
-import { useState } from "react";
+
+import { RenderTextarea } from "./RenderTextArea";
+import { useOverlay } from "@/contexts/OverlayContext";
 
 
 
 
 export function Sidebar() {
   const strokeWidth = 1.7
-  const [isOpen,setIsOpen]=useState(false)
   
    
+   const {overlays,handleOpenOverlay,handleCloseOverlay} = useOverlay()
   
   return(
         <aside
@@ -30,9 +32,17 @@ export function Sidebar() {
            "
           >
          
-          { isOpen && <OpenRegister  isOpen={isOpen} setIsOpen={setIsOpen}/>}
-       
-          <Link 
+          { overlays.register && <OpenRegister  isOpen={overlays.register} setIsOpen={(()=>{
+            handleCloseOverlay('register')
+          })}/>}
+             {overlays.textArea && 
+               <RenderTextarea
+                  setIsOpen={(()=>{
+                  handleCloseOverlay('textArea')
+                  })}
+                  />
+                }
+              <Link 
             href="/virtual/painel" 
             className="widgets">
              <House  strokeWidth={strokeWidth} aria-hidden="true" />
@@ -41,7 +51,9 @@ export function Sidebar() {
          
           <button 
             className="widgets"
-             onClick={() => setIsOpen(true)}
+             onClick={() =>{
+              handleOpenOverlay('register')
+             }}
             >
              
             <UserPlus strokeWidth={strokeWidth} />

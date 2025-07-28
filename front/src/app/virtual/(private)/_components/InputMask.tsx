@@ -17,11 +17,12 @@ export function InputMask({
   label,
   mask,
   onAccept,
-  onChange
+  onChange,
+  onBlur
   // react-imask não usa, pode ignorar
 }: MaskedInputProps) {
   const { formInfo } = useFormError();
-
+ 
   // react-imask chama onAccept quando o valor muda, passa valor já "unmasked"
   
   
@@ -48,20 +49,28 @@ export function InputMask({
       )}
 
       <IMaskInput
+      onBlur={(()=>{
+          onBlur?.(true)
+      })}
+      onFocus={() => {
+        onBlur?.(false)
+     }}
         className={cn(
           'inputMask',
           formInfo.hasError && 'border-red-500 ring-0',
+          
           className
         )}
         id={id}
         name={name}
-        mask={mask || ''}
+        mask={mask || '' }
         aria-label={ariaLabel}
         unmask={true}
-        value={value || ''}
+        value={value}
         placeholder={placeholder || "Digite algo..."}
         onAccept={handleAccept}
         onChange={handleChanger}
+        
       />
 
       {formInfo.hasError && (

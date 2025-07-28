@@ -1,25 +1,60 @@
-
+'use client'
 import { DialogProps } from "@/app/types/dialogProps";
 import { Box } from "./Box";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { useEffect, useState } from "react";
+import {  use, useEffect, useState } from "react";
 import { CarouselApi } from "@/components/ui/carousel";
 import { InputMask } from "./InputMask";
+import { brandsCar,modelCar,motorcycleBrands,motorcycleModels,vehicleColors,vehicleTypes } from "@/constants/vehicleOptions";
+import { InputSearch } from "./InputSearch";
+import { userPromise} from "./A";
+type VehicleCharacteristics = {
+  color: string | null;
+  plate: string | null;
+  model: string | null;
+  type: string | null;
+  brands: string | null;
+};
+
+
 
 
 export function DialogVehicleContent({onButtonClick}:DialogProps){
   const [api,setApi]=useState<CarouselApi | undefined>(undefined)
-
+   //const [render,setRender]=useState<string | undefined>(undefined)
+ 
+ 
+  const [vehicleCharacteristics,setVehicleCharacteristics] = useState<VehicleCharacteristics>({
+    color:null,
+    plate:null,
+    model:null,
+    type:null,
+    brands:null
+  })
+  
   useEffect(()=>{
   if(!onButtonClick) return
   setApi(onButtonClick())
   },[onButtonClick])
- return (
+ 
+  
+  
+  const isVehicleType = vehicleCharacteristics.type==null?true:false
+  const vehicleType  = vehicleCharacteristics.type==null?'Veículo':vehicleCharacteristics.type
+  
+  const brandsPromise = use(userPromise);
+
+   console.log(brandsPromise)
+  
+  
+  return (
     <div
+    
        className="
        bg-white sm:max-w-[800px]
-        p-10 rounded-lg 
+        p-10 
+        rounded-lg 
         shadow-lg
         "
        >
@@ -30,23 +65,110 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
         </p>
       </header>
       
-     <div>
-      <Box gridArea="vehiclePlate">
-       <InputMask />
+     <div 
+     className="grid gap-4 "
+     style={{
+          gridTemplateAreas: `
+            "vehiclePlate vehicleType"
+            "vehicleBrands vehicleBrands"
+            "vehicleModel vehicleModel"
+            "vehicleColor vehicleColor"
+          `,
+          gridTemplateRows: "repeat(4, 74px)"
+        }}
+     
+     >
+      
+    <Box gridArea="vehiclePlate" >
+       <InputMask 
+       textMode='uppercase'
+       label="placa de veiculo"
+       placeholder="Placa"
+       value={vehicleCharacteristics.plate??""}
+       onAccept={((ev)=>{
+        setVehicleCharacteristics(prev => ({
+       ...prev,
+       plate:ev.toUpperCase()
+     }))
+
+       })}
+       mask={[
+    {
+     mask:'aaa0a00',  // Placa antiga
+       
+    },
+    {
+      
+     mask:'aaa-0000'
+      //regex: /^[A-Z]{3}\d[A-Z]\d{0,2}/,
+    },
+  ]}
+       
+       />
+     
       </Box>
-       <Box gridArea="vehicleColor">
-        <InputMask 
-          label="Cor do veiculo"
+      <Box gridArea="vehicleType" >
+        <InputSearch
+          label="tipo do veiculo"
+           freeSolo={true}
+            placeholder="tipo do veiculo"
+          options={vehicleTypes}
+          
+          getValue={((ev)=>{
+            if(!ev) return
+           const type = typeof ev=='string'? ev:ev.name
+           setVehicleCharacteristics(prev => ({
+          ...prev,
+           type
+     }))
+          })}
+           getOptionLabel={((options) => {
+              return options.name
+            })}
+        />
+      </Box>
+       <Box gridArea="vehicleBrands">
+       <InputSearch
+          label="marca do veiculo"
+          freeSolo={true}
+          disabled={isVehicleType}
+          placeholder={`marca do/da ${vehicleType}`}
+          options={vehicleCharacteristics.type!=='Moto'?brandsCar:motorcycleBrands}
+           getOptionLabel={((options) => {
+              return options.name
+            })}
         />
       </Box>
        <Box gridArea="vehicleModel">
-        <InputMask 
+       <InputSearch
           label="Modelo do veiculo"
+          disabled={isVehicleType}
+           freeSolo={true}
+          placeholder={`Modelo do/da ${vehicleType}`}
+          options={vehicleCharacteristics.type!=='Moto'?modelCar:motorcycleModels}
+           getOptionLabel={((options) => {
+              return options.name
+            })}
+        />
+        
+      </Box>
+      
+       <Box gridArea="vehicleColor">
+       <InputSearch
+          label="Cor do veiculo"
+          freeSolo={true}
+          placeholder={`cor do/da ${vehicleType}`}
+          options={vehicleColors}
+           getOptionLabel={((options) => {
+              return options.name
+            })}
         />
       </Box>
+      
+      
 
      </div>
-     <div className="flex w-full justify-between items-center">
+     <div className=" py-3 flex w-full justify-between items-center">
     <ArrowLeft absoluteStrokeWidth 
     onClick={(()=>{api?.scrollPrev()})}
      className="bg-gray-400 hover:bg-black  cursor-pointer rounded-sm" 

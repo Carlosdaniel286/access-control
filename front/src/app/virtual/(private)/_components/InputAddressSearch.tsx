@@ -11,19 +11,21 @@ export function InputAddressSearch(
 
 }) {
     
-        return (
+     //const []
+
+    return (
         <InputSearch
            label="Endereço do morador"
               sx={sx}
-             getValue={((value: AccessAddressResident  | null)=>{
-          if (getValue) {
-             getValue(value);
-            }
+             getValue={((value: AccessAddressResident  | null | string)=>{
+             if(typeof value !=='string') return getValue?.(value)
+             
             })}
+            
             placeholder="endereço do morador ou nome..."
             options={optionsAccessAddressResident}
             getOptionLabel={((options) => {
-                return options.label
+              return options.label
             })}
         />
     )
