@@ -32,11 +32,12 @@ export function Carousel({ children, onCarouselApi }: CarouselProps) {
   }, [api, onCarouselApi]);
 
 
-  
+  //sm:max-w-[600px]
   
   return (
     <ShadCarousel
-      className="w-full max-w-[800px]"
+    
+      className="w-full md:max-w-[800px] sm:max-w-[90vw] max-w-[100vw]  mx-auto z-50"
       setApi={setApi}
       opts={{
         dragFree: false,
@@ -52,7 +53,7 @@ export function Carousel({ children, onCarouselApi }: CarouselProps) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <div className="flex items-center justify-center mt-6">
+      <div className=" hidden sm:flex items-center justify-center mt-6">
         <Pagination 
         indexItem={indexItem}
         />

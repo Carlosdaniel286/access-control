@@ -9,6 +9,7 @@ import { InputMask } from "./InputMask";
 import { brandsCar,modelCar,motorcycleBrands,motorcycleModels,vehicleColors,vehicleTypes } from "@/constants/vehicleOptions";
 import { InputSearch } from "./InputSearch";
 import { userPromise} from "./A";
+
 type VehicleCharacteristics = {
   color: string | null;
   plate: string | null;
@@ -23,7 +24,7 @@ type VehicleCharacteristics = {
 export function DialogVehicleContent({onButtonClick}:DialogProps){
   const [api,setApi]=useState<CarouselApi | undefined>(undefined)
    //const [render,setRender]=useState<string | undefined>(undefined)
- 
+  
  
   const [vehicleCharacteristics,setVehicleCharacteristics] = useState<VehicleCharacteristics>({
     color:null,
@@ -50,12 +51,14 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
   
   return (
     <div
-    
-       className="
-       bg-white sm:max-w-[800px]
+      className="
+       bg-white 
+        min-h-[100vh]
         p-10 
-        rounded-lg 
+        sm:rounded-lg 
         shadow-lg
+        max-h-[100vh] 
+        overflow-auto
         "
        >
       <header className="mb-6">
@@ -66,7 +69,14 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
       </header>
       
      <div 
-     className="grid gap-4 "
+     className="
+         flex
+         input-h
+         flex-col
+         sm:grid 
+         gap-4
+         
+         "
      style={{
           gridTemplateAreas: `
             "vehiclePlate vehicleType"
@@ -78,9 +88,9 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
         }}
      
      >
-      
-    <Box gridArea="vehiclePlate" >
+     <Box   gridArea="vehiclePlate" >
        <InputMask 
+       className=" min-h-[55px]"
        textMode='uppercase'
        label="placa de veiculo"
        placeholder="Placa"
@@ -127,7 +137,7 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
             })}
         />
       </Box>
-       <Box gridArea="vehicleBrands">
+       <Box className='min-h-full' gridArea="vehicleBrands">
        <InputSearch
           label="marca do veiculo"
           freeSolo={true}

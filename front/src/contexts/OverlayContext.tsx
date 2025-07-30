@@ -1,26 +1,25 @@
 'use client'
-
-
-
 import React, { createContext, useState, use } from "react";
 
 type OverlayState = {
   register: boolean;
   textArea: boolean;
+  sideBar:boolean
 };
 
 type OverlayContextType = {
-  overlays: OverlayState;
+ overlays: OverlayState;
  handleOpenOverlay: (select: SelectOverlay) => void
  handleCloseOverlay: (select: SelectOverlay) => void
 };
-type SelectOverlay = 'register'| 'textArea'
+type SelectOverlay = 'register'| 'textArea' | 'sideBar'
 const OverlayContext = createContext<OverlayContextType | null>(null);
 
 export function OverlayProvider({ children }: { children: React.ReactNode }) {
   const [overlays, setOverlays] = useState<OverlayState>({
     register: false,
     textArea: false,
+    sideBar:false
   });
 
    const handleOpenOverlay = (select: SelectOverlay) => {

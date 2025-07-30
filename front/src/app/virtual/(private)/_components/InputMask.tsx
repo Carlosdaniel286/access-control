@@ -39,9 +39,6 @@ export function InputMask({
       onChange(e);
     }
   }
-
-
-
   return (
     <div className="flex flex-col gap-2">
       {label !== undefined && (

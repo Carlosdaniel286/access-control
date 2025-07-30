@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { Sidebar } from "./_components/Sidebar";
+
 import { Header } from "./_components/Header";
 import { OverlayProvider } from "@/contexts/OverlayContext";
+import { Sidebar } from "./_components/Sidebar";
 
 
 export const metadata: Metadata = {
@@ -19,16 +20,17 @@ export default function RootLayout({
       <body
         className="antialiased" >
          <div className="h-screen flex flex-col w-full">
+          <OverlayProvider>
             <Header/>
               <div 
-                className="flex h-full"
+                 className="flex h-full"
                 >
-            <OverlayProvider>
-               <Sidebar/>
              
-                {children}
-                </OverlayProvider>
+                <Sidebar/>
+                 {children}
+                
               </div>
+              </OverlayProvider>
           </div>
       </body>
     </html>

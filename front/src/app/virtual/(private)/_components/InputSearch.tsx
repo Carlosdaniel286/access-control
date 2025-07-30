@@ -30,8 +30,10 @@ export function InputSearch<T extends { id: number | string }>({ sx, options, di
     <Label  className="text-transform: uppercase" >{label}</Label>
    
     <Autocomplete
+    
     //value={value}
     slotProps={{
+       
         clearIndicator: {
           sx: {
             position: "absolute",

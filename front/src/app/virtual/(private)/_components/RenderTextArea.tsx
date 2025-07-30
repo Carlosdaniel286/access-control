@@ -12,7 +12,7 @@ export function RenderTextarea({setIsOpen}:RenderProps) {
     className="z-60 "
        setIsOpen={setIsOpen}
        >
-        <div  className="bg-white w-[600px]  rounded-sm ">
+        <div  className="bg-white w-[95vw] sm:w-[600px]  rounded-sm ">
         <Textarea/>
          <div className="px-7 py-4 flex  justify-between">
             <Button 

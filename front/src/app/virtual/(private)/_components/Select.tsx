@@ -43,6 +43,8 @@ export  function SelectDemo<T>({
     <div className="flex flex-col gap-2">
       <Label className="uppercase">{label}</Label>
     <Select
+      className=" bg-amber-200 "
+     
        onChange={((ev,value)=>{
         if(!value) return
         if(typeof value ==='object'){
@@ -56,6 +58,7 @@ export  function SelectDemo<T>({
        indicator={<KeyboardArrowDown />}
       
       sx={{
+        zIndex:9999,
        // width: 240,
         [`& .${selectClasses.indicator}`]: {
           transition: '0.2s',

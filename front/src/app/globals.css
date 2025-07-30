@@ -137,10 +137,14 @@
     py-5 
   hover:bg-gray-100
     cursor-pointer
-    font-semibold
-  text-black
-    }
+    w-full
+    rounded-md
+   }
   }
+
+  .input-h input {
+  @apply h-[40px];
+}
 
 @layer base {
   * {

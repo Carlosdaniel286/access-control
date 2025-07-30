@@ -21,12 +21,10 @@ import { initValueForm, optionsAccessMode } from "@/constants/accessOptions";
 import ButtonAdd from "./ButtonAdd";
 import { useOverlay } from "@/contexts/OverlayContext";
 
-
-
 export function DialogContentPerson({ onButtonClick }: DialogProps) {
   const [form, setForm] = useState(initValueForm);
   const [api, setApi] = useState<CarouselApi | undefined>(undefined);
-  const {handleOpenOverlay} = useOverlay()
+  const {handleOpenOverlay,handleCloseOverlay} = useOverlay()
   
   useEffect(() => {
     if (!onButtonClick) return;
@@ -36,7 +34,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
   
 
   return (
-    <div draggable="false" className="bg-white sm:max-w-[800px] p-10 rounded-lg shadow-lg">
+    <div className=" bg-white p-10  max-h-[100vh] overflow-auto sm:rounded-lg shadow-lg">
       {/* Cabeçalho */}
       <header className="mb-6">
         <h2 className="text-lg font-semibold">Cadastro de Visitantes</h2>
@@ -47,7 +45,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
 
       {/* Formulário */}
       <div
-        className="grid gap-4 bg-white"
+        className="sm:grid flex h-full   flex-col gap-4 bg-white"
         style={{
           gridTemplateAreas: `
             "fullName fullName cpf"
@@ -125,6 +123,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
           className="cursor-pointer uppercase"
           type="button"
           variant="outline"
+          onClick={() => handleCloseOverlay('register')}
         >
           Cancelar
         </Button>

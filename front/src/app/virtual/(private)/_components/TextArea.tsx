@@ -18,7 +18,7 @@ export function Textarea() {
     setValue(newValue);
   };
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex w-full flex-col gap-2">
       <Label className="px-1 uppercase p-4">escreva uma observação</Label>
       <Text
         size="md"
