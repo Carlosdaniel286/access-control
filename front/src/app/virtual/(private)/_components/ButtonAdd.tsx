@@ -4,10 +4,10 @@ import Button from '@mui/joy/Button';
 import Add from '@mui/icons-material/Add';
  type PropsButtonAdd ={
     setIsOpen?: ((open: boolean) => void) | undefined
-    open?: boolean
+    
  }
 
-export default function ButtonAdd({setIsOpen,open}:PropsButtonAdd) {
+export default function ButtonAdd({setIsOpen}:PropsButtonAdd) {
   return (
     <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
       <Button 
