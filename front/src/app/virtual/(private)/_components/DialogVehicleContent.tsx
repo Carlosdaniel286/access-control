@@ -54,6 +54,7 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
       className="
        bg-white 
         min-h-[100vh]
+        sm:min-h-[100%]
         p-10 
         sm:rounded-lg 
         shadow-lg
@@ -75,6 +76,7 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
          flex-col
          sm:grid 
          gap-4
+         h-full
          
          "
      style={{
@@ -84,13 +86,14 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
             "vehicleModel vehicleModel"
             "vehicleColor vehicleColor"
           `,
-          gridTemplateRows: "repeat(4, 74px)"
+          gridTemplateRows: "repeat(4, 80px) auto"
         }}
      
      >
      <Box   gridArea="vehiclePlate" >
        <InputMask 
-       className=" min-h-[55px]"
+       
+       className="min-h-[58px]"
        textMode='uppercase'
        label="placa de veiculo"
        placeholder="Placa"
@@ -117,7 +120,7 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
        />
      
       </Box>
-      <Box gridArea="vehicleType" >
+      <Box className='h-[77px]' gridArea="vehicleType" >
         <InputSearch
           label="tipo do veiculo"
            freeSolo={true}
@@ -137,7 +140,7 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
             })}
         />
       </Box>
-       <Box className='min-h-full' gridArea="vehicleBrands">
+       <Box className='h-[77px]'  gridArea="vehicleBrands">
        <InputSearch
           label="marca do veiculo"
           freeSolo={true}
@@ -149,7 +152,7 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
             })}
         />
       </Box>
-       <Box gridArea="vehicleModel">
+       <Box className='h-[77px]' gridArea="vehicleModel">
        <InputSearch
           label="Modelo do veiculo"
           disabled={isVehicleType}
@@ -163,7 +166,7 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
         
       </Box>
       
-       <Box gridArea="vehicleColor">
+       <Box className='h-[77px]' gridArea="vehicleColor">
        <InputSearch
           label="Cor do veiculo"
           freeSolo={true}
@@ -178,7 +181,7 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
       
 
      </div>
-     <div className=" py-3 flex w-full justify-between items-center">
+     <div className=" h-32 flex w-full justify-between items-end">
     <ArrowLeft absoluteStrokeWidth 
     onClick={(()=>{api?.scrollPrev()})}
      className="bg-gray-400 hover:bg-black  cursor-pointer rounded-sm" 

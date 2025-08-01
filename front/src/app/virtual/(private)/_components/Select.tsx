@@ -40,7 +40,7 @@ export  function SelectDemo<T>({
 }, [options]);
   
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col  gap-2">
       <Label className="uppercase">{label}</Label>
     <Select
       className=" bg-amber-200 "
@@ -58,8 +58,7 @@ export  function SelectDemo<T>({
        indicator={<KeyboardArrowDown />}
       
       sx={{
-        zIndex:9999,
-       // width: 240,
+        
         [`& .${selectClasses.indicator}`]: {
           transition: '0.2s',
           [`&.${selectClasses.expanded}`]: {

@@ -56,7 +56,7 @@ import { InputMask } from "./InputMask";
  
  
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col  gap-2">
       <div className="flex items-center gap-2">
         <InputMask
           onBlur={((ev)=>{
@@ -71,7 +71,7 @@ import { InputMask } from "./InputMask";
             if (!ev) return;
             handleValueInput(ev.target.value);
           }}
-          className={`max-w-[50px] ${formInfo.hasError ? 'border-red-500 ring-0' : ''}`}
+          className={`max-w-[50px]  ${formInfo.hasError ? 'border-red-500 ring-0' : ''}`}
           placeholder="Dias"
         />
       </div>

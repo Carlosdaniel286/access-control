@@ -1,3 +1,5 @@
+import { ScrollProfile } from "./ScrollProfile";
+
 export function FeedControl() {
    return(
         <div
@@ -5,8 +7,10 @@ export function FeedControl() {
            bg-white
             w-full
             h-full
+            overflow-hidden
            "
         >
+          <ScrollProfile />
       </div>
     )
 

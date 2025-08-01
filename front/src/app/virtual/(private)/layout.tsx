@@ -1,9 +1,10 @@
+
+
 import type { Metadata } from "next";
 
 import { Header } from "./_components/Header";
-import { OverlayProvider } from "@/contexts/OverlayContext";
-import { Sidebar } from "./_components/Sidebar";
-
+import { OverlayProvider} from "@/contexts/OverlayContext";
+import { RenderSidebar } from "./_components/RenderSidebar";
 
 export const metadata: Metadata = {
   title: "painel",
@@ -15,6 +16,10 @@ export default function RootLayout({
 }: Readonly<{
   children?: React.ReactNode;
 }>) {
+ 
+ 
+ 
+ 
   return (
     <html lang='pt-BR'>
       <body
@@ -22,11 +27,14 @@ export default function RootLayout({
          <div className="h-screen flex flex-col w-full">
           <OverlayProvider>
             <Header/>
+              
               <div 
                  className="flex h-full"
                 >
-             
-                <Sidebar/>
+            
+                  <RenderSidebar/>
+              
+               
                  {children}
                 
               </div>

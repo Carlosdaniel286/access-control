@@ -19,7 +19,7 @@ export function OpenRegister({ isOpen, setIsOpen }: OpenRegisterProps) {
       <form action="">
        <Overlay
          setIsOpen={setIsOpen}
-
+         overlay={true} 
          >
           <Carousel
            onCarouselApi={(api) => {

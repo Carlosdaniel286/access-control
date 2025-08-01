@@ -19,17 +19,18 @@ export function Header() {
         >
         <div 
         onClick={(()=>{
+          console.log('clicou no header')
           handleOpenOverlay('sideBar')
         })}
-        className="bg-gray-200 p-1 rounded-md visible sm:invisible"
+        className="bg-gray-200 p-1 cursor-pointer rounded-md visible sm:invisible"
         ><AlignJustify 
-           size={32} 
+          size={32} 
            color="#0a0a0a" 
            strokeWidth={2.5} 
-           className=" cursor-pointer" />
+            />
            </div>
-           <h1 className="text-white"></h1>
-        
+           
+
         </header>
     )
 

@@ -1,119 +1,166 @@
 
-'use client'
+"use client";
 
 // COMPONENTES INTERNOS
 import { type CarouselApi } from "@/components/ui/carousel";
-import { InputAddressSearch } from "./InputAddressSearch";
-import { Box } from "./Box";
-import { InputAccessProfileOption } from "./InputAccessProfileOption";
-import { DatePicker } from "./DatePicker";
 
-import { InputAccessRegistration } from "./InputAccessRegistration";
+import { Box } from "./Box";
+import { DatePicker } from "./DatePicker";
 import { InputMask } from "./InputMask";
 import { SelectDemo } from "./Select";
+import Image from "next/image";
 
 // COMPONENTES EXTERNOS / UI
 import { Button } from "@/components/ui/button";
 import { DialogProps } from "@/app/types/dialogProps";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
-import { initValueForm, optionsAccessMode } from "@/constants/accessOptions";
+import {
+  initValueForm,
+  optionsAccessAddressResident,
+  optionsAccessMode,
+  optionsAccessProfile,
+  optionsAccessRegistration
+} from "@/constants/accessOptions";
 import ButtonAdd from "./ButtonAdd";
 import { useOverlay } from "@/contexts/OverlayContext";
+import { InputSearch } from "./InputSearch";
+import { AccessAddressResident } from "@/app/types/valueForm";
 
 export function DialogContentPerson({ onButtonClick }: DialogProps) {
   const [form, setForm] = useState(initValueForm);
   const [api, setApi] = useState<CarouselApi | undefined>(undefined);
-  const {handleOpenOverlay,handleCloseOverlay} = useOverlay()
+  const { handleOpenOverlay, handleCloseOverlay } = useOverlay();
+//max-h-[100px] max-w-[100px]
   
-  useEffect(() => {
+
+
+ useEffect(() => {
     if (!onButtonClick) return;
     setApi(onButtonClick());
   }, [onButtonClick]);
 
-  
-
   return (
-    <div className=" bg-white p-10  max-h-[100vh] overflow-auto sm:rounded-lg shadow-lg">
+    <div className="bg-white max-h-[96vh]  px-10 py-5 relative overflow-x-auto sm:rounded-lg shadow-lg">
       {/* Cabeçalho */}
-      <header className="mb-6">
-        <h2 className="text-lg font-semibold">Cadastro de Visitantes</h2>
-        <p className="text-sm text-gray-500">
-          Preencha as informações abaixo para cadastrar um novo visitante.
-        </p>
+      <header className="mb-6 flex py-3 justify-between gap-4 sm:gap-6 sm:mb-8">
+        <div>
+          <h2 className="text-lg font-semibold">Cadastro de Visitantes</h2>
+          <p className="text-sm text-gray-500">
+            Preencha as informações abaixo para cadastrar um novo visitante.
+          </p>
+        </div>
       </header>
 
       {/* Formulário */}
       <div
-        className="sm:grid flex h-full   flex-col gap-4 bg-white"
+        className="md:grid flex h-full flex-col gap-4"
         style={{
           gridTemplateAreas: `
-            "fullName fullName cpf"
-            "address address accessCategory"
-            "datePicker datePicker accessType"
-            "datePicker datePicker acessRegistration"
-            "textarea textarea textarea"
+            "fullName fullName image"
+            "address address image"
+            "date date cpf"
+            "date date category"
+            "date date registration"
+            "note note registration"
+            "note note accessType"
           `,
-          gridTemplateRows: "auto auto auto auto auto",
+          gridTemplateRows: "repeat(5, 77px) auto auto auto",
         }}
       >
-        <Box gridArea="fullName">
+        <div className="flex md:flex-row-reverse"
+          style={{ gridArea: "image" }}>
+          <div className="bg-gray-400 min-h-[140px] w-[40%] relative overflow-hidden md:w-[70%] h-full rounded-md">
+             <Image src="/imageForm/imageEx.jpg"
+              className=" object-cover"
+              alt="Profile" 
+                fill />
+          </div>
+
+        </div>
+        <Box className='h-[77px]' gridArea="fullName">
           <InputMask
             className="capitalize inputMask"
-            label="digite o nome completo"
-            placeholder="nome completo"
+            label="Nome completo"
+            placeholder="Digite o nome completo"
             mask={/^[a-zA-Z\s]*$/}
           />
         </Box>
 
-        <Box gridArea="cpf">
+       
+
+        <Box className='h-[77px]' gridArea="cpf">
           <InputMask
             mask="000.000.000-00"
-            label="cpf"
-            placeholder="cpf"
+            label="CPF"
+            placeholder="Digite o CPF"
           />
         </Box>
 
-        <Box gridArea="address">
-          <InputAddressSearch />
+        <Box className='h-[77px]' gridArea="address">
+          <InputSearch
+            label="Endereço do morador"
+            placeholder="Digite o endereço ou nome do morador..."
+            options={optionsAccessAddressResident}
+            getValue={(value: AccessAddressResident | null | string) => {
+              if (typeof value !== "string") return;
+            }}
+            getOptionLabel={(option) => option.label}
+          />
         </Box>
 
-        <Box gridArea="accessCategory">
-          <InputAccessProfileOption />
+        <Box className='h-[77px]' gridArea="category">
+          <SelectDemo
+           // sx={{ minHeight: "58px" }}
+            placeholder="Escolha a categoria da visita"
+            label="Categoria de visita"
+            options={optionsAccessProfile}
+            getOptionLabel={(option) => {
+              const { id, label, value } = option;
+              return { id, label, value };
+            }}
+          />
         </Box>
 
-        <Box  gridArea="datePicker">
+        <Box gridArea="date">
           <DatePicker />
         </Box>
 
-        <Box gridArea="textarea">
-          <>
-          
-        <ButtonAdd
-         setIsOpen={(()=>{
-          handleOpenOverlay('textArea')
-         })}
-        />
-        </>
+        <Box className="max-h-[60px]" gridArea="note">
+          <ButtonAdd
+            setIsOpen={() => {
+              handleOpenOverlay("textArea");
+            }}
+          />
         </Box>
 
-        <Box className="items-end h-[73px]" gridArea="accessType">
+        <Box className="items-end h-[77px]" gridArea="accessType">
           <SelectDemo
+            sx={{ height: "58px" }}
             label="Tipo de acesso"
-            placeholder="Tipo de acesso"
+            placeholder="Selecione o tipo de acesso"
             options={optionsAccessMode}
-            getOptionLabel={(ev) => {
+            getOptionLabel={(option) => {
               setForm((prev) => ({
                 ...prev,
-                accessMode: ev,
+                accessMode: option,
               }));
               return null;
             }}
           />
         </Box>
 
-        <Box className="items-start py-4" gridArea="acessRegistration">
-          <InputAccessRegistration />
+        <Box className="items-start py-4" gridArea="registration">
+          <SelectDemo
+            sx={{ height: "58px" }}
+            label="Tipo de registro"
+            placeholder="Selecione o tipo de registro"
+            options={optionsAccessRegistration}
+            getOptionLabel={(option) => {
+              const { id, label, value } = option;
+              return { id, label, value };
+            }}
+          />
         </Box>
       </div>
 
@@ -123,12 +170,13 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
           className="cursor-pointer uppercase"
           type="button"
           variant="outline"
-          onClick={() => handleCloseOverlay('register')}
+          onClick={() => handleCloseOverlay("register")}
         >
           Cancelar
         </Button>
 
-        {form.accessMode?.value !== 'veiculo' && form.accessMode?.value !== 'passageiro' ? (
+        {form.accessMode?.value !== "veiculo" &&
+        form.accessMode?.value !== "passageiro" ? (
           <Button className="cursor-pointer uppercase" type="submit">
             Cadastrar
           </Button>

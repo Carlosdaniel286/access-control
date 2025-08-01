@@ -173,7 +173,7 @@ export function CalendarDemo({
   }
 
   return (
-    <div className="flex flex-col gap-1 w-full">
+    <div className="flex flex-col  gap-1 w-full">
       <Label htmlFor="date" className="px-1 p-1 uppercase">
         {label}
       </Label>
@@ -182,6 +182,7 @@ export function CalendarDemo({
         <PopoverTrigger asChild>
           <div
             className={cn(
+              "h-[58px]",
               "flex justify-between items-center font-normal",
               "border-2 border-solid border-gray-300",
               "hover:ring-[3px] hover:ring-black hover:border-transparent",

@@ -3,6 +3,9 @@
 @import "tailwindcss/preflight.css" layer(base);
 
 @custom-variant dark (&:is(.dark *));
+
+
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -41,6 +44,11 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+}
+@theme {
+  --breakpoint-3xl: 120rem; /* 1920px */
+  --breakpoint-4xl: 140rem ; /* 2240px 140rem */
+  --breakpoint-smm: 60.625rem; /* 970px */
 }
 
 :root {
@@ -143,7 +151,7 @@
   }
 
   .input-h input {
-  @apply h-[40px];
+  @apply h-[35px];
 }
 
 @layer base {

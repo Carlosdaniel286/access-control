@@ -14,19 +14,21 @@ import { motion } from "framer-motion";
 export function Sidebar() {
   const strokeWidth = 1.7;
   const { overlays, handleOpenOverlay, handleCloseOverlay } = useOverlay();
-
+ console.log('overlays', overlays.sideBar);
   
   
   return (
     <motion.aside
-      initial={{ opacity: 1, x: -1000 }}
+      initial={{ opacity: 0, x: -1000 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 1, ease: "easeOut" }}
-      className="
+       exit={{ opacity: 0, x: -300 }} // saída suave
+      
+      className={`
         w-full
         max-w-[270px]
+        h-full
         bg-white
-        
         pt-0
         sm:top-[85px]
         border-r border-gray-300 shadow-lg
@@ -36,7 +38,7 @@ export function Sidebar() {
         left-0
         bottom-0
         z-50
-      "
+      `}
     >
       {overlays.register && (
         <OpenRegister
@@ -61,12 +63,18 @@ export function Sidebar() {
          cursor-pointer
          px-4
          py-2
+         
          "
          >
-        <h5 className="
+        <h5 
+        onClick={(()=>{
+          
+          handleCloseOverlay('sideBar');
+        })}
+        className="
         border-black 
           ring-4 
-          rounded-full  
+          rounded-full 
           p-0 
           m-0 
            ">

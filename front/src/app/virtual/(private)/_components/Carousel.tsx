@@ -12,7 +12,7 @@ import { CarouselProps } from "@/app/types/carouselProps";
 export function Carousel({ children, onCarouselApi }: CarouselProps) {
   const [api, setApi] = useState<CarouselApi | undefined>(undefined);
   const[indexItem, setIndexItem]= useState(0)
-  
+  console.log(window.innerWidth)
   useEffect(() => {
     if (api && onCarouselApi) {
       onCarouselApi(api);
@@ -36,8 +36,7 @@ export function Carousel({ children, onCarouselApi }: CarouselProps) {
   
   return (
     <ShadCarousel
-    
-      className="w-full md:max-w-[800px] sm:max-w-[90vw] max-w-[100vw]  mx-auto z-50"
+      className="w-full   max-w-[100vw]  sm:max-w-[98vw]   lg:max-w-[900px]    3xl:max-w-[1000px] 4xl:max-w-[1200px] mx-auto z-50"
       setApi={setApi}
       opts={{
         dragFree: false,
@@ -53,7 +52,7 @@ export function Carousel({ children, onCarouselApi }: CarouselProps) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <div className=" hidden sm:flex items-center justify-center mt-6">
+      <div className=" hidden  items-center justify-center mt-6">
         <Pagination 
         indexItem={indexItem}
         />
