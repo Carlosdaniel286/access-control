@@ -14,14 +14,14 @@ import { motion } from "framer-motion";
 export function Sidebar() {
   const strokeWidth = 1.7;
   const { overlays, handleOpenOverlay, handleCloseOverlay } = useOverlay();
- console.log('overlays', overlays.sideBar);
+
   
   
   return (
     <motion.aside
-      initial={{ opacity: 0, x: -1000 }}
+      initial={{ opacity: !overlays.sideBar?1:0, x: -1000 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 1, ease: "easeOut" }}
+      transition={{ duration: !overlays.sideBar?0:0.7, ease: "easeOut" }}
        exit={{ opacity: 0, x: -300 }} // saída suave
       
       className={`
@@ -30,9 +30,10 @@ export function Sidebar() {
         h-full
         bg-white
         pt-0
-        sm:top-[85px]
-        border-r border-gray-300 shadow-lg
-        sm:static
+        swap:top-[85px]
+        border-r 
+        border-gray-300 shadow-lg
+        swap:static
         absolute
         top-0
         left-0
@@ -56,7 +57,7 @@ export function Sidebar() {
         />
       )}
       <header className="
-         sm:hidden 
+         swap:hidden 
          flex 
          items-center 
          flex-row-reverse

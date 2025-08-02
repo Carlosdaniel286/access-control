@@ -41,7 +41,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
   }, [onButtonClick]);
 
   return (
-    <div className="bg-white max-h-[96vh]  px-10 py-5 relative overflow-x-auto sm:rounded-lg shadow-lg">
+    <div className="bg-white max-h-[100vh] sm:max-h-[96vh]  px-2 py-5 relative sm:px-10 overflow-x-auto sm:rounded-lg shadow-lg">
       {/* Cabeçalho */}
       <header className="mb-6 flex py-3 justify-between gap-4 sm:gap-6 sm:mb-8">
         <div>

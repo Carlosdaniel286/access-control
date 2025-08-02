@@ -14,18 +14,11 @@ type ImageOverlayScreenProps = {
 export function ImageOverlayScreen({src,className}:ImageOverlayScreenProps){ {
     const [openOverlay, setOpenOverlay] = useState(false)
     
-    const styles ={
-    image: `min-w-full min-h-full relative rounded-md overflow-hidden ${className}`,
-    imageOverlay: ` md:w-[100%] z-9999  rounded-md`
-  }
-   const isOpendOverlay = openOverlay ? styles.imageOverlay : styles.image;
+   
    
    return(
         <div 
-             onClick={(()=>{
-              console.log('clicou na imagem')
-             })}
-             className=" min-h-[130px] h-full w-full  flex justify-center overflow-hidden relative"
+             className=" min-h-[130px] h-full w-full flex justify-center overflow-hidden "
               style={{ gridArea: "image" }}>
               < Overlay 
               
@@ -35,17 +28,20 @@ export function ImageOverlayScreen({src,className}:ImageOverlayScreenProps){ {
                 setIsOpen={(()=>{
                   setOpenOverlay(!openOverlay);
                 })}
+                
                 isOpen={openOverlay}
                 overlay={openOverlay} 
-               className={`bg-gray-400 ${isOpendOverlay} `}>
+               className={`  `}>
+                 <div className={` ${openOverlay?'h-[300px] max-w-[95vw]':'h-[100%] w-[100%]'} ${openOverlay?'sm:h-[500px] w-[500px]':'h-[100%] w-[100%]'}   relative ${className} `}>
                  <Image src={src||""}
-                  className=" object-cover mx-auto"
+                  className={`object-cover ${openOverlay?'':'rounded-full'}`}
                   alt="Profile" 
                   fill 
-                  //sizes="100%"
+                  sizes="100%"
                   priority
                   
                   />
+               </div>
               </Overlay>
     
             </div>

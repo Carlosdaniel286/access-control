@@ -48,7 +48,7 @@
 @theme {
   --breakpoint-3xl: 120rem; /* 1920px */
   --breakpoint-4xl: 140rem ; /* 2240px 140rem */
-  --breakpoint-smm: 60.625rem; /* 970px */
+  --breakpoint-swap: 66.875rem; /* 1070px */
 }
 
 :root {

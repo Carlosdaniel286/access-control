@@ -22,7 +22,7 @@ export function Header() {
           console.log('clicou no header')
           handleOpenOverlay('sideBar')
         })}
-        className="bg-gray-200 p-1 cursor-pointer rounded-md visible sm:invisible"
+        className="bg-gray-200 p-1 cursor-pointer rounded-md visible swap:invisible"
         ><AlignJustify 
           size={32} 
            color="#0a0a0a" 
