@@ -11,14 +11,14 @@ export function ScrollProfile() {
     return (
     <Sheet
       variant="outlined"
-      sx={{ width: '100%', maxHeight: '90vh', overflowX: 'auto', borderRadius: 'sm' }}
+      sx={{ width: '100%', maxHeight: '90vh', overflowX: 'auto', borderRadius: 'sm',padding:'0px',margin:'0px' }}
     >
-      <List   sx={{background:'oklch(98.5% 0.002 247.839)'}}  >
-        <ListSubheader sticky>{'painel de movimentação diaria'}</ListSubheader>
+      <List   sx={{background:'oklch(97% 0.014 254.604)',padding:'0px',margin:'0px'}}  >
+        <ListSubheader sx={{fontSize:'1rem'}} sticky>{'painel de movimentação diaria'}</ListSubheader>
         {array.map((_, categoryIndex) => (
-          <ListItem   key={categoryIndex}>
-          <List  sx={{overflow:'hidden'}} >
-            <ListItem  key={categoryIndex}>
+          <ListItem sx={{overflow:'hidden',padding:'7px',marginBottom:'10px'}}  key={categoryIndex}>
+          <List  sx={{overflow:'hidden',padding:'0px',margin:'0px'}} >
+            <ListItem sx={{background:'white', display:'flex',padding:0,margin:0 }}  key={categoryIndex}>
                   <ProfileCard/>
                 </ListItem>
             </List>
