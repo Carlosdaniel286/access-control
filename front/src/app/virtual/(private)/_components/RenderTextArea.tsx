@@ -9,7 +9,7 @@ import { Textarea } from "./TextArea";
 export function RenderTextarea({setIsOpen}:RenderProps) {
    return(
     <Overlay 
-    className="z-60 "
+    className="z-999 "
        setIsOpen={setIsOpen}
        >
         <div  className="bg-white w-[95vw] sm:w-[600px]  rounded-sm ">

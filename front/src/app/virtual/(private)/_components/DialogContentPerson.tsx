@@ -54,7 +54,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
 
       {/* Formulário */}
       <div
-        className="md:grid flex h-full flex-col gap-4"
+        className="md:grid flex h-full flex-col gap-8"
         style={{
           gridTemplateAreas: `
             "fullName fullName image"
@@ -86,10 +86,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
             mask={/^[a-zA-Z\s]*$/}
           />
         </Box>
-
-       
-
-        <Box className='h-[77px]' gridArea="cpf">
+         <Box className='h-[77px]' gridArea="cpf">
           <InputMask
             mask="000.000.000-00"
             label="CPF"
@@ -111,7 +108,6 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
 
         <Box className='h-[77px]' gridArea="category">
           <SelectDemo
-           // sx={{ minHeight: "58px" }}
             placeholder="Escolha a categoria da visita"
             label="Categoria de visita"
             options={optionsAccessProfile}

@@ -3,12 +3,12 @@ import { DialogProps } from "@/app/types/dialogProps";
 import { Box } from "./Box";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import {  use, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { CarouselApi } from "@/components/ui/carousel";
 import { InputMask } from "./InputMask";
 import { brandsCar,modelCar,motorcycleBrands,motorcycleModels,vehicleColors,vehicleTypes } from "@/constants/vehicleOptions";
 import { InputSearch } from "./InputSearch";
-import { userPromise} from "./A";
+//import { userPromise} from "./A";
 
 type VehicleCharacteristics = {
   color: string | null;
@@ -44,9 +44,9 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
   const isVehicleType = vehicleCharacteristics.type==null?true:false
   const vehicleType  = vehicleCharacteristics.type==null?'Veículo':vehicleCharacteristics.type
   
-  const brandsPromise = use(userPromise);
+ // const brandsPromise = use(userPromise);
 
-   console.log(brandsPromise)
+   
   
   
   return (
@@ -55,7 +55,10 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
        bg-white 
         min-h-[100vh]
         sm:min-h-[100%]
-        p-10 
+        sm:px-10 
+        sm:py-7
+        px-[7px]
+        py-5
         sm:rounded-lg 
         shadow-lg
         max-h-[100vh] 
@@ -75,7 +78,7 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
          input-h
          flex-col
          sm:grid 
-         gap-4
+         gap-8
          h-full
          
          "
@@ -181,7 +184,7 @@ export function DialogVehicleContent({onButtonClick}:DialogProps){
       
 
      </div>
-     <div className=" h-32 flex w-full justify-between items-end">
+     <div className=" h-24  flex w-full justify-between items-center ">
     <ArrowLeft absoluteStrokeWidth 
     onClick={(()=>{api?.scrollPrev()})}
      className="bg-gray-400 hover:bg-black  cursor-pointer rounded-sm" 

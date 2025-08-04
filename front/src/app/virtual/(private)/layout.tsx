@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang='pt-BR'>
       <body
         className="antialiased" >
-         <div className="h-screen flex flex-col w-full">
+         <div className="h-screen flex overflow-hidden flex-col w-full">
           <OverlayProvider>
             <Header/>
               

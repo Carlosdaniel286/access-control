@@ -1,83 +1,74 @@
-import * as React from "react"
+import * as React from "react";
 
-const initRender:RenderSelect ={
-    id:0,
-    label:'',
-    value:''
-}
-
-import Option from '@mui/joy/Option';
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
-import Select , { selectClasses } from '@mui/joy/Select';
-import { Label } from "@/components/ui/label"
+import Option from "@mui/joy/Option";
+import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
+import Select, { selectClasses } from "@mui/joy/Select";
+import { Label } from "@/components/ui/label";
 
 import { RenderSelect, SelectOptions } from "@/app/types/selectType";
 import { sharedSx } from "@/styles/inputSx";
-export  function SelectDemo<T>({
-   // onValueChange,
-    value,
-   options,
-   placeholder,
-   getOptionLabel,
-   label,
-   sx
-   
-}:SelectOptions<T>) {
- 
+
+const initRender: RenderSelect = {
+  id: 0,
+  label: "",
+  value: "",
+};
+
+export function SelectDemo<T>({
+  value,
+  options,
+  placeholder,
+  getOptionLabel,
+  label,
+  sx,
+}: SelectOptions<T>) {
   const select = React.useMemo(() => {
- 
+    if (!options) return [];
 
-  if (!options) return [];
+    return options.map((option, id) => {
+      if (typeof option === "string") {
+        return { ...initRender, label: option, value: option, id };
+      }
 
-  return options.map((option, id) => {
-    if (typeof option === 'string') {
-      return { ...initRender, label: option, value: option, id };
-    }
+      const render = option as RenderSelect;
+      return { ...initRender, ...render };
+    });
+  }, [options]);
 
-    const render = option as RenderSelect; // se não for array!
-    return { ...initRender, ...render };
-  });
-}, [options]);
-  
   return (
-    <div className="flex flex-col  gap-2">
+    <div className="flex flex-col gap-2">
       <Label className="uppercase">{label}</Label>
-    <Select
-      className=" bg-amber-200 "
-     
-       onChange={((ev,value)=>{
-        if(!value) return
-        if(typeof value ==='object'){
-          getOptionLabel?.(value)
-        }
-      })}
-       
-       
-       value={value}
-       placeholder={placeholder}
-       indicator={<KeyboardArrowDown />}
-      
-      sx={{
-        
-        [`& .${selectClasses.indicator}`]: {
-          transition: '0.2s',
-          [`&.${selectClasses.expanded}`]: {
-            transform: 'rotate(-180deg)',
+      <Select
+        onChange={(ev, value) => {
+          if (!value) return;
+          if (typeof value === "object") {
+            getOptionLabel?.(value);
+          }
+        }}
+        value={value}
+        placeholder={placeholder}
+        indicator={<KeyboardArrowDown />}
+        sx={{
+          [`& .${selectClasses.indicator}`]: {
+            transition: "0.2s",
+            [`&.${selectClasses.expanded}`]: {
+              transform: "rotate(-180deg)",
+            },
           },
-        },
-         ...sharedSx,
-         ...sx
-      }}
-    >
-      
-        {select.map((item,index)=>(
-           <Option className="capitalize"  key={`${item.id}-${index}`} 
-           value={item}>{item.label}</Option>
-          ))}
-    </Select>
+          ...sharedSx,
+          ...sx,
+        }}
+      >
+        {select.map((item, index) => (
+          <Option
+            className="capitalize"
+            key={`${item.id}-${index}`}
+            value={item}
+          >
+            {item.label}
+          </Option>
+        ))}
+      </Select>
     </div>
   );
 }
-
-
-

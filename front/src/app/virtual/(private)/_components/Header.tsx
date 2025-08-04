@@ -8,10 +8,11 @@ export function Header() {
  return(
         <header 
           className="
-          bg-black
+          bg-slate-950
             flex
             items-center
-            h-24
+            min-h-24
+            max-h-24
             p-0
             m-0
             px-6

@@ -1,34 +1,32 @@
 'use client'
 
-import { WorkerIcon } from "@/icons/user";
-import { Car, House, UserPlus, Users, X } from "lucide-react";
-
+import HomeIcon from '@mui/icons-material/Home';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import GroupIcon from '@mui/icons-material/Group';
+import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
 import Link from "next/link";
 import { OpenRegister } from "./OpenRegister";
-
+import EngineeringIcon from '@mui/icons-material/Engineering';
 import { RenderTextarea } from "./RenderTextArea";
 import { useOverlay } from "@/contexts/OverlayContext";
-
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { motion } from "framer-motion";
 
 export function Sidebar() {
   const strokeWidth = 1.7;
   const { overlays, handleOpenOverlay, handleCloseOverlay } = useOverlay();
-
-  
-  
+ 
   return (
+   
     <motion.aside
-      initial={{ opacity: !overlays.sideBar?1:0, x: -1000 }}
+      initial={{ opacity: !overlays.sideBar?1:0, x:!overlays.sideBar? 0:-1000 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: !overlays.sideBar?0:0.7, ease: "easeOut" }}
-       exit={{ opacity: 0, x: -300 }} // saída suave
-      
+       exit={{ opacity: 0, x: -1000, transition: { duration:4 } }} // saída suave
       className={`
-        w-full
-        max-w-[270px]
-        h-full
-        bg-white
+        max-w-[200px]
+        h-[100vh]
+        bg-slate-900
         pt-0
         swap:top-[85px]
         border-r 
@@ -61,7 +59,7 @@ export function Sidebar() {
          flex 
          items-center 
          flex-row-reverse
-         cursor-pointer
+         
          px-4
          py-2
          
@@ -73,23 +71,24 @@ export function Sidebar() {
           handleCloseOverlay('sideBar');
         })}
         className="
-        border-black 
-          ring-4 
-          rounded-full 
+         rounded-full 
           p-0 
           m-0 
            ">
-          <X size={32} 
-          color="#0a0a0a" 
+          <KeyboardReturnIcon
+          className="text-white cursor-pointer"
+          sx={{fontSize:'3rem'}}
+          //size={32} 
+        // color="white" 
           strokeWidth={2.5} />
           </h5>
       </header>
       <nav aria-label="Sidebar Navigation">
-        <ul className="flex flex-col gap-4">
+        <ul className="flex flex-col text-white gap-4">
           <li>
            
             <Link href="/virtual/painel" className="widgets">
-              <House strokeWidth={strokeWidth} aria-hidden="true" />
+              <HomeIcon strokeWidth={strokeWidth} aria-hidden="true" />
               <span className=" font-medium">Home</span>
             </Link>
             
@@ -103,7 +102,7 @@ export function Sidebar() {
               }}
               type="button"
             >
-              <UserPlus strokeWidth={strokeWidth} />
+              <PersonAddIcon strokeWidth={strokeWidth} />
               <span className="font-medium">Cadastrar</span>
             </button>
           </li>
@@ -113,7 +112,7 @@ export function Sidebar() {
               className="widgets"
               type="button"
             >
-              <Users
+              <GroupIcon
                 strokeWidth={strokeWidth}
                 className="hover:stroke-[#3e9392]"
               />
@@ -126,7 +125,7 @@ export function Sidebar() {
               className="widgets "
               type="button"
             >
-              <WorkerIcon className="hover:stroke-[#3e9392]" />
+              <EngineeringIcon className="hover:stroke-[#3e9392]" />
               <span className="font-medium">Prestadores</span>
             </button>
           </li>
@@ -136,7 +135,7 @@ export function Sidebar() {
               className="widgets"
               type="button"
             >
-              <Car strokeWidth={strokeWidth} />
+              <DirectionsCarFilledIcon strokeWidth={strokeWidth} />
               <span className="font-medium">Veículos</span>
             </button>
           </li>

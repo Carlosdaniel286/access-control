@@ -11,7 +11,7 @@ export function ScrollProfile() {
     return (
     <Sheet
       variant="outlined"
-      sx={{ width: '100%', maxHeight: '90vh', overflowX: 'auto', borderRadius: 'sm',padding:'0px',margin:'0px' }}
+      sx={{ width: '100%', maxHeight: '87vh', overflowX: 'auto', borderRadius: 'sm',padding:'0px',margin:'0px' }}
     >
       <List   sx={{background:'oklch(97% 0.014 254.604)',padding:'0px',margin:'0px'}}  >
         <ListSubheader sx={{fontSize:'1rem'}} sticky>{'painel de movimentação diaria'}</ListSubheader>
