@@ -12,7 +12,7 @@ import Image from "next/image";
 
 // COMPONENTES EXTERNOS / UI
 import { Button } from "@/components/ui/button";
-import { DialogProps } from "@/app/types/dialogProps";
+import { DialogProps } from "@/types/dialogProps";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
@@ -25,17 +25,17 @@ import {
 import ButtonAdd from "./ButtonAdd";
 import { useOverlay } from "@/contexts/OverlayContext";
 import { InputSearch } from "./InputSearch";
-import { AccessAddressResident } from "@/app/types/valueForm";
+import { AccessAddressResident } from "@/types/valueForm";
 
 export function DialogContentPerson({ onButtonClick }: DialogProps) {
   const [form, setForm] = useState(initValueForm);
   const [api, setApi] = useState<CarouselApi | undefined>(undefined);
   const { handleOpenOverlay, handleCloseOverlay } = useOverlay();
-//max-h-[100px] max-w-[100px]
-  
+  //max-h-[100px] max-w-[100px]
 
 
- useEffect(() => {
+
+  useEffect(() => {
     if (!onButtonClick) return;
     setApi(onButtonClick());
   }, [onButtonClick]);
@@ -71,10 +71,10 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
         <div className="flex md:flex-row-reverse"
           style={{ gridArea: "image" }}>
           <div className="bg-gray-400 min-h-[140px] w-[40%] relative overflow-hidden md:w-[70%] h-full rounded-md">
-             <Image src="/imageForm/imageEx.jpg"
+            <Image src="/imageForm/imageEx.jpg"
               className=" object-cover"
-              alt="Profile" 
-                fill />
+              alt="Profile"
+              fill />
           </div>
 
         </div>
@@ -86,7 +86,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
             mask={/^[a-zA-Z\s]*$/}
           />
         </Box>
-         <Box className='h-[77px]' gridArea="cpf">
+        <Box className='h-[77px]' gridArea="cpf">
           <InputMask
             mask="000.000.000-00"
             label="CPF"
@@ -172,7 +172,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
         </Button>
 
         {form.accessMode?.value !== "veiculo" &&
-        form.accessMode?.value !== "passageiro" ? (
+          form.accessMode?.value !== "passageiro" ? (
           <Button className="cursor-pointer uppercase" type="submit">
             Cadastrar
           </Button>

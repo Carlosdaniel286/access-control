@@ -5,7 +5,7 @@ import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 import Select, { selectClasses } from "@mui/joy/Select";
 import { Label } from "@/components/ui/label";
 
-import { RenderSelect, SelectOptions } from "@/app/types/selectType";
+import { RenderSelect, SelectOptions } from "@/types/selectType";
 import { sharedSx } from "@/styles/inputSx";
 
 const initRender: RenderSelect = {

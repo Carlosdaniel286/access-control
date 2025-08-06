@@ -3,23 +3,23 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import { differenceInCalendarDays, startOfDay } from 'date-fns';
-import { DatePicker } from "@/app/types/datePiker";
+import { DatePicker } from "@/types/datePiker";
 import { useFormError } from "@/hooks/useFormError";
 import { InputMask } from "./InputMask";
 
- function InputDatePickerComponent({ startDate, endDate, countDay, onChange }: DatePicker) {
+function InputDatePickerComponent({ startDate, endDate, countDay, onChange }: DatePicker) {
   const onToday = startOfDay(new Date());
   const [valueInput, setValueInput] = useState<string>("0");
   const { formInfo, handleError } = useFormError();
   const [preventInputChange, setPreventInputChange] = useState(false);
-  
-  
+
+
   const differenceDays = useCallback(() => {
     const start = startDate ?? onToday;
     const end = endDate ?? onToday;
     const days = differenceInCalendarDays(end, start);
-    if (days <0) return;
-    
+    if (days < 0) return;
+
     setValueInput(days.toString());
 
     if (countDay) {
@@ -28,14 +28,14 @@ import { InputMask } from "./InputMask";
   }, [startDate, endDate, countDay, onToday]);
 
   useEffect(() => {
-    if(!preventInputChange) return
+    if (!preventInputChange) return
     differenceDays();
-  }, [differenceDays,preventInputChange]);
+  }, [differenceDays, preventInputChange]);
 
   const handleValueInput = useCallback((ev?: string) => {
     console.log('ev')
     if (!ev) return;
-    
+
     const onlyNumbers = ev.replace(/\D/g, '');
     const formatted = parseInt(onlyNumbers);
 
@@ -53,13 +53,13 @@ import { InputMask } from "./InputMask";
     onChange(formatted);
   }, [handleError, onChange]);
 
- 
- 
+
+
   return (
     <div className="flex flex-col  gap-2">
       <div className="flex items-center gap-2">
         <InputMask
-          onBlur={((ev)=>{
+          onBlur={((ev) => {
             setPreventInputChange(ev)
           })}
           value={valueInput}

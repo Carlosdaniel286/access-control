@@ -1,6 +1,6 @@
-import { AccessMode, AccessProfileOption, AccessRegistration, AccessAddressResident, ValueForm } from "@/app/types/valueForm";
+import { AccessMode, AccessProfileOption, AccessRegistration, AccessAddressResident, ValueForm } from "@/types/valueForm";
 
-export const optionsAccessMode:AccessMode[] = [
+export const optionsAccessMode: AccessMode[] = [
   { id: 1, label: 'Pedestre', value: 'pedestre' },
   { id: 2, label: 'Veículo', value: 'veiculo' },
   { id: 3, label: 'Passageiro', value: 'passageiro' },
@@ -8,20 +8,20 @@ export const optionsAccessMode:AccessMode[] = [
 ];
 
 
-export const optionsAccessProfile:AccessProfileOption[] = [
+export const optionsAccessProfile: AccessProfileOption[] = [
   { id: 1, label: 'Visitante', value: 'visitante' },
   { id: 2, label: 'Prestador', value: 'prestador' },
   { id: 3, label: 'Entregador', value: 'entregador' },
-  
+
 ];
 
 
-export const optionsAccessRegistration:AccessRegistration[] = [
+export const optionsAccessRegistration: AccessRegistration[] = [
   { id: 1, label: 'Fixo', value: 'fixo' },
   { id: 2, label: 'Esporádico', value: 'esporádico' },
 ];
 
-export const optionsAccessAddressResident:AccessAddressResident[] = [
+export const optionsAccessAddressResident: AccessAddressResident[] = [
   { id: 1, label: 'João Silva - Casa 1', casa: '1' },
   { id: 2, label: 'Maria Oliveira - Casa 1', casa: '1' },
   { id: 3, label: 'Carlos Daniel - Casa 1', casa: '1' },
@@ -43,7 +43,7 @@ export const optionsAccessAddressResident:AccessAddressResident[] = [
 export const initValueForm: ValueForm = {
   name: '',
   cpf: '',
-  accessRegistration:null,
+  accessRegistration: null,
   accessMode: null,
   accessProfileOption: null,
 }

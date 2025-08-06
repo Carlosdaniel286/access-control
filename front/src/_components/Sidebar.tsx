@@ -11,7 +11,7 @@ import { RenderTextarea } from "./RenderTextArea";
 import { useOverlay } from "@/contexts/OverlayContext";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { motion } from "framer-motion";
-
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 export function Sidebar() {
   const strokeWidth = 1.7;
   const { overlays, handleOpenOverlay, handleCloseOverlay } = useOverlay();
@@ -24,7 +24,9 @@ export function Sidebar() {
       transition={{ duration: !overlays.sideBar?0:0.7, ease: "easeOut" }}
        exit={{ opacity: 0, x: -1000, transition: { duration:4 } }} // saída suave
       className={`
-        max-w-[200px]
+        max-w-[230px]
+        sm:max-w-[200px]
+        w-full
         h-[100vh]
         bg-slate-900
         pt-0
@@ -59,7 +61,6 @@ export function Sidebar() {
          flex 
          items-center 
          flex-row-reverse
-         
          px-4
          py-2
          
@@ -78,8 +79,7 @@ export function Sidebar() {
           <KeyboardReturnIcon
           className="text-white cursor-pointer"
           sx={{fontSize:'3rem'}}
-          //size={32} 
-        // color="white" 
+        
           strokeWidth={2.5} />
           </h5>
       </header>
@@ -106,7 +106,15 @@ export function Sidebar() {
               <span className="font-medium">Cadastrar</span>
             </button>
           </li>
-
+          <li>
+            <button
+              className="widgets"
+              type="button"
+            >
+              <PersonSearchIcon  strokeWidth={strokeWidth} />
+              <span className="font-medium">Buscar</span>
+            </button>
+          </li>
           <li>
             <button
               className="widgets"
@@ -139,6 +147,7 @@ export function Sidebar() {
               <span className="font-medium">Veículos</span>
             </button>
           </li>
+          
         </ul>
       </nav>
     </motion.aside>

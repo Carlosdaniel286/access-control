@@ -1,6 +1,6 @@
 'use client';
 
-import { MaskedInputProps } from "@/app/types/MaskedInputProps";
+import { MaskedInputProps } from "@/types/MaskedInputProps";
 import { Label } from "@/components/ui/label";
 import { useFormError } from "@/hooks/useFormError";
 import { Info } from "lucide-react";
@@ -22,10 +22,10 @@ export function InputMask({
   // react-imask não usa, pode ignorar
 }: MaskedInputProps) {
   const { formInfo } = useFormError();
- 
+
   // react-imask chama onAccept quando o valor muda, passa valor já "unmasked"
-  
-  
+
+
   function handleAccept(value: string) {
     if (onAccept) {
       // repassando só o valor "limpo"
@@ -33,8 +33,8 @@ export function InputMask({
     }
   }
 
-  function handleChanger(e:React.ChangeEvent<HTMLInputElement>) {
-     if (onChange) {
+  function handleChanger(e: React.ChangeEvent<HTMLInputElement>) {
+    if (onChange) {
       // repassando só o valor "limpo"
       onChange(e);
     }
@@ -46,28 +46,28 @@ export function InputMask({
       )}
 
       <IMaskInput
-      onBlur={(()=>{
+        onBlur={(() => {
           onBlur?.(true)
-      })}
-      onFocus={() => {
-        onBlur?.(false)
-     }}
+        })}
+        onFocus={() => {
+          onBlur?.(false)
+        }}
         className={cn(
           'inputMask',
           formInfo.hasError && 'border-red-500 ring-0',
-          
+
           className
         )}
         id={id}
         name={name}
-        mask={mask || '' }
+        mask={mask || ''}
         aria-label={ariaLabel}
         unmask={true}
         value={value}
         placeholder={placeholder || "Digite algo..."}
         onAccept={handleAccept}
         onChange={handleChanger}
-        
+
       />
 
       {formInfo.hasError && (

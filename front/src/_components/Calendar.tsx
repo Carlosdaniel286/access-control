@@ -15,8 +15,8 @@ import { CalendarDays, Info, X } from 'lucide-react'
 import { Calendar } from '@/components/ui/calendar'
 import { Label } from '@/components/ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import {  useEffect, useMemo, useState } from 'react'
-import { DatePicker } from '@/app/types/datePiker'
+import { useEffect, useMemo, useState } from 'react'
+import { DatePicker } from '@/types/datePiker'
 import { useFormError } from '@/hooks/useFormError'
 import { InputMask } from './InputMask'
 import { cn } from '@/lib/utils'
@@ -31,11 +31,11 @@ export function CalendarDemo({
   endDate,
   valueDay,
 }: DatePicker) {
- const today = useMemo(() => startOfDay(new Date()), [])
- const limitDate = useMemo(() => addYears(today, 1), [today])
- 
-  
-  
+  const today = useMemo(() => startOfDay(new Date()), [])
+  const limitDate = useMemo(() => addYears(today, 1), [today])
+
+
+
   const defaultFormattedDate = useMemo(() => format(today, 'dd/MM/yyyy'), [today]);
   // `start` depende de `startDate` e `today`, então recalcule se `startDate` mudar.
   const effectiveStartDate = useMemo(() => startOfDay(startDate ?? today), [startDate, today]);
@@ -52,7 +52,7 @@ export function CalendarDemo({
   })
 
   useEffect(() => {
-     
+
     if (dateType === 'start') return
 
     if (isBefore(effectiveStartDate, today)) {
@@ -62,7 +62,7 @@ export function CalendarDemo({
 
     setValueInput(format(effectiveStartDate, 'dd/MM/yyyy'))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startDate,valueDay])
+  }, [startDate, valueDay])
 
   useEffect(() => {
     addDaysToEndDate()
@@ -71,27 +71,27 @@ export function CalendarDemo({
 
   useEffect(() => {
     updateSelectedMonth()
-   // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valueInput])
 
-   useEffect(() => {
-   updateDateStart()
+  useEffect(() => {
+    updateDateStart()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [endDate])
 
-  const updateDateStart =()=>{
-    if(dateType=='end'){
-   
+  const updateDateStart = () => {
+    if (dateType == 'end') {
+
       const parsed = parse(valueInput, 'dd/MM/yyyy', new Date())
-      if (isBefore(parsed,effectiveStartDate)) {
-       setValueInput(format(effectiveStartDate, 'dd/MM/yyyy'))
-    }
+      if (isBefore(parsed, effectiveStartDate)) {
+        setValueInput(format(effectiveStartDate, 'dd/MM/yyyy'))
+      }
     }
   }
- 
- 
- 
- 
+
+
+
+
   const addDaysToEndDate = () => {
     const start = startDate ?? today
     const days = valueDay ?? 0
@@ -123,9 +123,9 @@ export function CalendarDemo({
     })
   }
 
-  const handleInputChange = (value?:string) => {
-   if(!value) return
-    
+  const handleInputChange = (value?: string) => {
+    if (!value) return
+
     if (value.length < 8) return
 
     const parsed = parse(value, 'ddMMyyyy', new Date())
@@ -134,7 +134,7 @@ export function CalendarDemo({
       return
     }
 
-   setValueInput(format(parsed, 'dd/MM/yyyy'))
+    setValueInput(format(parsed, 'dd/MM/yyyy'))
   }
 
   useEffect(() => {
@@ -145,7 +145,7 @@ export function CalendarDemo({
   }, [calendarState.selectedDate])
 
   useEffect(() => {
-    
+
     if (totalDays === undefined) return
     if (totalDays >= 0) return handleError(false)
 
@@ -153,7 +153,7 @@ export function CalendarDemo({
     if (dateType === 'start') {
       message = 'A data inicial deve ser menor que a final'
     } else if (dateType === 'end') {
-      
+
       message = 'A data final deve ser maior que a inicial'
     }
 
@@ -207,7 +207,7 @@ export function CalendarDemo({
               message={formInfo.message}
               hasError={formInfo.hasError}
               onAccept={handleInputChange}
-             // onChange={handleInputChange}
+              // onChange={handleInputChange}
               value={valueInput}
             />
 
