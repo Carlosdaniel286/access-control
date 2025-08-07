@@ -10,7 +10,9 @@ export function RenderTextarea({setIsOpen}:RenderProps) {
    return(
     <Overlay 
     className="z-999 "
-       setIsOpen={setIsOpen}
+       setIsOpen={(()=>{
+         setIsOpen?.(false)
+       })}
        >
         <div  className="bg-white w-[95vw] sm:w-[600px]  rounded-sm ">
         <Textarea/>

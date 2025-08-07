@@ -7,7 +7,9 @@ import { useEffect, useState } from "react";
 import { CarouselApi } from "@/components/ui/carousel";
 import { InputMask } from "./InputMask";
 import { brandsCar, modelCar, motorcycleBrands, motorcycleModels, vehicleColors, vehicleTypes } from "@/constants/vehicleOptions";
-import { InputSearch } from "./InputSearch";
+import { AutocompleteInput } from "./AutocompleteInput";
+import { FormHeader } from "./FormHeader";
+
 //import { userPromise} from "./A";
 
 type VehicleCharacteristics = {
@@ -45,10 +47,6 @@ export function DialogVehicleContent({ onButtonClick }: DialogProps) {
   const vehicleType = vehicleCharacteristics.type == null ? 'Veículo' : vehicleCharacteristics.type
 
   // const brandsPromise = use(userPromise);
-
-
-
-
   return (
     <div
       className="
@@ -65,13 +63,10 @@ export function DialogVehicleContent({ onButtonClick }: DialogProps) {
         overflow-auto
         "
     >
-      <header className="mb-6">
-        <h2 className="text-lg font-semibold">Cadastro de veiculos</h2>
-        <p className="text-sm text-gray-500">
-          Preencha as informações abaixo para cadastrar um novo veiculo.
-        </p>
-      </header>
-
+     <FormHeader
+        title="Cadastro de veiculos"
+        subtitle="Preencha as informações abaixo para cadastrar um novo veiculo."
+        />
       <div
         className="
          flex
@@ -124,7 +119,7 @@ export function DialogVehicleContent({ onButtonClick }: DialogProps) {
 
         </Box>
         <Box className='h-[77px]' gridArea="vehicleType" >
-          <InputSearch
+          <AutocompleteInput
             label="tipo do veiculo"
             freeSolo={true}
             placeholder="tipo do veiculo"
@@ -144,7 +139,7 @@ export function DialogVehicleContent({ onButtonClick }: DialogProps) {
           />
         </Box>
         <Box className='h-[77px]' gridArea="vehicleBrands">
-          <InputSearch
+          <AutocompleteInput
             label="marca do veiculo"
             freeSolo={true}
             disabled={isVehicleType}
@@ -156,7 +151,7 @@ export function DialogVehicleContent({ onButtonClick }: DialogProps) {
           />
         </Box>
         <Box className='h-[77px]' gridArea="vehicleModel">
-          <InputSearch
+          <AutocompleteInput
             label="Modelo do veiculo"
             disabled={isVehicleType}
             freeSolo={true}
@@ -170,7 +165,7 @@ export function DialogVehicleContent({ onButtonClick }: DialogProps) {
         </Box>
 
         <Box className='h-[77px]' gridArea="vehicleColor">
-          <InputSearch
+          <AutocompleteInput
             label="Cor do veiculo"
             freeSolo={true}
             placeholder={`cor do/da ${vehicleType}`}

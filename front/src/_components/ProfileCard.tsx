@@ -8,7 +8,7 @@ type ProfileInfoLabelProps = {
   
 };
 function ProfileInfoLabel({ label, className }: ProfileInfoLabelProps) {
-  const style = className ?? 'text-gray-500';
+  const style = className ?? 'font-semibold text-gray-600';
   return <span className={style}>{label}</span>
    
 }
@@ -19,7 +19,7 @@ type ProfileInfoValueProps = {
 };
 
 function ProfileInfoValue({ value, className }: ProfileInfoValueProps) {
-   const style = className ?? 'font-semibold';
+   const style = className ?? 'font-semibold text-gray-800';
   return (
     <strong className={style}>{value}</strong>
     
@@ -34,7 +34,9 @@ type ProfileProps={
 export function ProfileCard({onClick}:ProfileProps) {
   return (
     <div
-    onClick={onClick}
+    onClick={(()=>{
+      onClick?.()
+      })}
       className="grid w-full min-w-[400px] gap-3 rounded-lg bg-white p-1.5 cursor-pointer shadow-md"
       style={{
         gridTemplateAreas: `
@@ -45,15 +47,16 @@ export function ProfileCard({onClick}:ProfileProps) {
         gridTemplateRows: 'auto 100px',
       }}
     >
-      <div
+      <figure
         style={{ gridArea: 'divImg' }}
-        className="flex overflow-hidden sm:items-center sm:justify-center"
+       className="flex overflow-hidden relative sm:items-center sm:justify-center"
+       
       >
         <ImageOverlayScreen
           src="https://images.pexels.com/photos/3771123/pexels-photo-3771123.jpeg"
-          className="min-h-[100px] min-w-[100px] md:min-h-[125px] md:min-w-[125px] lg:min-h-[150px] lg:min-w-[150px]"
+          className="h-[100px] w-[100px] md:min-h-[125px] md:min-w-[125px] lg:min-h-[150px] lg:min-w-[150px]"
         />
-      </div>
+      </figure>
 
       <div
         style={{
@@ -75,7 +78,7 @@ export function ProfileCard({onClick}:ProfileProps) {
         </header>
 
         <div
-          className="grid grid-cols-2 gap-5 text-[0.9rem] sm:flex sm:flex-col sm:justify-around md:text-[1rem] lg:text-[1.05rem]"
+          className="grid grid-cols-2 capitalize  gap-5 text-[0.9rem] sm:flex sm:flex-col sm:justify-around md:text-[1rem] lg:text-[1.05rem]"
           style={{ gridArea: 'tag' }}
         >
           {/* Cabeçalhos */}
@@ -90,7 +93,7 @@ export function ProfileCard({onClick}:ProfileProps) {
 
           {/* Valores */}
           <div className="flex flex-col gap-4 sm:grid sm:grid-cols-6">
-            <ProfileInfoValue value="visitante" />
+            <ProfileInfoValue  value="visitante" />
             <ProfileInfoValue value="saída" />
             <ProfileInfoValue value="31/07/2025" />
             <ProfileInfoValue value="11:00" />

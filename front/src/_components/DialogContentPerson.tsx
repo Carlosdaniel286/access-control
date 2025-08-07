@@ -24,8 +24,10 @@ import {
 } from "@/constants/accessOptions";
 import ButtonAdd from "./ButtonAdd";
 import { useOverlay } from "@/contexts/OverlayContext";
-import { InputSearch } from "./InputSearch";
+
 import { AccessAddressResident } from "@/types/valueForm";
+import { AutocompleteInput } from "./AutocompleteInput";
+import { FormHeader } from "./FormHeader";
 
 export function DialogContentPerson({ onButtonClick }: DialogProps) {
   const [form, setForm] = useState(initValueForm);
@@ -43,15 +45,10 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
   return (
     <div className="bg-white max-h-[100vh] sm:max-h-[96vh]  px-2 py-5 relative sm:px-10 overflow-x-auto sm:rounded-lg shadow-lg">
       {/* Cabeçalho */}
-      <header className="mb-6 flex py-3 justify-between gap-4 sm:gap-6 sm:mb-8">
-        <div>
-          <h2 className="text-lg font-semibold">Cadastro de Visitantes</h2>
-          <p className="text-sm text-gray-500">
-            Preencha as informações abaixo para cadastrar um novo visitante.
-          </p>
-        </div>
-      </header>
-
+     <FormHeader
+      title="Cadastro de Visitantes"
+      subtitle="Preencha as informações abaixo para cadastrar um novo visitante."
+      />
       {/* Formulário */}
       <div
         className="md:grid flex h-full flex-col gap-8"
@@ -74,14 +71,15 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
             <Image src="/imageForm/imageEx.jpg"
               className=" object-cover"
               alt="Profile"
+              sizes="100%"
               fill />
           </div>
 
         </div>
         <Box className='h-[77px]' gridArea="fullName">
           <InputMask
-            className="capitalize inputMask"
-            label="Nome completo"
+            className="inputMask"
+            label="nome completo"
             placeholder="Digite o nome completo"
             mask={/^[a-zA-Z\s]*$/}
           />
@@ -95,7 +93,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
         </Box>
 
         <Box className='h-[77px]' gridArea="address">
-          <InputSearch
+          <AutocompleteInput
             label="Endereço do morador"
             placeholder="Digite o endereço ou nome do morador..."
             options={optionsAccessAddressResident}

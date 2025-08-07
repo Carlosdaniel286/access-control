@@ -45,8 +45,8 @@ export function SelectDemo<T>({
             getOptionLabel?.(value);
           }
         }}
-        value={value}
-        placeholder={placeholder}
+        value={value?.toUpperCase()}
+        placeholder={placeholder?.toUpperCase()}
         indicator={<KeyboardArrowDown />}
         sx={{
           [`& .${selectClasses.indicator}`]: {
@@ -55,17 +55,19 @@ export function SelectDemo<T>({
               transform: "rotate(-180deg)",
             },
           },
+          textTransform:"uppercase",
           ...sharedSx,
           ...sx,
         }}
       >
         {select.map((item, index) => (
           <Option
-            className="capitalize"
+          sx={{zIndex:1500,textTransform:'uppercase'}}
+            
             key={`${item.id}-${index}`}
             value={item}
           >
-            {item.label}
+            {item.label.toUpperCase()}
           </Option>
         ))}
       </Select>

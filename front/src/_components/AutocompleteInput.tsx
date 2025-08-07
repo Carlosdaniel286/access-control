@@ -14,10 +14,11 @@ export type HouseSearchAutocompleteProps<T extends { id: number | string }> = {
     label?: string;
     getValue?: (value: T | null | string) => void;
     freeSolo?: boolean;
-    disabled?: boolean 
+    disabled?: boolean;
+    type?:string
   };
 
-export function InputSearch<T extends { id: number | string }>({ sx, options, disabled, getOptionLabel, placeholder ,label,getValue,freeSolo}: HouseSearchAutocompleteProps<T>) {
+export function AutocompleteInput<T extends { id: number | string }>({ sx, options, disabled, getOptionLabel, placeholder ,label,getValue,freeSolo,type}: HouseSearchAutocompleteProps<T>) {
   const capitalize = (text?: string): string => {
     if (!text) return "Digite algo";
     return text.charAt(0).toUpperCase() + text.slice(1);
@@ -30,7 +31,10 @@ export function InputSearch<T extends { id: number | string }>({ sx, options, di
     <Label  className="text-transform: uppercase" >{label}</Label>
    
     <Autocomplete
-    
+    type={type}
+    sx={{
+     textTransform: 'uppercase',
+    }}
     //value={value}
     slotProps={{
        
@@ -43,6 +47,8 @@ export function InputSearch<T extends { id: number | string }>({ sx, options, di
         },
         root: {
           sx: {
+            
+            textTransform:'uppercase',
             position: "relative",
             padding: "6px",
             border: "2px solid #d1d5dc",
@@ -59,6 +65,16 @@ export function InputSearch<T extends { id: number | string }>({ sx, options, di
             ...sx,
           },
         },
+        input: {
+            // AQUI É ONDE VOCÊ DEVE APLICAR O textTransform
+            sx: {
+              textTransform: 'uppercase',
+            placeholder:{
+              textTransform: 'capitalize',
+            }
+            },
+           
+          },
         listbox: {
           disablePortal: true,
         },
@@ -69,6 +85,7 @@ export function InputSearch<T extends { id: number | string }>({ sx, options, di
       options={options??[]}
       
       getOptionLabel={((option)=>{
+        
          if(typeof option =='string') return option
         if(!getOptionLabel) return ''
         return getOptionLabel(option)
@@ -76,16 +93,19 @@ export function InputSearch<T extends { id: number | string }>({ sx, options, di
       freeSolo={freeSolo}
       disabled={disabled}
       onInputChange={(event, newInputValue) => {
+        //console.log(event)
         getValue?.(newInputValue)
         }}
       
       onChange={(ev,value)=>{
+        console.log(ev)
        getValue?.(value)
      
       }}
       isOptionEqualToValue={(option, value) => option.id === value.id}
+      style={{textTransform:'uppercase'}}
       renderOption={(props, option) => (
-        <AutocompleteOption {...props} key={option.id}>
+        <AutocompleteOption   sx={{zIndex:1500,textTransform:'uppercase'}} {...props} key={option.id}>
           {getOptionLabel?.(option)}
         </AutocompleteOption>
       )}

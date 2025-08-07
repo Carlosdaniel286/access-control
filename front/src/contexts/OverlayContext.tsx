@@ -4,7 +4,8 @@ import React, { createContext, useState, use } from "react";
 type OverlayState = {
   register: boolean;
   textArea: boolean;
-  sideBar:boolean
+  sideBar:boolean;
+  searchFilter:boolean
 };
 
 type OverlayContextType = {
@@ -12,14 +13,15 @@ type OverlayContextType = {
  handleOpenOverlay: (select: SelectOverlay) => void
  handleCloseOverlay: (select: SelectOverlay) => void
 };
-type SelectOverlay = 'register'| 'textArea' | 'sideBar'
+type SelectOverlay = 'register'| 'textArea' | 'sideBar'| 'searchFilter'
 const OverlayContext = createContext<OverlayContextType | null>(null);
 
 export function OverlayProvider({ children }: { children: React.ReactNode }) {
   const [overlays, setOverlays] = useState<OverlayState>({
     register: false,
     textArea: false,
-    sideBar:false
+    sideBar:false,
+    searchFilter:false
   });
 
    const handleOpenOverlay = (select: SelectOverlay) => {

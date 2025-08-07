@@ -24,12 +24,12 @@ export function InfoCard({onClick}:InfoCardProps){
     <Overlay
     setIsOpen={onClick}
     >
-       <article className="bg-white flex flex-col p-2 w-[100vw] max-w-[500px] rounded-md">
+       <article className="bg-white flex flex-col p-2 w-[100vw] h-screen sm:h-[526px] sm:max-w-[600px] sm:rounded-md">
         <header className="flex items-center  border-b-2 border-gray-200 gap-4">
             <figure>
             <ImageOverlayScreen
                 src="https://images.pexels.com/photos/3771123/pexels-photo-3771123.jpeg"
-                className=" h-[80px] w-[80px] m-2  max-h-[400px] max-w-[400px]  flex rounded-full  "
+                className=" h-[80px] w-[80px] m-2 bg-amber-400 max-h-[400px] max-w-[400px]  flex rounded-full  "
             />
             {/* <figcaption>Legenda da imagem</figcaption> se quiser */}
             </figure>
@@ -90,9 +90,9 @@ export function InfoCard({onClick}:InfoCardProps){
         <span className="text-green-600 font-medium">Ativo</span>
       </div>
     </section>
-       <div className="flex flex-row-reverse px-4 py-3">
-        <Button onClick={onClick} className="cursor-pointer px-6 py-4">Confirmar</Button>
-       </div>
+       <section className="flex h-full items-center justify-center sm:justify-start  sm:flex-row-reverse px-4 py-3">
+        <Button onClick={onClick} className="cursor-pointer text-[1.3rem] px-4 w-40 py-4">Sair</Button>
+       </section>
     </article>
 
     

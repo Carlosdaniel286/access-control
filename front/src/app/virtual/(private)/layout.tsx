@@ -17,30 +17,17 @@ export default function RootLayout({
 }: Readonly<{
   children?: React.ReactNode;
 }>) {
-
-
-
-
-  return (
+ return (
     <html lang='pt-BR'>
       <body
         className="antialiased" >
         <div className="h-screen flex overflow-hidden flex-col w-full">
           <OverlayProvider>
-           
-          
             <Header />
-
-            <div
-              className="flex h-full"
-            >
-
+            <div className="flex overflow-hidden max-h-screen">
               <RenderSidebar />
-
-
               {children}
-
-            </div>
+              </div>
           </OverlayProvider>
         </div>
       </body>

@@ -8,10 +8,10 @@ import { cn } from "@/lib/utils";
 export function Overlay({ children, setIsOpen, className, overlay = true, onClick }: OverlayProps) {
 
   const hidden = () => {
-    setIsOpen?.(false)
-  }
+    setIsOpen?.()
+    }
 
-  const overStyle = "fixed inset-0 bg-black/50 z-999 flex justify-center items-center"
+  const overStyle = "fixed inset-0 bg-black/50 z-999 flex justify-center cursor-default items-center"
   const isOverlay = overlay == true ? overStyle : "";
 
 
@@ -20,8 +20,9 @@ export function Overlay({ children, setIsOpen, className, overlay = true, onClic
       isOverlay,
       className
     )}>
-      <div  onClick={(e) => {
-        onClick?.(e)
+      <div className=" " onClick={(e) => {
+        onClick?.()
+        console.log('cilcou')
         e.stopPropagation()
       }}>{children}</div>
     </div>

@@ -6,7 +6,7 @@ type StyleProps = React.HTMLAttributes<HTMLDivElement>
 type BoxProps={
    className?:StyleProps | string | undefined
    children?:JSX.Element
-   gridArea:string
+   gridArea?:string
 }
 
 export function Box({className,children,gridArea}: BoxProps) {

@@ -4,10 +4,10 @@ export function FeedControl() {
    return(
         <div
           className="
-           bg-white
-            w-full
-            h-full
             overflow-hidden
+            flex
+            flex-grow: 1
+            max-h-full
            "
         >
           <ScrollProfile />

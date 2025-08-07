@@ -12,10 +12,14 @@ import { useOverlay } from "@/contexts/OverlayContext";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { motion } from "framer-motion";
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import { SearchFilter } from './SearchFilter';
+import { Overlay } from './Overlay';
 export function Sidebar() {
   const strokeWidth = 1.7;
   const { overlays, handleOpenOverlay, handleCloseOverlay } = useOverlay();
- 
+  
+  
+  
   return (
    
     <motion.aside
@@ -56,6 +60,17 @@ export function Sidebar() {
           }}
         />
       )}
+      
+      {overlays.searchFilter && (
+        <Overlay
+         setIsOpen={(()=>{
+          handleCloseOverlay('searchFilter');
+         })}
+        >
+          <SearchFilter/>
+        </Overlay>
+      )}
+      
       <header className="
          swap:hidden 
          flex 
@@ -108,6 +123,9 @@ export function Sidebar() {
           </li>
           <li>
             <button
+               onClick={() => {
+                handleOpenOverlay('searchFilter');
+              }}
               className="widgets"
               type="button"
             >

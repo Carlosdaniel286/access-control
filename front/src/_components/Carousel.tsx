@@ -12,17 +12,14 @@ import { CarouselProps } from "@/types/carouselProps";
 export function Carousel({ children, onCarouselApi }: CarouselProps) {
   const [api, setApi] = useState<CarouselApi | undefined>(undefined);
   const [indexItem, setIndexItem] = useState(0)
-  console.log(window.innerWidth)
-  useEffect(() => {
+   useEffect(() => {
     if (api && onCarouselApi) {
       onCarouselApi(api);
     }
     if (api) {
       api.on('select', () => {
         setIndexItem(api.selectedScrollSnap())
-
-
-      })
+       })
     }
     return () => {
       api?.off("select", (() => {
