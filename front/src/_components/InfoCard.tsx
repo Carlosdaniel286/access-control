@@ -24,7 +24,7 @@ export function InfoCard({onClick}:InfoCardProps){
     <Overlay
     setIsOpen={onClick}
     >
-       <article className="bg-white flex flex-col p-2 w-[100vw] h-screen sm:h-[526px] sm:max-w-[600px] sm:rounded-md">
+       <article className="bg-white flex flex-col pt-4 w-[100dvw] h-[100dvh] sm:h-auto sm:max-w-[600px] sm:rounded-md">
         <header className="flex items-center  border-b-2 border-gray-200 gap-4">
             <figure>
             <ImageOverlayScreen

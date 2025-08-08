@@ -6,7 +6,7 @@ import { Box } from "./Box";
 
 export function SearchFilter() {
   return (
-    <article className="bg-white overflow-y-auto px-1.5 py-6 max-h-[100vh] md:px-4 md:py-3 flex flex-col  w-[100vw] h-[100vh]  md:overflow-x-hidden  md:max-h-[500px] md:max-w-[700px] md:rounded-md">
+    <article className="bg-white overflow-y-auto px-1.5 py-6 max-h-[100dvh] md:px-4 md:py-3 flex flex-col  w-[100dvw] h-[100dvh]  md:overflow-x-hidden   md:max-h-[500px]  md:max-w-[700px] md:rounded-md">
       <FormHeader
         title="Pesquisa Avançada"
         subtitle="Filtre os dados por critérios personalizados."
