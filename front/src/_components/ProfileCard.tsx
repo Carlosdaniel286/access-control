@@ -1,17 +1,8 @@
 'use client';
 import { ImageOverlayScreen } from "./ImageOverlayScreen";
+import { cn } from "@/lib/utils";
 
 
-type ProfileInfoLabelProps = {
-  label: 'Categoria' | 'Fluxo' | 'Data' | 'Locomoção' | 'Endereço'| 'hora';
-  className?: string;
-  
-};
-function ProfileInfoLabel({ label, className }: ProfileInfoLabelProps) {
-  const style = className ?? 'font-semibold text-gray-600';
-  return <span className={style}>{label}</span>
-   
-}
 
 type ProfileInfoValueProps = {
   value: string;
@@ -19,9 +10,12 @@ type ProfileInfoValueProps = {
 };
 
 function ProfileInfoValue({ value, className }: ProfileInfoValueProps) {
-   const style = className ?? 'font-semibold text-gray-800';
+   
   return (
-    <strong className={style}>{value}</strong>
+    <strong className={cn(
+      'font-semibold text-gray-800 ',
+       className
+    )}>{value}</strong>
     
   );
 }
@@ -37,7 +31,7 @@ export function ProfileCard({onClick}:ProfileProps) {
     onClick={(()=>{
       onClick?.()
       })}
-      className="grid w-full min-w-[400px] gap-3 rounded-lg bg-white p-1.5 cursor-pointer shadow-md"
+      className="grid w-full min-w-[400px] gap-3  rounded-lg bg-white py-1.5 cursor-pointer shadow-md"
       style={{
         gridTemplateAreas: `
           "divImg name"
@@ -49,12 +43,12 @@ export function ProfileCard({onClick}:ProfileProps) {
     >
       <figure
         style={{ gridArea: 'divImg' }}
-       className="flex overflow-hidden relative sm:items-center sm:justify-center"
+       className="flex items-center px-1  "
        
       >
         <ImageOverlayScreen
           src="https://images.pexels.com/photos/3771123/pexels-photo-3771123.jpeg"
-          className="h-[100px] w-[100px] md:min-h-[125px] md:min-w-[125px] lg:min-h-[150px] lg:min-w-[150px]"
+          className="h-[80px] w-[80px] md:min-h-[90px] md:min-w-[90px] lg:min-h-[100px] lg:min-w-[100px]"
         />
       </figure>
 
@@ -69,7 +63,7 @@ export function ProfileCard({onClick}:ProfileProps) {
           gridTemplateColumns: '100px 100px',
           gridTemplateRows: 'auto auto',
         }}
-        className="grid p-3"
+        className="grid   p-3"
       >
         <header style={{ gridArea: 'header' }}>
           <h3 className="mb-6 font-semibold capitalize text-[1rem] sm:text-lg lg:text-[1.3rem]">
@@ -78,26 +72,16 @@ export function ProfileCard({onClick}:ProfileProps) {
         </header>
 
         <div
-          className="grid grid-cols-2 capitalize  gap-5 text-[0.9rem] sm:flex sm:flex-col sm:justify-around md:text-[1rem] lg:text-[1.05rem]"
+          className="grid  capitalize    gap-5 text-[0.9rem] sm:flex sm:flex-col sm:justify-around md:text-[1rem] lg:text-[1.05rem]"
           style={{ gridArea: 'tag' }}
         >
-          {/* Cabeçalhos */}
-          <div className="flex flex-col gap-4 sm:grid sm:grid-cols-6">
-          <ProfileInfoLabel label="Categoria" />
-          <ProfileInfoLabel label="Fluxo" />
-          <ProfileInfoLabel label="Data" />
-          <ProfileInfoLabel label="hora" />
-          <ProfileInfoLabel label="Locomoção" />
-          <ProfileInfoLabel label="Endereço" />
-          </div>
-
-          {/* Valores */}
-          <div className="flex flex-col gap-4 sm:grid sm:grid-cols-6">
-            <ProfileInfoValue  value="visitante" />
-            <ProfileInfoValue value="saída" />
-            <ProfileInfoValue value="31/07/2025" />
-            <ProfileInfoValue value="11:00" />
-            <ProfileInfoValue value="carro" />
+         {/* Valores */}
+          <div className="gap-4 flex flex-col md:grid md:grid-cols-6">
+            <ProfileInfoValue value="visitante" />
+            <ProfileInfoValue className="hidden md:block" value="saída" />
+            <ProfileInfoValue className="hidden md:block" value="31/07/2025" />
+            <ProfileInfoValue className="hidden md:block" value="11:00" />
+            <ProfileInfoValue className="hidden md:block" value="carro" />
             <ProfileInfoValue value="casa - 02" />
           </div>
         </div>
