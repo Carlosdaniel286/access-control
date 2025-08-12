@@ -6,9 +6,9 @@ export function FeedControl() {
           className="
             overflow-hidden
             flex
-            flex-grow: 1
-            max-h-full
-           "
+            w-full
+            h-full
+            "
         >
           <ScrollProfile />
       </div>

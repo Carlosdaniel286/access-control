@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
-
-
+import { OverlayProvider } from "@/contexts/OverlayContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,10 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='pt-BR'>
-      <body
-        className={`antialiased`}
-      >
-        {children}
+      <body className={`antialiased`}>
+        <OverlayProvider>
+           {children}
+        </OverlayProvider>
       </body>
     </html>
   );

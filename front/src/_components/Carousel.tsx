@@ -1,59 +1,110 @@
-'use client';
-import {
-  Carousel as ShadCarousel,
-  type CarouselApi,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import { useEffect, useState } from "react";
-import { Pagination } from "./Pagination";
-import { CarouselProps } from "@/types/carouselProps";
+'use client'
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import React, { useMemo } from "react";
+import { useRef,  useEffect} from "react";
 
-export function Carousel({ children, onCarouselApi }: CarouselProps) {
-  const [api, setApi] = useState<CarouselApi | undefined>(undefined);
-  const [indexItem, setIndexItem] = useState(0)
-   useEffect(() => {
-    if (api && onCarouselApi) {
-      onCarouselApi(api);
+type CarouselApi = {
+  onApiReady?: (api: {
+    scrollToNext: () => void;
+    scrollToPrev: () => void;
+  }) => void;
+  showButtons?: boolean;
+  children?: React.JSX.Element[] | React.JSX.Element;
+  onClickOvelay?: ()=>void;
+  className?:string
+};
+
+export function Carousel({ onApiReady, showButtons = true, children,onClickOvelay,className }: CarouselApi) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const scrollToNext = () => {
+    if (!containerRef.current) return;
+    containerRef.current.scrollBy({
+      left: containerRef.current.offsetWidth,
+      behavior: "smooth",
+    });
+  };
+
+  const scrollToPrev = () => {
+    if (!containerRef.current) return;
+    containerRef.current.scrollBy({
+      left: -containerRef.current.offsetWidth,
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    if (onApiReady) {
+      onApiReady({
+        scrollToNext,
+        scrollToPrev,
+      });
     }
-    if (api) {
-      api.on('select', () => {
-        setIndexItem(api.selectedScrollSnap())
-       })
-    }
-    return () => {
-      api?.off("select", (() => {
-        setIndexItem(api.selectedScrollSnap())
-      })); // limpa listener
-    };
-  }, [api, onCarouselApi]);
-
-
-  //sm:max-w-[600px]
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const items = useMemo(() =>  React.Children.toArray(children), [children]);
+  
 
   return (
-    <ShadCarousel
-      className="w-full   max-w-[100vw]  sm:max-w-[98vw]   lg:max-w-[900px]    3xl:max-w-[1000px] 4xl:max-w-[1200px] mx-auto z-50"
-      setApi={setApi}
-      opts={{
-        dragFree: false,
-        containScroll: "keepSnaps",
-        watchDrag: false,  // Esta é a chave para desativar completamente o arraste
-      }}
-    >
-      <CarouselContent
-        className="flex items-center">
-        {children.map((child, index) => (
-          <CarouselItem key={index}>
-            {child}
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <div className=" hidden  items-center justify-center mt-6">
-        <Pagination
-          indexItem={indexItem}
-        />
-      </div>
-    </ShadCarousel>
+   
+      <section
+        ref={containerRef}
+        aria-label="Carousel de diálogos"
+        className={cn(
+          "w-full mx-auto  h-screen flex items-center justify-center",
+          "scroll-smooth overflow-hidden snap-x snap-mandatory",
+           className
+        )}
+      >
+        <div role="group" aria-label="Slides do carrossel" className="flex  w-full">
+          {items.map((DialogComponent, index) => (
+            <article
+              key={index}
+              aria-labelledby={`dialog-heading-${index}`}
+              className={cn(
+                "w-full  flex-shrink-0 overflow-x-hidden snap-center",
+                "overflow-y-auto  max-h-[calc(100vh-2rem)]"
+              )}
+            >
+              <div onClick={((ev)=>{
+                 if(ev.target === ev.currentTarget){
+                  onClickOvelay?.()
+                }
+              
+              })} className="w-full  overflow-hidden flex items-center justify-center p-4">
+                {DialogComponent}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {showButtons && (
+          <nav className="absolute inset-0 flex items-center justify-between ">
+            <Button
+              onClick={scrollToPrev}
+              className="pointer-events-auto ml-4"
+              aria-label="Slide anterior"
+              variant="secondary"
+              size="icon"
+              type="button"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </Button>
+            <Button
+              onClick={scrollToNext}
+              className="pointer-events-auto mr-4"
+              aria-label="Próximo slide"
+              variant="secondary"
+              size="icon"
+              type="button"
+            >
+              <ChevronRight className="h-6 w-6" />
+            </Button>
+          </nav>
+        )}
+      </section>
+    
   );
 }

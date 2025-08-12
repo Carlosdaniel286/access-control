@@ -23,8 +23,7 @@ export function Overlay({ children, setIsOpen, className, overlay = true, onClic
     )}>
       <div className="overflow-hidden" onClick={(e) => {
         onClick?.()
-        console.log('cilcou')
-        e.stopPropagation()
+         e.stopPropagation()
       }}>{children}</div>
     </div>
   );

@@ -1,32 +1,31 @@
-'use client'
+'use client';
 
+// Imports de ícones do Material-UI
 import HomeIcon from '@mui/icons-material/Home';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import GroupIcon from '@mui/icons-material/Group';
 import DirectionsCarFilledIcon from '@mui/icons-material/DirectionsCarFilled';
-import Link from "next/link";
-import { OpenRegister } from "./OpenRegister";
 import EngineeringIcon from '@mui/icons-material/Engineering';
-import { RenderTextarea } from "./RenderTextArea";
-import { useOverlay } from "@/contexts/OverlayContext";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import { motion } from "framer-motion";
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import { SearchFilter } from './SearchFilter';
-import { Overlay } from './Overlay';
+
+// Imports de bibliotecas externas
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+
+// Imports de contexto e utilitários locais
+import { useOverlay } from '@/contexts/OverlayContext';
+
 export function Sidebar() {
   const strokeWidth = 1.7;
   const { overlays, handleOpenOverlay, handleCloseOverlay } = useOverlay();
-  
-  
-  
+
   return (
-   
     <motion.aside
-      initial={{ opacity: !overlays.sideBar?1:0, x:!overlays.sideBar? 0:-1000 }}
+      initial={{ opacity: !overlays.sideBar ? 1 : 0, x: !overlays.sideBar ? 0 : -1000 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: !overlays.sideBar?0:0.7, ease: "easeOut" }}
-       exit={{ opacity: 0, x: -1000, transition: { duration:4 } }} // saída suave
+      transition={{ duration: !overlays.sideBar ? 0 : 0.7, ease: 'easeOut' }}
+      exit={{ opacity: 0, x: -1000, transition: { duration: 4 } }}
       className={`
         max-w-[230px]
         sm:max-w-[200px]
@@ -45,68 +44,40 @@ export function Sidebar() {
         z-50
       `}
     >
-      {overlays.register && (
-        <OpenRegister
-          isOpen={overlays.register}
-          setIsOpen={() => {
-            handleCloseOverlay('register');
+      <header
+        className={`
+          swap:hidden 
+          flex 
+          items-center 
+          flex-row-reverse
+          px-4
+          py-2
+        `}
+      >
+        <button
+          onClick={() => {
+            handleCloseOverlay('sideBar');
           }}
-        />
-      )}
-      {overlays.textArea && (
-        <RenderTextarea
-          setIsOpen={() => {
-            handleCloseOverlay('textArea');
-          }}
-        />
-      )}
-      
-      {overlays.searchFilter && (
-        <Overlay
-         setIsOpen={(()=>{
-          handleCloseOverlay('searchFilter');
-         })}
+          className={`
+            rounded-full 
+            p-0 
+            m-0 
+          `}
         >
-          <SearchFilter/>
-        </Overlay>
-      )}
-      
-      <header className="
-         swap:hidden 
-         flex 
-         items-center 
-         flex-row-reverse
-         px-4
-         py-2
-         
-         "
-         >
-        <h5 
-        onClick={(()=>{
-          
-          handleCloseOverlay('sideBar');
-        })}
-        className="
-         rounded-full 
-          p-0 
-          m-0 
-           ">
           <KeyboardReturnIcon
-          className="text-white cursor-pointer"
-          sx={{fontSize:'3rem'}}
-        
-          strokeWidth={2.5} />
-          </h5>
+            className="text-white cursor-pointer"
+            sx={{ fontSize: '3rem' }}
+            strokeWidth={2.5}
+          />
+        </button>
       </header>
       <nav aria-label="Sidebar Navigation">
         <ul className="flex flex-col text-white gap-4">
           <li>
-           
             <Link href="/virtual/painel" className="widgets">
               <HomeIcon strokeWidth={strokeWidth} aria-hidden="true" />
-              <span className=" font-medium">Home</span>
+              <span className="font-medium">Home</span>
             </Link>
-            
           </li>
 
           <li>
@@ -123,21 +94,18 @@ export function Sidebar() {
           </li>
           <li>
             <button
-               onClick={() => {
+              onClick={() => {
                 handleOpenOverlay('searchFilter');
               }}
               className="widgets"
               type="button"
             >
-              <PersonSearchIcon  strokeWidth={strokeWidth} />
+              <PersonSearchIcon strokeWidth={strokeWidth} />
               <span className="font-medium">Buscar</span>
             </button>
           </li>
           <li>
-            <button
-              className="widgets"
-              type="button"
-            >
+            <button className="widgets" type="button">
               <GroupIcon
                 strokeWidth={strokeWidth}
                 className="hover:stroke-[#3e9392]"
@@ -147,25 +115,18 @@ export function Sidebar() {
           </li>
 
           <li>
-            <button
-              className="widgets "
-              type="button"
-            >
+            <button className="widgets " type="button">
               <EngineeringIcon className="hover:stroke-[#3e9392]" />
               <span className="font-medium">Prestadores</span>
             </button>
           </li>
 
           <li>
-            <button
-              className="widgets"
-              type="button"
-            >
+            <button className="widgets" type="button">
               <DirectionsCarFilledIcon strokeWidth={strokeWidth} />
               <span className="font-medium">Veículos</span>
             </button>
           </li>
-          
         </ul>
       </nav>
     </motion.aside>

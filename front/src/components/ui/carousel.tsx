@@ -49,7 +49,6 @@ function Carousel({
   plugins,
   className,
   children,
-  
   ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
   const [carouselRef, api] = useEmblaCarousel(
@@ -208,7 +207,7 @@ function CarouselNext({
   size = "icon",
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const {  scrollNext, canScrollNext } = useCarousel()
+  const { orientation, scrollNext, canScrollNext } = useCarousel()
 
   return (
     <Button
@@ -216,8 +215,10 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        "size-8 rounded-full",
-       
+        "absolute size-8 rounded-full",
+        orientation === "horizontal"
+          ? "top-1/2 -right-12 -translate-y-1/2"
+          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       disabled={!canScrollNext}
@@ -238,7 +239,3 @@ export {
   CarouselPrevious,
   CarouselNext,
 }
-
-/* orientation === "horizontal"
-          ? "top-1/2 -right-12 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",*/

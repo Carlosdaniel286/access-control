@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Header } from "../../../_components/Header";
 import { OverlayProvider } from "@/contexts/OverlayContext";
 import { RenderSidebar } from "../../../_components/RenderSidebar";
+import { OverlayRoot } from "@/_components/OverlayRoot";
 
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({
         className="antialiased" >
         <div className="h-screen flex overflow-hidden flex-col w-full">
           <OverlayProvider>
+          <OverlayRoot/>
             <Header />
             <div className="flex overflow-hidden max-h-screen">
               <RenderSidebar />

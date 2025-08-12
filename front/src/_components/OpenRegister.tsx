@@ -1,43 +1,49 @@
-
 'use client';
-import { Dialog } from "@/components/ui/dialog";
-import { Overlay } from "./Overlay";
+import  {DialogVehicleContent } from "./DialogVehicleContent";
+import   {DialogContentPerson } from "./DialogContentPerson";
+import { useCallback, useState } from "react";
 import { Carousel } from "./Carousel";
-import { DialogVehicleContent } from "./DialogVehicleContent";
-import { DialogContentPerson } from "./DialogContentPerson";
-import { CarouselApi } from "@/components/ui/carousel";
-import { useState } from "react";
-import { OpenRegisterProps } from "@/types/OpenRegister";
+import { useOverlay } from "@/contexts/OverlayContext";
+import { Overlay } from "./Overlay";
+
+export function OpenRegister() {
+  const { handleCloseOverlay } = useOverlay();
+  const [api, setApi] = useState({
+    scrollToNext: () => {},
+    scrollToPrev: () => {}
+});
+
+  
+const handleApiReady = useCallback((api: {
+    scrollToNext: () => void;
+    scrollToPrev: () => void;
+}) => {
+    setApi(api);
+   
+  }, []);
 
 
-
-export function OpenRegister({ isOpen, setIsOpen }: OpenRegisterProps) {
-  const [api, setApi] = useState<CarouselApi>(undefined);
-
-  return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <form action="">
-        <Overlay
-          setIsOpen={setIsOpen}
-          overlay={true}
-        >
-          <Carousel
-            onCarouselApi={(api) => {
-              setApi(api);
-
-            }}
-          >
-            <DialogContentPerson
-              onButtonClick={() => api}
-            //textButton="Proximo"
-            />
-            <DialogVehicleContent
-              onButtonClick={() => api}
-            //textButton="Retornar"
-            />
-          </Carousel>
-        </Overlay>
+return (
+    <Overlay>
+     <form action="">
+        <Carousel
+        className="bg-white md:bg-transparent"
+         onClickOvelay={(()=>{
+          handleCloseOverlay("register")
+        })}
+        showButtons={false}
+         onApiReady={((apis)=>{
+          handleApiReady(apis)
+        })} 
+       >
+           <DialogContentPerson
+           onButtonClick={api.scrollToNext}
+           />
+          <DialogVehicleContent
+           onButtonClick={api.scrollToPrev}
+          />
+        </Carousel>
       </form>
-    </Dialog>
+   </Overlay>
   );
 }
