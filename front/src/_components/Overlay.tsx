@@ -10,11 +10,10 @@ export function Overlay({ children, setIsOpen, className, overlay = true, onClic
   const hidden = () => {
     setIsOpen?.()
     }
-
-  const overStyle = "fixed  inset-0 bg-black/50 z-999 flex justify-center cursor-default items-center"
+//bg-black/50
+  const overStyle = "fixed  inset-0 bg-black/50  z-999 flex justify-center cursor-default items-center"
   const isOverlay = overlay == true ? overStyle : "";
-
-
+  
   return (
     <div onClick={hidden} className={cn(
       'overflow-hidden',

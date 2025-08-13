@@ -5,7 +5,8 @@ type OverlayState = {
   register: boolean;
   textArea: boolean;
   sideBar:boolean;
-  searchFilter:boolean
+  searchFilter:boolean;
+  infoCard:boolean;
 };
 
 type OverlayContextType = {
@@ -13,7 +14,7 @@ type OverlayContextType = {
  handleOpenOverlay: (select: SelectOverlay) => void
  handleCloseOverlay: (select: SelectOverlay) => void
 };
-type SelectOverlay = 'register'| 'textArea' | 'sideBar'| 'searchFilter'
+type SelectOverlay = 'register'| 'textArea' | 'sideBar'| 'searchFilter'|'infoCard'
 const OverlayContext = createContext<OverlayContextType | null>(null);
 
 export function OverlayProvider({ children }: { children: React.ReactNode }) {
@@ -21,7 +22,8 @@ export function OverlayProvider({ children }: { children: React.ReactNode }) {
     register: false,
     textArea: false,
     sideBar:false,
-    searchFilter:false
+    searchFilter:false,
+    infoCard:false
   });
 
    const handleOpenOverlay = (select: SelectOverlay) => {

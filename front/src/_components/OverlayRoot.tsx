@@ -6,6 +6,7 @@ import { OpenRegister } from "./OpenRegister";
 import { RenderTextarea } from "./RenderTextArea";
 import { Overlay } from "./Overlay";
 import { SearchFilter } from "./SearchFilter";
+import { InfoCard } from "./InfoCard";
 
 export function OverlayRoot() {
   const { overlays, handleCloseOverlay } = useOverlay();
@@ -25,6 +26,9 @@ export function OverlayRoot() {
           <SearchFilter  />
         </Overlay>
       )}
+      {overlays.infoCard && (
+          <InfoCard/>
+        )}
     </>
   );
 }

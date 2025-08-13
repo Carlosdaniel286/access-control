@@ -33,7 +33,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
   const [form, setForm] = useState(initValueForm);
   const { handleOpenOverlay, handleCloseOverlay } = useOverlay();
 
- 
+ // md:w-[900px]
 
   return (
     //scrollbar-thin
@@ -43,15 +43,14 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
        flex-col 
        pb-10 
        px-1
-       sm:px-3.5  
+       sm:px-5  
        md:rounded-lg 
        md:shadow-lg
-       w-[100dvw]
-       md:w-[900px]
+       w-full
        sm:max-w-[98vw]   
-       lg:max-w-[900px]    
-       3xl:max-w-[1000px] 
-       4xl:max-w-[1200px]
+       lg:max-w-[1100px]    
+       3xl:max-w-[1300px] 
+       4xl:max-w-[1400px]
        
        ">
        {/* Cabeçalho */}

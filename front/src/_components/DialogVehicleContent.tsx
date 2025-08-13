@@ -32,7 +32,18 @@ export function DialogVehicleContent({ onButtonClick }: DialogProps) {
   const vehicleType = vehicleCharacteristics.type == null ? 'Veículo' : vehicleCharacteristics.type;
 
   return (
-    <div className="bg-white w-[800px] px-1 sm:px-3.5 py-5 md:rounded-lg md:shadow-lg">
+    <div className="
+    bg-white 
+    w-screen 
+    
+    sm:max-w-[98vw]   
+    lg:max-w-[900px]    
+    3xl:max-w-[1000px] 
+    4xl:max-w-[1100px]
+    px-1 
+    sm:px-3.5 py-5 
+    md:rounded-lg 
+    md:shadow-lg">
       <FormHeader
         title="Cadastro de veiculos"
         subtitle="Preencha as informações abaixo para cadastrar um novo veiculo."

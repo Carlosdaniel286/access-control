@@ -1,6 +1,6 @@
 'use client'
 
-import { ImageOverlayScreen } from "./ImageOverlayScreen"
+
 import { Overlay } from "./Overlay"
 import PersonIcon from '@mui/icons-material/Person';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -11,22 +11,22 @@ import KeyIcon from '@mui/icons-material/Key';
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import { Button } from "@/components/ui/button";
-
-type InfoCardProps ={
-    onClick?: () => void;
-}
+import { ImageOverlayScreen } from "./ImageOverlayScreen";
+import { useOverlay } from "@/contexts/OverlayContext";
 
 
-export function InfoCard({onClick}:InfoCardProps){
-
+export function InfoCard(){
+ const {handleCloseOverlay} = useOverlay()
  
     return(
     <Overlay
-    setIsOpen={onClick}
+    setIsOpen={(()=>{
+      handleCloseOverlay('infoCard')
+    })}
     >
        <article className="bg-white flex flex-col pt-4 w-[100dvw] h-[100dvh] sm:h-auto sm:max-w-[600px] sm:rounded-md">
         <header className="flex items-center  border-b-2 border-gray-200 gap-4">
-            <figure>
+            <figure className="mx-3.5">
             <ImageOverlayScreen
                 src="https://images.pexels.com/photos/3771123/pexels-photo-3771123.jpeg"
                 className=" h-[80px] w-[80px] m-2 bg-amber-400 max-h-[400px] max-w-[400px]  flex rounded-full  "
@@ -36,7 +36,7 @@ export function InfoCard({onClick}:InfoCardProps){
             <h2 className="capitalize font-semibold  text-[1.2rem]">daniela lisa mendes</h2>
         </header>
 
-   <section className="p-4 flex flex-col gap-3 text-sm text-gray-700">
+   <section className="px-5 flex flex-col gap-3 text-sm text-gray-700">
       <div className="flex items-center gap-2">
         <PersonIcon className="text-gray-500" />
         <span className="font-semibold text-gray-600">Registro:</span>
@@ -91,7 +91,9 @@ export function InfoCard({onClick}:InfoCardProps){
       </div>
     </section>
        <section className="flex h-full items-center justify-center sm:justify-start  sm:flex-row-reverse px-4 py-3">
-        <Button onClick={onClick} className="cursor-pointer text-[1.3rem] px-4 w-40 py-4">Sair</Button>
+        <Button onClick={(()=>{
+          handleCloseOverlay('infoCard')
+        })} className="cursor-pointer text-[1.3rem] px-4 w-40 py-4">Sair</Button>
        </section>
     </article>
 
