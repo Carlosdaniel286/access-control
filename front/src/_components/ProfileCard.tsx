@@ -68,7 +68,7 @@ const {handleOpenOverlay} = useOverlay()
   return (
     <div  onClick={(()=>{
       handleOpenOverlay('infoCard')
-    })} className="bg-white w-full h-full rounded-xl cursor-pointer shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+    })} className="bg-white hover:ring-4 hover:ring-black w-full h-full rounded-xl cursor-pointer shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
       <div className="flex  space-x-1 mb-4">
         {/* Foto de perfil */}
         <figure>

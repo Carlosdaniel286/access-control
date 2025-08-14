@@ -33,7 +33,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
   const [form, setForm] = useState(initValueForm);
   const { handleOpenOverlay, handleCloseOverlay } = useOverlay();
 
- // md:w-[900px]
+
 
   return (
     //scrollbar-thin
@@ -70,7 +70,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
         >
           {/* Imagem */}
           <div className="flex md:flex-row-reverse md:col-start-3   md:row-start-1 md:row-span-2">
-            <div className="bg-gray-400 min-h-[140px] w-[40%] md:w-[100%] relative overflow-hidden h-full rounded-md">
+            <figure className="bg-gray-400 min-h-[140px] w-[100%] max-w-[160px]  md:max-w-[200px]  relative overflow-hidden h-full rounded-md">
               <Image
                 src="/imageForm/imageEx.jpg"
                 className="object-cover"
@@ -78,7 +78,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
                 sizes="100%"
                 fill
               />
-            </div>
+            </figure>
           </div>
 
           {/* Nome Completo */}

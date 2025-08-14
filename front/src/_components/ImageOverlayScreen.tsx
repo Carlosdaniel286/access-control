@@ -22,7 +22,7 @@ export function ImageOverlayScreen({ src, className }: ImageOverlayScreenProps) 
        })}
       className={clsx(
         'relative',
-        className
+        className,
       )}
     >
       <Image
@@ -31,7 +31,7 @@ export function ImageOverlayScreen({ src, className }: ImageOverlayScreenProps) 
         })}
         src={src || "/imageForm/imageEx.jpg"}
         alt="Imagem de perfil"
-        className="object-cover ring-4  ring-red-600 rounded-full"
+        className="object-cover ring-[3px] border-4 ring-blue-400 rounded-full"
         fill
         sizes="100%"
         priority

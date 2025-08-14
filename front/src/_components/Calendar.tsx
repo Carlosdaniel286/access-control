@@ -178,8 +178,8 @@ export function CalendarDemo({
         {label}
       </Label>
 
-      <Popover open={open}>
-        <PopoverTrigger asChild>
+      <Popover  open={open}>
+        <PopoverTrigger  asChild>
           <div
             className={cn(
               "h-[58px]",
@@ -244,7 +244,7 @@ export function CalendarDemo({
           </div>
         )}
 
-        <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+        <PopoverContent  className="w-auto overflow-hidden z-[1600] p-0" align="start">
           <Calendar
             mode="single"
             selected={calendarState.selectedDate ?? today}
