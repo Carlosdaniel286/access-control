@@ -83,14 +83,14 @@ export default function Login() {
             "
           >
             <InputMask
-              type="email"
+             
               className="h-[60px]"
               name="email"
               placeholder="Digite seu email"
             />
 
             <InputMask
-              type="password"
+             
               className="h-[60px]"
               name="password"
               placeholder="Digite sua senha"

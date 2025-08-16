@@ -7,6 +7,7 @@ import { Info } from "lucide-react";
 import { IMaskInput } from 'react-imask';
 import { cn } from "@/lib/utils";
 
+
 export function InputMask({
   name,
   placeholder,
@@ -17,57 +18,56 @@ export function InputMask({
   label,
   mask,
   onAccept,
-  onChange,
-  onBlur
-  // react-imask não usa, pode ignorar
+  onBlur,
+  onChange
+  // remova onChange, pois não é usado
 }: MaskedInputProps) {
   const { formInfo } = useFormError();
+  const typeString = /^[a-zA-Z\s]*$/;
+  const typeNumber = /^\d+$/
 
-  // react-imask chama onAccept quando o valor muda, passa valor já "unmasked"
+  let valueType;
 
-
-  function handleAccept(value: string) {
-    if (onAccept) {
-      // repassando só o valor "limpo"
-      onAccept(value);
-    }
-  }
-
-  function handleChanger(e: React.ChangeEvent<HTMLInputElement>) {
-    if (onChange) {
-      // repassando só o valor "limpo"
-      onChange(e);
-    }
-  }
+switch (mask) {
+  case 'number':
+    valueType = typeNumber;
+    break;
+  case 'string':
+    valueType = typeString;
+    break;
+ 
+  default:
+    valueType = mask // fallback
+}
+ 
+ 
   return (
     <div className="flex flex-col gap-2">
       {label !== undefined && (
-        <Label className="text-transform: uppercase">{label}</Label>
+        <Label className="uppercase">{label}</Label>
       )}
 
       <IMaskInput
-        onBlur={(() => {
-          onBlur?.(true)
-        })}
-        onFocus={() => {
-          onBlur?.(false)
-        }}
+        onBlur={() => onBlur?.(true)}
+        onFocus={() => onBlur?.(false)}
         className={cn(
           'inputMask',
           formInfo.hasError && 'border-red-500 ring-0',
-
           className
         )}
         id={id}
         name={name}
-        mask={mask || ''}
+        mask={valueType || ''}
         aria-label={ariaLabel}
         unmask={true}
         value={value}
+        onChange={onChange}
         placeholder={placeholder || "Digite algo..."}
-        onAccept={handleAccept}
-        onChange={handleChanger}
-
+        onAccept={(value) => {
+          if (onAccept) {
+            onAccept(value);
+          }
+        }}
       />
 
       {formInfo.hasError && (

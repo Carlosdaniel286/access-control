@@ -25,9 +25,9 @@ import {
 import ButtonAdd from "./ButtonAdd";
 import { useOverlay } from "@/contexts/OverlayContext";
 import { AccessAddressResident } from "@/types/valueForm";
-import { AutocompleteInput } from "./AutocompleteInput";
 import { FormHeader } from "./FormHeader";
 import React from "react";
+import { Autocomplete } from "./AutoComplete";
 
 export function DialogContentPerson({ onButtonClick }: DialogProps) {
   const [form, setForm] = useState(initValueForm);
@@ -102,20 +102,22 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
 
           {/* Endereço do Morador */}
           <Box className="h-[77px] md:col-span-2 md:row-start-2">
-            <AutocompleteInput
+            <Autocomplete
               label="Endereço do morador"
+              optionsItem="label"
               placeholder="Digite o endereço ou nome do morador..."
               options={optionsAccessAddressResident}
               getValue={(value: AccessAddressResident | null | string) => {
                 if (typeof value !== "string") return;
               }}
-              getOptionLabel={(option) => option.label}
+              
             />
           </Box>
 
           {/* Categoria de Visita */}
           <Box className="h-[77px] md:col-start-3 md:row-start-4">
             <SelectDemo
+            className="h-[55px]"
               placeholder="categoria da visita"
               label="Categoria de visita"
               options={optionsAccessProfile}
@@ -143,7 +145,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
           {/* Tipo de Registro */}
           <Box className="items-start py-4 md:col-start-3 md:row-start-5">
             <SelectDemo
-              sx={{ height: "58px" }}
+             className="h-[55px]"
               label="Tipo de registro"
               placeholder="tipo de registro"
               options={optionsAccessRegistration}
@@ -157,7 +159,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
           {/* Tipo de Acesso */}
           <Box className="items-end h-[77px] md:col-start-3 md:row-start-7">
             <SelectDemo
-              sx={{ height: "58px" }}
+            className="h-[55px]"
               label="Tipo de acesso"
               placeholder=" tipo de acesso"
               options={optionsAccessMode}
@@ -203,4 +205,3 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
     
   );
 }
-

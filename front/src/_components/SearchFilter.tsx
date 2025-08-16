@@ -1,12 +1,14 @@
 import { FormHeader } from "./FormHeader";
 import { Button } from "@/components/ui/button";
-import { AutocompleteInput } from "./AutocompleteInput";
-import { Box } from "./Box";
-//import { InputMask } from "./InputMask";
 
+import { Box } from "./Box";
+import { Autocomplete } from "./AutoComplete";
+//import { InputMask } from "./InputMask";
+//label="Nome" placeholder="Buscar por nome"
 export function SearchFilter() {
   return (
-    <article className="bg-white overflow-y-auto px-1.5 py-6 max-h-[100dvh] md:px-4 md:py-3 flex flex-col  w-[100dvw] h-[100dvh]  md:overflow-x-hidden   md:max-h-[500px]  md:max-w-[700px] md:rounded-md">
+   
+    <article className="bg-white  overflow-y-auto px-1.5 py-6  md:px-4 md:py-3 flex flex-col  w-[100dvw]   max-h-[96%]   md:overflow-x-hidden     md:max-w-[700px] md:rounded-md">
       <FormHeader
         title="Pesquisa Avançada"
         subtitle="Filtre os dados por critérios personalizados."
@@ -14,25 +16,34 @@ export function SearchFilter() {
       <form action="" className="grid gap-5">
         <div className="flex flex-col md:grid grid-cols-2  gap-4">
           <Box className="h-[77px] col-span-2 gap-4">
-            <AutocompleteInput label="Nome" placeholder="Buscar por nome" />
+            <Autocomplete  
+             options={[{id: '',label:'oii',ben:'ooo'}]}
+             optionsItem="ben"          
+             
+             />
           </Box>
 
           <Box className="h-[77px] gap-4">
-            <AutocompleteInput label="Senha" placeholder="Buscar por senha" />
+            <Autocomplete options={[]} label="Senha" placeholder="Buscar por senha" />
           </Box>
 
           <Box className="h-[77px] gap-4">
             <>
-              <AutocompleteInput label="CPF" placeholder="Buscar por CPF" />
+              <Autocomplete 
+               options={[]}
+              label="CPF" placeholder="Buscar por CPF" />
             </>
           </Box>
 
           <Box className="h-[77px] gap-4">
-            <AutocompleteInput label="Endereço" placeholder="Buscar por endereço" />
+            <Autocomplete label="Endereço" placeholder="Buscar por endereço" />
           </Box>
 
           <Box className="h-[77px] gap-4">
-            <AutocompleteInput label="Placa" placeholder="Buscar por placa" />
+            <Autocomplete label="Placa" placeholder="Buscar por placa" />
+          </Box>
+          <Box className="h-[77px] col-span-2 gap-4">
+            <Autocomplete label="Categoria" placeholder="Buscar por categoria" />
           </Box>
         </div>
 
@@ -50,5 +61,6 @@ export function SearchFilter() {
         </div>
       </form>
     </article>
+    
   );
 }

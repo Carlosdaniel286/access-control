@@ -18,7 +18,7 @@ export type HouseSearchAutocompleteProps<T extends { id: number | string }> = {
     type?:string
   };
 
-export function AutocompleteInput<T extends { id: number | string }>({ sx, options, disabled, getOptionLabel, placeholder ,label,getValue,freeSolo,type}: HouseSearchAutocompleteProps<T>) {
+export function AutocompleteInputs<T extends { id: number | string }>({ sx, options, disabled, getOptionLabel, placeholder ,label,getValue,freeSolo,type}: HouseSearchAutocompleteProps<T>) {
   const capitalize = (text?: string): string => {
     if (!text) return "Digite algo";
     return text.charAt(0).toUpperCase() + text.slice(1);

@@ -1,4 +1,4 @@
-import { SxProps } from "@mui/joy/styles/types"
+
 
 export type RenderSelect ={
     id:number
@@ -13,6 +13,6 @@ export type SelectOptions<T> ={
   placeholder?: string 
   getOptionLabel?: (option: T) => RenderSelect | null | string
   label?:string
-  sx?: SxProps
+  className?:string
 
 }

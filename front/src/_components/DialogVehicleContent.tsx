@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { InputMask } from "./InputMask";
 import { brandsCar, modelCar, motorcycleBrands, motorcycleModels, vehicleColors, vehicleTypes } from "@/constants/vehicleOptions";
-import { AutocompleteInput } from "./AutocompleteInput";
 import { FormHeader } from "./FormHeader";
 import { useState } from "react";
 import React from "react";
+import { Autocomplete } from "./AutoComplete";
 
 type VehicleCharacteristics = {
   color: string | null;
@@ -75,7 +75,7 @@ export function DialogVehicleContent({ onButtonClick }: DialogProps) {
 
         {/* Tipo */}
         <Box className="col-span-1  h-[77px]">
-          <AutocompleteInput
+          <Autocomplete
             label="tipo do veiculo"
             freeSolo={true}
             placeholder="tipo do veiculo"
@@ -88,42 +88,45 @@ export function DialogVehicleContent({ onButtonClick }: DialogProps) {
                 type
               }));
             }}
-            getOptionLabel={(options) => options.name}
+           
           />
         </Box>
 
         {/* Marca */}
         <Box className="col-span-2 h-[77px]">
-          <AutocompleteInput
+          <Autocomplete
             label="marca do veiculo"
+            optionsItem='name'
             freeSolo={true}
             disabled={isVehicleType}
             placeholder={`marca do/da ${vehicleType}`}
             options={vehicleCharacteristics.type !== 'Moto' ? brandsCar : motorcycleBrands}
-            getOptionLabel={(options) => options.name}
+            getValue={(options) => options.name}
           />
         </Box>
 
         {/* Modelo */}
         <Box className="col-span-2 h-[77px]">
-          <AutocompleteInput
+          <Autocomplete
             label="Modelo do veiculo"
+            optionsItem='name'
             disabled={isVehicleType}
             freeSolo={true}
             placeholder={`Modelo do/da ${vehicleType}`}
             options={vehicleCharacteristics.type !== 'Moto' ? modelCar : motorcycleModels}
-            getOptionLabel={(options) => options.name}
+            getValue={(options) => options.name}
           />
         </Box>
 
         {/* Cor */}
         <Box className="col-span-2 h-[77px]">
-          <AutocompleteInput
+          <Autocomplete
             label="Cor do veiculo"
+             optionsItem='name'
             freeSolo={true}
             placeholder={`cor do/da ${vehicleType}`}
             options={vehicleColors}
-            getOptionLabel={(options) => options.name}
+            getValue={(options) => options.name}
           />
         </Box>
 
