@@ -1,8 +1,6 @@
 "use client";
 
 // COMPONENTES INTERNOS
-
-import { Box } from "./Box";
 import { DatePicker } from "./DatePicker";
 import { InputMask } from "./InputMask";
 import { SelectDemo } from "./Select";
@@ -12,7 +10,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { DialogProps } from "@/types/dialogProps";
 import { ArrowRight } from "lucide-react";
-import {  useState } from "react";
+import { useState } from "react";
 
 import {
   initValueForm,
@@ -33,44 +31,67 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
   const [form, setForm] = useState(initValueForm);
   const { handleOpenOverlay, handleCloseOverlay } = useOverlay();
 
-
-
   return (
-    //scrollbar-thin
-      <div className="
+    <div className="
       bg-white
-       flex 
-       flex-col 
-       pb-10 
-       px-1
-       sm:px-5  
-       md:rounded-lg 
-       md:shadow-lg
-       w-full
-       sm:max-w-[98vw]   
-       lg:max-w-[1100px]    
-       3xl:max-w-[1300px] 
-       4xl:max-w-[1400px]
-       
-       ">
-       {/* Cabeçalho */}
-        <FormHeader
-          title="Cadastro de Visitantes"
-          subtitle="Preencha as informações abaixo para cadastrar um novo visitante."
-        />
+      flex 
+      flex-col 
+      pb-10 
+      px-2
+      md:rounded-2xl 
+      md:shadow-lg
+      w-full
+      lg:max-w-[1000px]    
+      3xl:max-w-[1300px] 
+      4xl:max-w-[1400px]
+    ">
+      {/* Cabeçalho */}
+      <FormHeader
+        title="Cadastro de Visitantes"
+        subtitle="Preencha as informações abaixo para cadastrar um novo visitante."
+      />
 
-        {/* Formulário */}
-        <div
-          className="
-            flex flex-col gap-8 h-full  
-            md:grid md:grid-cols-3 
-            md:gap-8
-            md:[grid-template-rows:repeat(5,77px)_auto_auto]
-          "
-        >
-          {/* Imagem */}
-          <div className="flex md:flex-row-reverse md:col-start-3   md:row-start-1 md:row-span-2">
-            <figure className="bg-gray-400 min-h-[140px] w-[100%] max-w-[160px]  md:max-w-[200px]  relative overflow-hidden h-full rounded-md">
+      {/* Formulário */}
+      <div className=" flex  flex-col-reverse lg:flex-row ">
+        
+        <div className="flex-1 gap-6  p-4 flex flex-col">
+          <div className="h-[77px] ">
+            <InputMask
+              className="w-[100%]"
+              label="nome completo"
+             placeholder="Digite o nome completo"
+              mask={/^[a-zA-Z\s]*$/}
+              
+            />
+          </div>
+
+          <div className="h-[77px]">
+            <Autocomplete
+              label="Endereço do morador"
+              optionsItem="label"
+              placeholder="Digite o endereço ou nome do morador..."
+              options={optionsAccessAddressResident}
+              getValue={(value: AccessAddressResident | null | string) => {
+                if (typeof value !== "string") return;
+              }}
+            />
+          </div>
+
+          <div className=" sm:max-w-[250px]">
+            <DatePicker />
+          </div>
+
+          <div className="h-[60px] flex justify-center sm:justify-normal ">
+            <ButtonAdd
+            className="w-full sm:w-auto  "
+              setIsOpen={() => handleOpenOverlay("textArea")}
+            />
+          </div>
+        </div>
+
+        <div className=" lg:w-[27%] flex flex-col gap-6 p-3.5">
+          <div className="flex md:flex-row-reverse">
+            <figure className="bg-gray-400 min-h-[140px] w-[100%] max-w-[160px] md:max-w-[200px] relative overflow-hidden h-full rounded-md">
               <Image
                 src="/imageForm/imageEx.jpg"
                 className="object-cover"
@@ -81,43 +102,17 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
             </figure>
           </div>
 
-          {/* Nome Completo */}
-          <Box className="h-[77px] md:col-span-2 md:row-start-1">
-            <InputMask
-              className="inputMask"
-              label="nome completo"
-              placeholder="Digite o nome completo"
-              mask={/^[a-zA-Z\s]*$/}
-            />
-          </Box>
-
-          {/* CPF */}
-          <Box className="h-[77px] md:col-start-3 md:row-start-3">
+          <div className="h-[77px] ">
             <InputMask
               mask="000.000.000-00"
               label="CPF"
               placeholder="Digite o CPF"
             />
-          </Box>
+          </div>
 
-          {/* Endereço do Morador */}
-          <Box className="h-[77px] md:col-span-2 md:row-start-2">
-            <Autocomplete
-              label="Endereço do morador"
-              optionsItem="label"
-              placeholder="Digite o endereço ou nome do morador..."
-              options={optionsAccessAddressResident}
-              getValue={(value: AccessAddressResident | null | string) => {
-                if (typeof value !== "string") return;
-              }}
-              
-            />
-          </Box>
-
-          {/* Categoria de Visita */}
-          <Box className="h-[77px] md:col-start-3 md:row-start-4">
+          <div className="h-[77px]">
             <SelectDemo
-            className="h-[55px]"
+              className="h-[55px]"
               placeholder="categoria da visita"
               label="Categoria de visita"
               options={optionsAccessProfile}
@@ -126,26 +121,11 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
                 return { id, label, value };
               }}
             />
-          </Box>
+          </div>
 
-          {/* Data */}
-          <Box className="md:col-span-2 md:row-start-3 md:row-span-3">
-            <DatePicker />
-          </Box>
-
-          {/* Observação */}
-          <Box className="max-h-[60px] md:col-span-2 md:row-start-6 md:row-span-2">
-            <ButtonAdd
-              setIsOpen={() => {
-                handleOpenOverlay("textArea");
-              }}
-            />
-          </Box>
-
-          {/* Tipo de Registro */}
-          <Box className="items-start py-4 md:col-start-3 md:row-start-5">
+          <div className="items-start py-4">
             <SelectDemo
-             className="h-[55px]"
+              className="h-[55px]"
               label="Tipo de registro"
               placeholder="tipo de registro"
               options={optionsAccessRegistration}
@@ -154,12 +134,11 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
                 return { id, label, value };
               }}
             />
-          </Box>
+          </div>
 
-          {/* Tipo de Acesso */}
-          <Box className="items-end h-[77px] md:col-start-3 md:row-start-7">
+          <div className="h-[77px]">
             <SelectDemo
-            className="h-[55px]"
+              className="h-[55px]"
               label="Tipo de acesso"
               placeholder=" tipo de acesso"
               options={optionsAccessMode}
@@ -171,37 +150,37 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
                 return null;
               }}
             />
-          </Box>
+          </div>
         </div>
-
-        {/* Rodapé */}
-        <footer className="mt-6 flex justify-between items-center gap-4">
-          <Button
-            className="cursor-pointer uppercase"
-            type="button"
-            variant="outline"
-            onClick={() => handleCloseOverlay("register")}
-          >
-            Cancelar
-          </Button>
-
-          {form.accessMode?.value !== "veiculo" &&
-          form.accessMode?.value !== "passageiro" ? (
-            <Button className="cursor-pointer uppercase" type="submit">
-              Cadastrar
-            </Button>
-          ) : (
-            <ArrowRight
-              absoluteStrokeWidth
-              className="bg-gray-400 hover:bg-black cursor-pointer rounded-sm"
-              height={40}
-              width={50}
-              color="white"
-              onClick={onButtonClick}
-            />
-          )}
-        </footer>
       </div>
-    
+
+      {/* Rodapé */}
+      <footer className="mt-6 px-3.5 flex  justify-between items-center gap-4">
+        <Button
+          className="cursor-pointer uppercase"
+          type="button"
+          variant="outline"
+          onClick={() => handleCloseOverlay("register")}
+        >
+          Cancelar
+        </Button>
+
+        {form.accessMode?.value !== "veiculo" &&
+        form.accessMode?.value !== "passageiro" ? (
+          <Button className="cursor-pointer uppercase" type="submit">
+            Cadastrar
+          </Button>
+        ) : (
+          <ArrowRight
+            absoluteStrokeWidth
+            className="bg-gray-400 hover:bg-black cursor-pointer rounded-sm"
+            height={40}
+            width={50}
+            color="white"
+            onClick={onButtonClick}
+          />
+        )}
+      </footer>
+    </div>
   );
 }

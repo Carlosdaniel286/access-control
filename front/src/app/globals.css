@@ -130,12 +130,11 @@
 @layer components {
   .inputMask{
     @apply
-   border-2 
+   border-0 
+ bg-gray-100 
+   rounded-lg
    py-[10px] 
-   border-solid 
    px-2 
-   border-gray-300 
-   rounded-sm 
    w-full 
    hover:ring-black 
    hover:ring-[3px] 
@@ -143,6 +142,8 @@
    focus:outline-none
    h-full
    uppercase
+   text-black
+   placeholder-black
     }
   .widgets{
     @apply

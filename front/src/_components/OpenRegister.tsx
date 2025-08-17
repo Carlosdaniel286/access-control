@@ -24,10 +24,12 @@ const handleApiReady = useCallback((api: {
 
 
 return (
-    <Overlay>
+    <Overlay
+    className="bg-white md:bg-transparent"
+    >
      <form action="">
         <Carousel
-        className="bg-white md:bg-transparent"
+        className=""
          onClickOvelay={(()=>{
           handleCloseOverlay("register")
         })}

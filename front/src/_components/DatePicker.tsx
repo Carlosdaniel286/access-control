@@ -53,7 +53,7 @@ export function DatePicker({ getDateFull }: DatePickerProps) {
   }, [date]);
 
   return (
-    <div className="gap-3 flex flex-col max-w-[250px]">
+    <div className="gap-3 flex flex-col ">
       <CalendarDemo
         label="Data inicial"
         dateType="start"

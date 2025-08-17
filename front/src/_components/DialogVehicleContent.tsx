@@ -35,7 +35,6 @@ export function DialogVehicleContent({ onButtonClick }: DialogProps) {
     <div className="
     bg-white 
     w-screen 
-    
     sm:max-w-[98vw]   
     lg:max-w-[900px]    
     3xl:max-w-[1000px] 

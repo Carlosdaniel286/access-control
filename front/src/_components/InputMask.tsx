@@ -42,18 +42,21 @@ switch (mask) {
  
  
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex w-full h-full   flex-col gap-2">
       {label !== undefined && (
         <Label className="uppercase">{label}</Label>
       )}
 
       <IMaskInput
+       style={{color:'black'}}
+       
         onBlur={() => onBlur?.(true)}
         onFocus={() => onBlur?.(false)}
         className={cn(
           'inputMask',
-          formInfo.hasError && 'border-red-500 ring-0',
-          className
+         formInfo.hasError && 'border-red-500 ring-0',
+          className,
+          
         )}
         id={id}
         name={name}

@@ -182,11 +182,7 @@ export function CalendarDemo({
         <PopoverTrigger  asChild>
           <div
             className={cn(
-              "h-[58px]",
-              "flex justify-between items-center font-normal",
-              "border-2 border-solid border-gray-300",
-              "hover:ring-[3px] hover:ring-black hover:border-transparent",
-              "focus:outline-none rounded-sm"
+             'flex items-center gap-3 inputMask h-[58px]'
             )}
           >
             <div

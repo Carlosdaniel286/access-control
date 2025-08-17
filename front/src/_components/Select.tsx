@@ -11,7 +11,6 @@ const initRender: RenderSelect = {
 export function SelectDemo<T>({
   value,
   options,
-  placeholder,
   getOptionLabel,
   label,
   className
@@ -48,24 +47,13 @@ export function SelectDemo<T>({
           value={value}
           onChange={handleChange}
           className={cn(
-          "border-2 border-solid border-gray-300",
-          "py-2.5 px-2",
-          "text-gray-600",
-          "rounded-sm",
-          "w-full h-full",
-          "outline-none focus:outline-none",
-          "hover:border-transparent hover:shadow-[0_0_0_3px_black]",
-          "uppercase",
+         'inputMask',
           className
       )}
         >
-          {placeholder && (
-            <option value="" disabled>
-              {placeholder.toUpperCase()}
-            </option>
-          )}
+          
           {selectOptions.map((item, index) => (
-            <option  key={`${item.id}-${index}`} value={item.value}>
+            <option className="inputMask" key={`${item.id}-${index}`} value={item.value} >
               {item.label.toUpperCase()}
             </option>
           ))}

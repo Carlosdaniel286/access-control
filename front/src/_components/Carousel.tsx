@@ -53,9 +53,9 @@ export function Carousel({ onApiReady, showButtons = true, children,onClickOvela
         ref={containerRef}
         aria-label="Carousel de diálogos"
         className={cn(
-          "w-full mx-auto  h-screen flex items-center justify-center",
+          " mx-auto w-screen  flex items-center justify-center",
           "scroll-smooth overflow-hidden snap-x snap-mandatory",
-           className
+          className
         )}
       >
         <div role="group" aria-label="Slides do carrossel" className="flex  w-full">
@@ -73,7 +73,7 @@ export function Carousel({ onApiReady, showButtons = true, children,onClickOvela
                   onClickOvelay?.()
                 }
               
-              })} className="w-full  overflow-hidden flex items-center justify-center p-4">
+              })} className="w-full  overflow-hidden flex items-center justify-center md:p-4">
                 {DialogComponent}
               </div>
             </article>
