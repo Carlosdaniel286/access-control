@@ -129,7 +129,7 @@ useEffect(() => {
           ref={dropdownRef}
           style={{ width }}
           className={cn(
-            "absolute top-full left-0 z-10 border-2 border-gray-200 bg-gray-50 flex flex-col max-h-[200px] gap-1 p-1 overflow-y-auto mt-2",
+            "absolute mt-2 bottom-full sm:top-full sm:bottom-auto sm:left-0  z-[1800] border-2 border-gray-200 bg-gray-50 flex flex-col max-h-[200px] gap-1 p-1 overflow-y-auto ",
             className
           )}
         >

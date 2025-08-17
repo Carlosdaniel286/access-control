@@ -71,7 +71,7 @@ export function DaysDifferenceInput({ startDate, endDate, countDay, onChange }: 
             if (!ev) return;
             handleValueInput(ev.target.value);
           }}
-          className={`max-w-[80px] text-center ${formInfo.hasError ? 'border-red-500 ring-0' : ''}`}
+          className={`max-w-[80px] min-h-auto text-center ${formInfo.hasError ? 'border-red-500 ring-0' : ''}`}
           placeholder="Dias"
         />
       </div>

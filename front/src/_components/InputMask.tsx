@@ -6,6 +6,7 @@ import { useFormError } from "@/hooks/useFormError";
 import { Info } from "lucide-react";
 import { IMaskInput } from 'react-imask';
 import { cn } from "@/lib/utils";
+import { FocusOverlay } from "./FocusOverlay";
 
 
 export function InputMask({
@@ -42,7 +43,8 @@ switch (mask) {
  
  
   return (
-    <div className="flex w-full h-full   flex-col gap-2">
+    <FocusOverlay>
+    <div className="flex w-full  h-full  flex-col gap-2">
       {label !== undefined && (
         <Label className="uppercase">{label}</Label>
       )}
@@ -53,7 +55,8 @@ switch (mask) {
         onBlur={() => onBlur?.(true)}
         onFocus={() => onBlur?.(false)}
         className={cn(
-          'inputMask',
+          'min-h-[58px]',
+           'inputMask',
          formInfo.hasError && 'border-red-500 ring-0',
           className,
           
@@ -82,5 +85,6 @@ switch (mask) {
         </div>
       )}
     </div>
+    </FocusOverlay>
   );
 }

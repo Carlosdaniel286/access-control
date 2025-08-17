@@ -19,8 +19,8 @@ export function FocusOverlay({children}:FocusOverlayProps) {
          setActiveOverlay(false)
      })}
       >
-      <article className=" w-screen  overflow-y-auto p-2">
-        <div  className="bg-white px-4 py-3 rounded-lg">
+      <article className=" flex items-center  w-screen h-screen  overflow-y-auto p-2">
+        <div  className="bg-white  px-4 w-full py-3 rounded-lg">
             {children}
           <div className=" flex  pt-5  flex-row-reverse ">
             <Button onClick={() => {
@@ -34,10 +34,10 @@ export function FocusOverlay({children}:FocusOverlayProps) {
     </Overlay>
   ):(
     <>
-     <div className="block sm:hidden" onClick={(()=>{
+     <div className="block sm:hidden h-full  " onClick={(()=>{
         setActiveOverlay(true)
     })}>{children}</div>
-     <div className="hidden sm:block">{children}</div>
+     <div className="hidden h-full  sm:block">{children}</div>
     </>
   )
 )

@@ -8,8 +8,6 @@ import Image from "next/image";
 import ButtonAdd from "./ButtonAdd";
 import { FormHeader } from "./FormHeader";
 import { Autocomplete } from "./AutoComplete";
-import { FocusOverlay } from "./FocusOverlay";
-
 // COMPONENTES EXTERNOS / UI
 import { Button } from "@/components/ui/button";
 import { DialogProps } from "@/types/dialogProps";
@@ -71,31 +69,34 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
         </div>
 
         {/* Nome completo */}
-        <FocusOverlay>
-          <div className="h-[77px] col-span-2 col-start-1 row-start-1">
+        
+          <div className=" col-span-2 col-start-1 row-start-1">
+            
             <InputMask
-              className="w-full"
+              className="w-full "
               label="nome completo"
               placeholder="Digite o nome completo"
               mask={/^[a-zA-Z\s]*$/}
             />
+            
           </div>
-        </FocusOverlay>
+        
 
         {/* CPF */}
-        <FocusOverlay>
-          <div className="h-[77px] row-start-3 col-start-3">
+        
+          <div className=" row-start-3 col-start-3">
             <InputMask
               mask="000.000.000-00"
               label="CPF"
               placeholder="Digite o CPF"
             />
           </div>
-        </FocusOverlay>
+        
 
         {/* Endereço do morador */}
-        <FocusOverlay>
+        
           <div className="col-span-2 row-start-2 col-start-1">
+            
             <Autocomplete
               label="Endereço do morador"
               optionsItem="label"
@@ -105,15 +106,16 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
                 if (typeof value !== "string") return;
               }}
             />
+            
           </div>
-        </FocusOverlay>
+        
 
         {/* Data */}
-        <FocusOverlay>
+        
           <div className="row-span-3 col-start-1 row-start-3 sm:max-w-[250px]">
             <DatePicker />
           </div>
-        </FocusOverlay>
+        
 
         {/* Categoria de visita */}
         <div className="h-[77px] col-start-3 row-start-4">
