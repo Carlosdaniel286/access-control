@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { CalendarDemo } from "./Calendar";
-import { InputDatePicker } from "./InputDatePicker";
+import { DaysDifferenceInput} from "./DaysDifferenceInput";
 import { startOfDay } from "date-fns";
 
 type DateInfo = {
@@ -71,7 +71,7 @@ export function DatePicker({ getDateFull }: DatePickerProps) {
         valueDay={date.valueDay}
         getDateEnd={handleDateEnd}
       />
-      <InputDatePicker
+      <DaysDifferenceInput
         startDate={date.dateStart}
         endDate={date.dateEnd}
         onChange={handleValueDay}

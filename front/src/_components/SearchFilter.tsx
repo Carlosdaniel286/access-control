@@ -1,10 +1,9 @@
+'use client'
 import { FormHeader } from "./FormHeader";
 import { Button } from "@/components/ui/button";
 
 import { Box } from "./Box";
 import { Autocomplete } from "./AutoComplete";
-//import { InputMask } from "./InputMask";
-//label="Nome" placeholder="Buscar por nome"
 export function SearchFilter() {
   return (
    
@@ -24,13 +23,13 @@ export function SearchFilter() {
           </Box>
 
           <Box className="h-[77px] gap-4">
-            <Autocomplete options={[]} label="Senha" placeholder="Buscar por senha" />
+            <Autocomplete  label="Senha" placeholder="Buscar por senha" />
           </Box>
 
           <Box className="h-[77px] gap-4">
             <>
               <Autocomplete 
-               options={[]}
+               
               label="CPF" placeholder="Buscar por CPF" />
             </>
           </Box>

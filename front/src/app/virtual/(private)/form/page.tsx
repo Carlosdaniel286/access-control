@@ -1,13 +1,6 @@
-'use client'
-import { DialogContentPerson } from "@/_components/DialogContentPerson"
+
+import { FocusOverlay } from "@/_components/FocusOverlay"
 export default function Form() {
-   return (
-      <div className="bg-white w-full overflow-auto ">
-        <DialogContentPerson
-      
-      />
-      </div>
-     
-   )
+   return (<FocusOverlay><div></div></FocusOverlay>)
 
 }

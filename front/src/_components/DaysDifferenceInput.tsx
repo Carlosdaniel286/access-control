@@ -7,7 +7,7 @@ import { DatePicker } from "@/types/datePiker";
 import { useFormError } from "@/hooks/useFormError";
 import { InputMask } from "./InputMask";
 
-function InputDatePickerComponent({ startDate, endDate, countDay, onChange }: DatePicker) {
+export function DaysDifferenceInput({ startDate, endDate, countDay, onChange }: DatePicker) {
   const onToday = startOfDay(new Date());
   const [valueInput, setValueInput] = useState<string>("0");
   const { formInfo, handleError } = useFormError();
@@ -71,7 +71,7 @@ function InputDatePickerComponent({ startDate, endDate, countDay, onChange }: Da
             if (!ev) return;
             handleValueInput(ev.target.value);
           }}
-          className={`max-w-[50px]  ${formInfo.hasError ? 'border-red-500 ring-0' : ''}`}
+          className={`max-w-[80px] text-center ${formInfo.hasError ? 'border-red-500 ring-0' : ''}`}
           placeholder="Dias"
         />
       </div>
@@ -80,4 +80,4 @@ function InputDatePickerComponent({ startDate, endDate, countDay, onChange }: Da
 }
 
 // Memoiza o componente para evitar re-renderizações desnecessárias
-export const InputDatePicker = React.memo(InputDatePickerComponent);
+

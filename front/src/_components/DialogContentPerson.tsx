@@ -5,13 +5,19 @@ import { DatePicker } from "./DatePicker";
 import { InputMask } from "./InputMask";
 import { SelectDemo } from "./Select";
 import Image from "next/image";
+import ButtonAdd from "./ButtonAdd";
+import { FormHeader } from "./FormHeader";
+import { Autocomplete } from "./AutoComplete";
+import { FocusOverlay } from "./FocusOverlay";
 
 // COMPONENTES EXTERNOS / UI
 import { Button } from "@/components/ui/button";
 import { DialogProps } from "@/types/dialogProps";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
+import { useOverlay } from "@/contexts/OverlayContext";
 
+// CONSTANTES E TIPOS
 import {
   initValueForm,
   optionsAccessAddressResident,
@@ -19,32 +25,30 @@ import {
   optionsAccessProfile,
   optionsAccessRegistration,
 } from "@/constants/accessOptions";
-
-import ButtonAdd from "./ButtonAdd";
-import { useOverlay } from "@/contexts/OverlayContext";
 import { AccessAddressResident } from "@/types/valueForm";
-import { FormHeader } from "./FormHeader";
 import React from "react";
-import { Autocomplete } from "./AutoComplete";
 
 export function DialogContentPerson({ onButtonClick }: DialogProps) {
   const [form, setForm] = useState(initValueForm);
   const { handleOpenOverlay, handleCloseOverlay } = useOverlay();
 
   return (
-    <div className="
-      bg-white
-      flex 
-      flex-col 
-      pb-10 
-      px-2
-      md:rounded-2xl 
-      md:shadow-lg
-      w-full
-      lg:max-w-[1000px]    
-      3xl:max-w-[1300px] 
-      4xl:max-w-[1400px]
-    ">
+    <div
+      className="
+        bg-white
+        flex 
+        flex-col 
+        pb-10 
+        px-2.5
+        sm:px-4
+        md:rounded-2xl 
+        md:shadow-lg
+        w-full
+        lg:max-w-[1000px]    
+        3xl:max-w-[1300px] 
+        4xl:max-w-[1400px]
+      "
+    >
       {/* Cabeçalho */}
       <FormHeader
         title="Cadastro de Visitantes"
@@ -52,20 +56,46 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
       />
 
       {/* Formulário */}
-      <div className=" flex  flex-col-reverse lg:flex-row ">
-        
-        <div className="flex-1 gap-6  p-4 flex flex-col">
-          <div className="h-[77px] ">
+      <div className="flex flex-col md:grid grid-cols-3 gap-7">
+        {/* Foto */}
+        <div className="flex row-span-2 row-start-1 col-start-3 col-span-1">
+          <figure className="bg-gray-400 min-h-[140px] w-full max-w-[200px] md:max-w-full relative overflow-hidden h-full rounded-md">
+            <Image
+              src="/imageForm/imageEx.jpg"
+              className="object-cover"
+              alt="Profile"
+              sizes="100%"
+              fill
+            />
+          </figure>
+        </div>
+
+        {/* Nome completo */}
+        <FocusOverlay>
+          <div className="h-[77px] col-span-2 col-start-1 row-start-1">
             <InputMask
-              className="w-[100%]"
+              className="w-full"
               label="nome completo"
-             placeholder="Digite o nome completo"
+              placeholder="Digite o nome completo"
               mask={/^[a-zA-Z\s]*$/}
-              
             />
           </div>
+        </FocusOverlay>
 
-          <div className="h-[77px]">
+        {/* CPF */}
+        <FocusOverlay>
+          <div className="h-[77px] row-start-3 col-start-3">
+            <InputMask
+              mask="000.000.000-00"
+              label="CPF"
+              placeholder="Digite o CPF"
+            />
+          </div>
+        </FocusOverlay>
+
+        {/* Endereço do morador */}
+        <FocusOverlay>
+          <div className="col-span-2 row-start-2 col-start-1">
             <Autocomplete
               label="Endereço do morador"
               optionsItem="label"
@@ -76,86 +106,71 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
               }}
             />
           </div>
+        </FocusOverlay>
 
-          <div className=" sm:max-w-[250px]">
+        {/* Data */}
+        <FocusOverlay>
+          <div className="row-span-3 col-start-1 row-start-3 sm:max-w-[250px]">
             <DatePicker />
           </div>
+        </FocusOverlay>
 
-          <div className="h-[60px] flex justify-center sm:justify-normal ">
-            <ButtonAdd
-            className="w-full sm:w-auto  "
-              setIsOpen={() => handleOpenOverlay("textArea")}
-            />
-          </div>
+        {/* Categoria de visita */}
+        <div className="h-[77px] col-start-3 row-start-4">
+          <SelectDemo
+            className="h-[55px]"
+            placeholder="categoria da visita"
+            label="Categoria de visita"
+            options={optionsAccessProfile}
+            getOptionLabel={(option) => {
+              const { id, label, value } = option;
+              return { id, label, value };
+            }}
+          />
         </div>
 
-        <div className=" lg:w-[27%] flex flex-col gap-6 p-3.5">
-          <div className="flex md:flex-row-reverse">
-            <figure className="bg-gray-400 min-h-[140px] w-[100%] max-w-[160px] md:max-w-[200px] relative overflow-hidden h-full rounded-md">
-              <Image
-                src="/imageForm/imageEx.jpg"
-                className="object-cover"
-                alt="Profile"
-                sizes="100%"
-                fill
-              />
-            </figure>
-          </div>
+        {/* Tipo de registro */}
+        <div className="row-start-6 col-start-3 py-4">
+          <SelectDemo
+            className="h-[55px]"
+            label="Tipo de registro"
+            placeholder="tipo de registro"
+            options={optionsAccessRegistration}
+            getOptionLabel={(option) => {
+              const { id, label, value } = option;
+              return { id, label, value };
+            }}
+          />
+        </div>
 
-          <div className="h-[77px] ">
-            <InputMask
-              mask="000.000.000-00"
-              label="CPF"
-              placeholder="Digite o CPF"
-            />
-          </div>
+        {/* Tipo de acesso */}
+        <div className="h-[77px] col-start-3 row-start-5">
+          <SelectDemo
+            className="h-[55px]"
+            label="Tipo de acesso"
+            placeholder="tipo de acesso"
+            options={optionsAccessMode}
+            getOptionLabel={(option) => {
+              setForm((prev) => ({
+                ...prev,
+                accessMode: option,
+              }));
+              return null;
+            }}
+          />
+        </div>
 
-          <div className="h-[77px]">
-            <SelectDemo
-              className="h-[55px]"
-              placeholder="categoria da visita"
-              label="Categoria de visita"
-              options={optionsAccessProfile}
-              getOptionLabel={(option) => {
-                const { id, label, value } = option;
-                return { id, label, value };
-              }}
-            />
-          </div>
-
-          <div className="items-start py-4">
-            <SelectDemo
-              className="h-[55px]"
-              label="Tipo de registro"
-              placeholder="tipo de registro"
-              options={optionsAccessRegistration}
-              getOptionLabel={(option) => {
-                const { id, label, value } = option;
-                return { id, label, value };
-              }}
-            />
-          </div>
-
-          <div className="h-[77px]">
-            <SelectDemo
-              className="h-[55px]"
-              label="Tipo de acesso"
-              placeholder=" tipo de acesso"
-              options={optionsAccessMode}
-              getOptionLabel={(option) => {
-                setForm((prev) => ({
-                  ...prev,
-                  accessMode: option,
-                }));
-                return null;
-              }}
-            />
-          </div>
+        {/* Observações */}
+        <div className="h-[60px] mt-2.5 col-start-1 row-start-6 flex justify-center sm:justify-normal">
+          <ButtonAdd
+            className="w-full sm:w-auto md:text-[0.86rem] lg:text-[1rem]"
+            setIsOpen={() => handleOpenOverlay("textArea")}
+          />
         </div>
       </div>
 
       {/* Rodapé */}
-      <footer className="mt-6 px-3.5 flex  justify-between items-center gap-4">
+      <footer className="mt-6 px-3.5 flex justify-between items-center gap-4">
         <Button
           className="cursor-pointer uppercase"
           type="button"

@@ -39,8 +39,9 @@ export function DialogVehicleContent({ onButtonClick }: DialogProps) {
     lg:max-w-[900px]    
     3xl:max-w-[1000px] 
     4xl:max-w-[1100px]
-    px-1 
-    sm:px-3.5 py-5 
+    px-2.5
+    sm:px-3.5 
+    py-5 
     md:rounded-lg 
     md:shadow-lg">
       <FormHeader

@@ -21,8 +21,10 @@ type AutocompleteProps<T extends OptionType> = {
   mask?: any | 'string' | 'number';
 };
 
+
+
 export function Autocomplete<T extends OptionType>({
-  options = [],
+  options,
   className,
   label,
   placeholder,
@@ -36,7 +38,7 @@ export function Autocomplete<T extends OptionType>({
   const { width, ref } = useResizeDetector();
   const dropdownRef = useRef<HTMLUListElement>(null);
   const debouncedInputValue = useDebounce(inputValue, 300);
-
+ 
   // Hook para detectar cliques fora do componente
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -50,13 +52,15 @@ export function Autocomplete<T extends OptionType>({
     };
   }, [ref]);
 
+  
+
   // Efeito para filtrar as opções com debounce
-  useEffect(() => {
+useEffect(() => {
+   if(!options) return
     if (debouncedInputValue.trim() === "") {
-      setFilteredOptions([]);
+       setFilteredOptions([]);
       return;
     }
-
     const newFilteredOptions = options.filter((item) => {
       // Usa a prop 'optionsItem' para acessar a chave dinâmica e garante que ela seja uma string
       const optionValue = item[optionsItem as keyof T];
@@ -66,9 +70,13 @@ export function Autocomplete<T extends OptionType>({
       return false;
     });
 
-    setFilteredOptions(newFilteredOptions);
-  }, [debouncedInputValue, options, optionsItem]);
+   setFilteredOptions(newFilteredOptions);
+   }, [debouncedInputValue,options,optionsItem]);
 
+  
+  
+  
+  
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
     setIsDropdownOpen(true);
