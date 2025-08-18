@@ -25,7 +25,7 @@ const handleApiReady = useCallback((api: {
 
 return (
     <Overlay
-    className="bg-white md:bg-transparent"
+     className="bg-white py-4 md:p-0 md:bg-transparent"
     >
      <form action="">
         <Carousel

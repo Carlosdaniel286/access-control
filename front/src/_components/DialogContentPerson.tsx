@@ -25,6 +25,7 @@ import {
 } from "@/constants/accessOptions";
 import { AccessAddressResident } from "@/types/valueForm";
 import React from "react";
+import { FocusOverlay } from "./FocusOverlay";
 
 export function DialogContentPerson({ onButtonClick }: DialogProps) {
   const [form, setForm] = useState(initValueForm);
@@ -36,8 +37,11 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
         bg-white
         flex 
         flex-col 
+        py-4
         pb-10 
-        px-2.5
+        my-10
+        md:my-0
+        px-4
         sm:px-4
         md:rounded-2xl 
         md:shadow-lg
@@ -94,9 +98,8 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
         
 
         {/* Endereço do morador */}
-        
-          <div className="col-span-2 row-start-2 col-start-1">
-            
+         <FocusOverlay disableScreenEnd={false} className="col-span-2 row-start-2 col-start-1">
+          <div >
             <Autocomplete
               label="Endereço do morador"
               optionsItem="label"
@@ -108,7 +111,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
             />
             
           </div>
-        
+        </FocusOverlay>
 
         {/* Data */}
         

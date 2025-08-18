@@ -34,14 +34,18 @@ export function DialogVehicleContent({ onButtonClick }: DialogProps) {
   return (
     <div className="
     bg-white 
-    w-screen 
+     w-screen 
+     my-10
+     h-[102vh]
+     md:h-auto
+     md:my-0
     sm:max-w-[98vw]   
     lg:max-w-[900px]    
     3xl:max-w-[1000px] 
     4xl:max-w-[1100px]
     px-2.5
+    py-5
     sm:px-3.5 
-    py-5 
     md:rounded-lg 
     md:shadow-lg">
       <FormHeader
@@ -53,7 +57,7 @@ export function DialogVehicleContent({ onButtonClick }: DialogProps) {
       <div className=" flex flex-col sm:grid grid-cols-1 sm:grid-cols-2 gap-8 auto-rows-[80px]">
         
         {/* Placa */}
-        <Box className="col-span-1 h-[77px]">
+        <Box className="col-span-1  h-[77px]">
           <InputMask
             className=""
             textMode="uppercase"

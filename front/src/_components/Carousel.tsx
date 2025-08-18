@@ -53,7 +53,7 @@ export function Carousel({ onApiReady, showButtons = true, children,onClickOvela
         ref={containerRef}
         aria-label="Carousel de diálogos"
         className={cn(
-          " mx-auto w-screen  flex items-center justify-center",
+          "mx-auto w-screen  flex items-center justify-center",
           "scroll-smooth overflow-hidden snap-x snap-mandatory",
           className
         )}

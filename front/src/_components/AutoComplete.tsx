@@ -1,13 +1,13 @@
 'use client'
 
-import { ChangeEvent, useEffect, useState, useRef } from "react";
-import { InputMask } from "./InputMask";
+import { ChangeEvent, useEffect, useState, useRef, RefObject } from "react";
+import { IMaskInput } from 'react-imask'
 import { cn } from "@/lib/utils";
 import { useResizeDetector } from "react-resize-detector";
 import { useDebounce } from "@uidotdev/usehooks";
+import { Label } from "@/components/ui/label";
 
 type OptionType = { id: number | string };
-
 type AutocompleteProps<T extends OptionType> = {
   className?: string;
   options?: T[];
@@ -21,7 +21,46 @@ type AutocompleteProps<T extends OptionType> = {
   mask?: any | 'string' | 'number';
 };
 
+type AutocompleteDropdownProps<T extends OptionType> = {
+  options?: T[];
+  handleOptionClick: (option: T) => void;
+  handleOptions: (option: T) => React.ReactNode;
+  className?: string;
+  dropdownRef?: RefObject<HTMLUListElement | null>
+  width: number | undefined;
+};
 
+ function AutocompleteDropdown<T extends OptionType>({
+  options,
+  handleOptionClick,
+  handleOptions,
+  className,
+  dropdownRef,
+  width,
+}: AutocompleteDropdownProps<T>) {
+
+
+  return (
+    <ul
+      ref={dropdownRef}
+      style={{ width }}
+      className={cn(
+        "sm:mt-2 sm:absolute mb-3 z-[1600] sm:top-full sm:left-0 border-2 border-gray-200 bg-gray-50 flex flex-col max-h-[190px] sm:max-h-[250px] gap-1 p-1 overflow-y-auto",
+        className
+      )}
+    >
+      {options?.map((option) => (
+        <li
+          onClick={() => handleOptionClick(option)}
+          key={option.id}
+          className="p-1.5 cursor-pointer hover:bg-gray-100"
+        >
+          {handleOptions(option)}
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export function Autocomplete<T extends OptionType>({
   options,
@@ -55,7 +94,7 @@ export function Autocomplete<T extends OptionType>({
   
 
   // Efeito para filtrar as opções com debounce
-useEffect(() => {
+  useEffect(() => {
    if(!options) return
     if (debouncedInputValue.trim() === "") {
        setFilteredOptions([]);
@@ -104,46 +143,42 @@ useEffect(() => {
   const noResults = isDropdownOpen && filteredOptions.length === 0 && debouncedInputValue.trim() !== "";
 
   return (
+    <>
+   {noResults && (
+        <div
+          style={{ width }}
+          className=" sm:absolute  uppercase mb-4 py-4 px-1.5 rounded-md z-[1600]  cursor-pointer bg-slate-100 mt-2"
+        >
+          <span>Sem opção</span>
+        </div>
+      )}
     <div ref={ref} className="relative">
-      <InputMask
+       {showDropdown && (
+        <AutocompleteDropdown
+         options={filteredOptions}
+         handleOptionClick={handleOptionClick}
+         handleOptions={handleOptions}
+         dropdownRef={dropdownRef}
+         className={className}
+         width={width}
+        />
+      )}
+      
+       {label !== undefined && (
+        <Label className="uppercase mb-2.5 ">{label}</Label>
+      )}
+      <IMaskInput
         placeholder={placeholder}
         label={label}
         value={inputValue}
         onChange={handleChange}
-        textMode="uppercase"
-        className="h-[55px]"
+        className="h-[55px] inputMask"
         mask={mask}
       />
-
-      {noResults && (
-        <span
-          style={{ width }}
-          className="uppercase py-4 px-1.5 rounded-md min-w-[200px] z-[1700] absolute cursor-pointer bg-gray-100 mt-2"
-        >
-          Sem opção
-        </span>
-      )}
-
-      {showDropdown && (
-        <ul
-          ref={dropdownRef}
-          style={{ width }}
-          className={cn(
-            "absolute mt-2 bottom-full sm:top-full sm:bottom-auto sm:left-0  z-[1800] border-2 border-gray-200 bg-gray-50 flex flex-col max-h-[200px] gap-1 p-1 overflow-y-auto ",
-            className
-          )}
-        >
-          {filteredOptions.map((option) => (
-            <li
-              onClick={() => handleOptionClick(option)}
-              key={option.id}
-              className="p-1.5 cursor-pointer hover:bg-gray-100"
-            >
-              {handleOptions(option)}
-            </li>
-          ))}
-        </ul>
-      )}
+    
+     
     </div>
+    
+    </>
   );
 }

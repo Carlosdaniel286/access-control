@@ -10,8 +10,7 @@ import { useFormError } from '@/hooks/useFormError'
 import { DatePicker } from '@/types/datePiker'
 import { cn } from '@/lib/utils'
 
-// Removi imports de shadcn/ui: Calendar, Label, Popover, etc.
-// Substituí por HTML nativo e estilização via Tailwind
+
 
 export function CalendarDemo({
   getDateStart,
