@@ -1,11 +1,9 @@
-
-
 {
   "name": "front",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-   "dev": "next dev --turbopack --hostname 0.0.0.0",
+    "dev": "next dev --turbopack --hostname 0.0.0.0",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -39,8 +37,8 @@
     "next": "15.3.4",
     "primereact": "^10.9.6",
     "react": "^19.0.0",
-    "react-datepicker": "^8.4.0",
-    "react-day-picker": "^9.8.0",
+    "react-datepicker": "^8.7.0",
+    "react-day-picker": "^9.9.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.59.0",
     "react-imask": "^7.6.1",

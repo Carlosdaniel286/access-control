@@ -1,7 +1,7 @@
 "use client";
 
 // COMPONENTES INTERNOS
-import { DatePicker } from "./DatePicker";
+
 import { InputMask } from "./InputMask";
 import { SelectDemo } from "./Select";
 import Image from "next/image";
@@ -26,6 +26,7 @@ import {
 import { AccessAddressResident } from "@/types/valueForm";
 import React from "react";
 import { FocusOverlay } from "./FocusOverlay";
+import { DateRangePicker } from "./DateRangePicker";
 
 export function DialogContentPerson({ onButtonClick }: DialogProps) {
   const [form, setForm] = useState(initValueForm);
@@ -116,7 +117,7 @@ export function DialogContentPerson({ onButtonClick }: DialogProps) {
         {/* Data */}
         
           <div className="row-span-3 col-start-1 row-start-3 sm:max-w-[250px]">
-            <DatePicker />
+           <DateRangePicker/>
           </div>
         
 

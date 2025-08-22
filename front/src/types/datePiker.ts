@@ -7,7 +7,7 @@ export type DatePicker = {
   placeholder?:string
   label?:string
   totalDays? :number 
-  dateType?:'start' | 'end';
+  dateType?:"startDate" | "endDate"
   onChange?:(day:number) => void;
   valueDay?:number
 }

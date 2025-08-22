@@ -1,202 +1,134 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
-import { parse, format, startOfDay, addYears, isAfter, isBefore, startOfMonth, addDays } from 'date-fns'
-import { CalendarDays, Info, X } from 'lucide-react'
-import { IMaskInput } from 'react-imask'
+import { Calendar as CalendarCom } from "@/components/ui/calendar"
+import { IMaskInput } from "react-imask"
+import { format, startOfDay, addYears, parse, isValid, startOfMonth, addMonths } from "date-fns"
+import { ptBR } from "date-fns/locale"
+import { useMemo, useState, useRef, useEffect, useCallback } from "react"
+import { CalendarDays, X } from "lucide-react"
+import useClickOutside from "@/hooks/useClickOutside"
+import { DatePicker } from "@/types/datePiker"
+import { useCalendar } from "@/contexts/CalendarContext"
 
-import { FocusOverlay } from './FocusOverlay'
-import { useFormError } from '@/hooks/useFormError'
-import { DatePicker } from '@/types/datePiker'
-import { cn } from '@/lib/utils'
-
-
-
-export function CalendarDemo({
-  getDateStart,
-  getDateEnd,
-  label,
-  totalDays,
-  dateType,
-  startDate,
-  endDate,
-  valueDay,
-}: DatePicker) {
+export function Calendar({ dateType }: DatePicker) {
   const today = useMemo(() => startOfDay(new Date()), [])
-  const limitDate = useMemo(() => addYears(today, 1), [today])
+  const [selectedDate, setSelectedDate] = useState<Date>(today)
+  const [isCalendarVisible, setIsCalendarVisible] = useState(false)
+  const [currentMonth, setCurrentMonth] = useState(today)
 
-  const defaultFormattedDate = useMemo(() => format(today, 'dd/MM/yyyy'), [today])
-  const effectiveStartDate = useMemo(() => startOfDay(startDate ?? today), [startDate, today])
+  const calendarLimitDate = useMemo(
+    () => addYears(startOfDay(startOfMonth(addMonths(new Date(), 1))), 1),
+    []
+  )
 
-  const [open, setOpen] = useState(false)
-  const [valueInput, setValueInput] = useState<string>(defaultFormattedDate)
-  const { formInfo, handleError } = useFormError()
+  const { containerRef } = useClickOutside(() => setIsCalendarVisible(false))
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  const [calendarState, setCalendarState] = useState({
-    selectedDate: undefined as Date | undefined,
-    selectedMonth: undefined as Date | undefined,
-  })
+  const { handleDateCalendar, updateDate } = useCalendar()
 
-  // Funções agrupadas e exportadas para evitar eslint-disable
-  const updateDateStart = () => {
-    if (dateType === 'end') {
-      const parsed = parse(valueInput, 'dd/MM/yyyy', new Date())
-      if (isBefore(parsed, effectiveStartDate)) {
-        setValueInput(format(effectiveStartDate, 'dd/MM/yyyy'))
-      }
-    }
+  const toggleCalendarVisibility = () => {
+    setIsCalendarVisible((prev) => !prev)
   }
 
-  const addDaysToEndDate = () => {
-    const start = startDate ?? today
-    const days = valueDay ?? 0
-    if (dateType === 'end' && days >= 0) {
-      const date = addDays(start, days)
-      setValueInput(format(date, 'dd/MM/yyyy'))
+  const resolveDateByType = useCallback(() => {
+    switch (dateType) {
+      case "startDate":
+        return updateDate.startDate
+
+      case "endDate":
+        return updateDate.endDate
+
+      default:
+        return today
     }
+  }, [dateType, updateDate, today])
+
+  useEffect(() => {
+    const resolvedDate = resolveDateByType()
+      setCurrentMonth(resolvedDate)
+  }, [resolveDateByType])
+
+  useEffect(() => {
+    if (dateType) handleDateCalendar(dateType, selectedDate)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateType, selectedDate])
+
+  function parseAndValidateDate(value: string): Date | null {
+    const parsedDate = startOfDay(parse(value, "dd/MM/yyyy", new Date()))
+    if (!isValid(parsedDate)) return null
+    if (parsedDate < today) return null
+    if (parsedDate > calendarLimitDate) return null
+    return parsedDate
   }
-
-  const updateSelectedMonth = () => {
-    const date = startOfDay(parse(valueInput, 'dd/MM/yyyy', new Date()))
-    if (isNaN(date.getTime())) return
-
-    if (isBefore(date, today)) {
-      return handleError(true, 'A data escolhida deve ser igual ou posterior à data atual.')
-    }
-    if (isAfter(date, limitDate)) {
-      return handleError(true, 'A data escolhida deve ser inferior a um ano.')
-    }
-
-    handleError(false)
-    setCalendarState({ selectedDate: date, selectedMonth: startOfMonth(date) })
-  }
-
-  const handleInputChange = (value?: string) => {
-    if (!value || value.length < 8) return
-    const parsed = parse(value, 'ddMMyyyy', new Date())
-    if (!isNaN(parsed.getTime())) {
-      setValueInput(format(parsed, 'dd/MM/yyyy'))
-    }
-  }
-
-  const formatSelectedDate = (selected: Date | undefined) => {
-    if (!selected) return
-    const formatted = format(selected, 'dd/MM/yyyy')
-    setValueInput(formatted)
-    setCalendarState(prev => ({ ...prev, selectedDate: selected }))
-  }
-
-  // Effects reorganizados sem eslint-disable
-  useEffect(() => {
-    if (dateType !== 'start' && isBefore(effectiveStartDate, today)) {
-      handleError(true, 'A data escolhida deve ser igual ou posterior à data atual.')
-      return
-    }
-    setValueInput(format(effectiveStartDate, 'dd/MM/yyyy'))
-  }, [dateType, effectiveStartDate, today, handleError])
-
-  useEffect(() => {
-    addDaysToEndDate()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [valueDay, dateType, startDate, today])
-
-  useEffect(() => {
-    updateSelectedMonth()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [valueInput])
-
-  useEffect(() => {
-    updateDateStart()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [endDate, dateType, effectiveStartDate, valueInput])
-
-  useEffect(() => {
-    const date = calendarState.selectedDate ?? new Date()
-    getDateStart?.(date)
-    getDateEnd?.(date)
-  }, [calendarState.selectedDate, getDateStart, getDateEnd])
-
-  useEffect(() => {
-    if (totalDays === undefined) return
-    if (totalDays >= 0) return handleError(false)
-
-    const message = dateType === 'start'
-      ? 'A data inicial deve ser menor que a final'
-      : 'A data final deve ser maior que a inicial'
-
-    handleError(true, message)
-  }, [totalDays, dateType, handleError])
 
   return (
-    <FocusOverlay>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="date" className="px-1 p-1 uppercase">
-          {label}
-        </label>
-
-        <div
-          className={cn('flex items-center gap-3 inputMask border rounded-md p-2')}
-        >
-          <button
-            type="button"
-            className="cursor-pointer"
-            onClick={() => {
-              setOpen(!open)
-              updateSelectedMonth()
+    <div ref={containerRef} className="relative">
+      {/* Calendário */}
+      {isCalendarVisible && (
+        <div className="absolute bottom-14 left-[-1rem] z-50">
+          <CalendarCom 
+            mode="single"
+            selected={selectedDate}
+            onSelect={(d) => {
+              if (d) {
+                setSelectedDate(d)
+              }
+              setIsCalendarVisible(false)
             }}
-          >
-            <CalendarDays />
-          </button>
-
-          <IMaskInput
-            aria-label="Campo de data"
-            placeholder="DD/MM/YYYY"
-            className="inputMask border-0 min-h-[43px] ring-0 p-0 hover:ring-0 flex-1"
-            mask="00/00/0000"
-            onAccept={handleInputChange}
-            value={valueInput}
+            className="rounded-md border shadow-sm"
+            
+            locale={ptBR}
+            disabled={{ before: dateType=='endDate'? updateDate.startDate:today, after: addYears(today, 1) }}
+            endMonth={calendarLimitDate}
+            month={currentMonth}
+            onMonthChange={(month) => {
+              const limitDate = addYears(startOfDay(today),1)
+              console.log(limitDate)
+              console.log(limitDate <month)
+              
+              setCurrentMonth(month)
+            }}
+            captionLayout="dropdown"
           />
-
-          <button
-            type="button"
-            onClick={() => {
-              setCalendarState({ selectedDate: undefined, selectedMonth: undefined })
-              setValueInput(dateType === 'end'
-                ? format(effectiveStartDate, 'dd/MM/yyyy')
-                : defaultFormattedDate
-              )
-              handleError(false)
-            }}
-            className="cursor-pointer"
-          >
-            <X />
-          </button>
         </div>
+      )}
 
-        {formInfo.hasError && (
-          <div className="py-1 flex items-center gap-1 text-sm text-red-500">
-            <Info className="w-5 h-5 text-red-600" />
-            {formInfo.message}
-          </div>
-        )}
+      {/* Input e ícones */}
+      <div className="inputMask flex min-h-[58px] gap-1 items-center justify-center">
+        <CalendarDays className="cursor-pointer" onClick={toggleCalendarVisibility} />
 
-        {open && (
-          <div className="w-auto bg-white border shadow-md rounded-md mt-2 z-[1600] p-2">
-            {/* Substituí o Calendar do shadcn por um espaço reservado */}
-            <p className="text-gray-500 text-sm">[Calendário aqui]</p>
-            <button
-              type="button"
-              onClick={() => {
-                formatSelectedDate(new Date())
-                setOpen(false)
-              }}
-              className="mt-2 px-3 py-1 bg-blue-500 text-white rounded-md text-sm"
-            >
-              Selecionar hoje
-            </button>
-          </div>
-        )}
+        <IMaskInput
+          ref={inputRef}
+          aria-label="Campo de data"
+          placeholder="DD/MM/YYYY"
+          onAccept={(ev) => {
+            const parsedDate = parseAndValidateDate(ev)
+            if (!parsedDate) return
+            if (dateType) handleDateCalendar(dateType, parsedDate)
+            setCurrentMonth(parsedDate)
+            if (parsedDate.getTime() !== selectedDate.getTime()) {
+              setSelectedDate(parsedDate)
+            }
+          }}
+          onChange={(ev) => {
+            const value = ev.currentTarget.value
+            console.log(value)
+            const parsedDate = parseAndValidateDate(value)
+            if (!parsedDate) return
+            setSelectedDate(parsedDate)
+          }}
+          className="focus:outline-none pl-4 w-[150px] border-0 p-0 ring-0 hover:ring-0"
+          mask="00/00/0000"
+          value={format(resolveDateByType(), "dd/MM/yyyy")}
+        />
+
+        <X
+          className="cursor-pointer"
+          onClick={() => {
+            setSelectedDate(updateDate.startDate)
+          }}
+        />
       </div>
-    </FocusOverlay>
+    </div>
   )
 }
